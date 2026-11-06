@@ -1,0 +1,107 @@
+@font-face {
+    font-family: "IBM VGA";
+    src: url("ib.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    background-color: rgb(20, 21, 20);
+    font-family: "IBM VGA", monospace;
+    margin: 0;
+    color: whitesmoke;
+}
+
+.header {
+    background-color: rgb(50, 52, 53);
+    padding: 20px 15px 10px 15px;
+    display: flex;
+    align-items: center;
+}
+
+.header a {
+    color: rgb(10, 185, 42);
+    text-decoration: none;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 31px;
+}
+
+.header .nav {
+    margin-left: auto;
+    display: flex;
+    gap: 20px;
+    font-size: 22px;
+}
+
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-size: 22px;
+    line-height: 1.6;
+}
+
+.content h1,
+.content h2,
+.content h3 {
+    color: rgb(10, 185, 42);
+}
+
+.content a {
+    color: rgb(176, 230, 13);
+}
+
+.post-date {
+    color: lightgray;
+    font-style: italic;
+}
+
+.content pre {
+    background-color: rgb(50, 52, 53);
+    padding: 15px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-size: 18px;
+}
+
+.content code {
+    background-color: rgb(50, 52, 53);
+    padding: 2px 6px;
+    border-radius: 5px;
+}
+
+.content pre code {
+    padding: 0;
+}
+
+.post-list {
+    list-style: none;
+    padding: 0;
+}
+
+.post-list li {
+    background-color: rgba(59, 62, 58, 0.854);
+    border-radius: 25px;
+    padding: 15px 30px;
+    margin-bottom: 15px;
+    transition: transform 0.3s;
+}
+
+.post-list li:hover {
+    transform: translateY(-5px);
+}
+
+.post-list a {
+    color: rgb(176, 230, 13);
+    text-decoration: none;
+}
+
+.post-list span {
+    display: block;
+    color: lightgray;
+    font-size: 18px;
+}

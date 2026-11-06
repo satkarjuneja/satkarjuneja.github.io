@@ -1,0 +1,32 @@
+---
+---
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | Satkar Juneja</title>
+  <link rel="stylesheet" href="{{ site.baseurl }}/blog.css">
+</head>
+<body>
+  <div class="header">
+    <h1><a href="{{ site.baseurl }}/">Satkar Juneja</a></h1>
+    <div class="nav">
+      <a href="{{ site.baseurl }}/">Home</a>
+      <a href="{{ site.baseurl }}/blog/">Blog</a>
+    </div>
+  </div>
+
+  <div class="content">
+    <h1>Blog</h1>
+    <ul class="post-list">
+      {% for post in site.posts %}
+        <li>
+          <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+          <span>{{ post.date | date: "%B %d, %Y" }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>
