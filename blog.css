@@ -1,44 +1,148 @@
-body {
-    background-color: #000;
-    color: #fff;
-    font-family: serif;          /* browser default serif, no import */
-    margin: 0;
-    counter-reset: thm defn;     /* auto-numbering for theorem blocks */
+@font-face {
+    font-family: "IBM VGA";
+    src: url("ib.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
-/* ---------- Header ---------- */
+body {
+    background-color: rgb(20, 21, 20);
+    font-family: "IBM VGA", monospace;
+    margin: 0;
+    color: whitesmoke;
+}
+
 .header {
+    background-color: rgb(50, 52, 53);
+    padding: 20px 15px 10px 15px;
     display: flex;
-    align-items: baseline;
-    padding: 16px 32px;
-    border-bottom: 1px solid #444;
+    align-items: center;
 }
 
 .header a {
-    color: #fff;
+    color: rgb(10, 185, 42);
     text-decoration: none;
-}
-
-.header a:hover {
-    text-decoration: underline;
 }
 
 .header h1 {
     margin: 0;
-    font-size: 24px;
-    font-weight: normal;
+    font-size: 31px;
 }
 
 .header .nav {
     margin-left: auto;
     display: flex;
+    gap: 20px;
+    font-size: 22px;
+}
+
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-size: 22px;
+    line-height: 1.6;
+}
+
+.content h1,
+.content h2,
+.content h3 {
+    color: rgb(10, 185, 42);
+}
+
+.content a {
+    color: rgb(176, 230, 13);
+}
+
+.post-date {
+    color: lightgray;
+    font-style: italic;
+}
+
+.content pre {
+    background-color: rgb(50, 52, 53);
+    padding: 15px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-size: 18px;
+}
+
+.content code {
+    background-color: rgb(50, 52, 53);
+    padding: 2px 6px;
+    border-radius: 5px;
+}
+
+.content pre code {
+    padding: 0;
+}
+
+.post-list {
+    list-style: none;
+    padding: 0;
+}
+
+.post-list li {
+    background-color: rgba(59, 62, 58, 0.854);
+    border-radius: 25px;
+    padding: 15px 30px;
+    margin-bottom: 15px;
+    transition: transform 0.3s;
+}
+
+.post-list li:hover {
+    transform: translateY(-5px);
+}
+
+.post-list a {
+    color: rgb(176, 230, 13);
+    text-decoration: none;
+}
+
+.post-list span {
+    display: block;
+    color: lightgray;
+    font-size: 18px;
+}
+
+/* =========================================================
+   PART 2: Math article theme (only when <body class="post">)
+   ========================================================= */
+body.post {
+    background-color: rgb(12, 13, 12);
+    color: #f2f2f2;
+    font-family: serif;
+    counter-reset: thm defn;
+}
+
+/* ---------- Header ---------- */
+body.post .header {
+    align-items: baseline;
+    padding: 16px 32px;
+    background-color: rgb(30, 32, 31);
+    border-bottom: 2px solid rgb(10, 185, 42);
+}
+
+body.post .header a:hover {
+    color: rgb(176, 230, 13);
+}
+
+body.post .header h1 {
+    font-size: 24px;
+    font-weight: normal;
+}
+
+body.post .header .nav {
     gap: 24px;
     font-size: 18px;
 }
 
 /* ---------- Article body (full width) ---------- */
-.content {
+body.post .content {
     width: 100%;
+    max-width: none;
+    margin: 0;
     box-sizing: border-box;
     padding: 24px 32px 64px;
     font-size: 20px;
@@ -46,115 +150,151 @@ body {
     text-align: justify;
 }
 
-.content h1 {
+body.post .content h1 {
     text-align: center;
-    font-size: 34px;
+    font-size: 36px;
     font-weight: normal;
     margin-bottom: 4px;
+    text-shadow: 0 0 12px rgba(10, 185, 42, 0.45);
 }
 
-.content h2,
-.content h3 {
-    font-weight: bold;
-    margin-top: 2em;
-}
-
-.content a {
-    color: #8ab4f8;
-}
-
-.post-date {
+body.post .post-date {
     text-align: center;
-    color: #aaa;
+    color: rgb(176, 230, 13);
     margin-top: 0;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed rgba(10, 185, 42, 0.5);
+}
+
+body.post .content h2 {
+    margin-top: 2em;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(10, 185, 42, 0.4);
+}
+
+body.post .content h3 {
+    color: rgb(176, 230, 13);
+    margin-top: 1.6em;
+}
+
+body.post .content strong {
+    color: #fff;
 }
 
 /* ---------- Math ---------- */
 mjx-container[display="true"] {
     overflow-x: auto;
     overflow-y: hidden;
+    margin: 1.2em 0;
+    padding: 0.4em 0;
 }
 
 /* ---------- Theorem-style blocks ---------- */
-.theorem, .lemma, .corollary {
-    border-left: 3px solid #fff;
-    padding: 0.5rem 1rem;
+body.post .theorem,
+body.post .lemma,
+body.post .corollary,
+body.post .definition {
+    padding: 0.6rem 1.2rem;
     margin: 1.5rem 0;
+    border-left: 4px solid;
+    border-radius: 0 8px 8px 0;
+}
+
+body.post .theorem,
+body.post .lemma,
+body.post .corollary {
     font-style: italic;
 }
 
-.theorem::before   { counter-increment: thm; content: "Theorem "   counter(thm) ". "; font-weight: bold; font-style: normal; }
-.lemma::before     { counter-increment: thm; content: "Lemma "     counter(thm) ". "; font-weight: bold; font-style: normal; }
-.corollary::before { counter-increment: thm; content: "Corollary " counter(thm) ". "; font-weight: bold; font-style: normal; }
+body.post .theorem    { border-color: rgb(10, 185, 42);  background: rgba(10, 185, 42, 0.08); }
+body.post .lemma      { border-color: rgb(176, 230, 13); background: rgba(176, 230, 13, 0.07); }
+body.post .corollary  { border-color: #e0a526;           background: rgba(224, 165, 38, 0.08); }
+body.post .definition { border-color: #4fc3d9;           background: rgba(79, 195, 217, 0.07); }
 
-.definition {
-    border-left: 3px solid #888;
-    padding: 0.5rem 1rem;
-    margin: 1.5rem 0;
-}
-
-.definition::before {
-    counter-increment: defn;
-    content: "Definition " counter(defn) ". ";
+body.post .theorem::before,
+body.post .lemma::before,
+body.post .corollary::before,
+body.post .definition::before {
     font-weight: bold;
+    font-style: normal;
 }
 
-.proof {
+body.post .theorem::before    { counter-increment: thm;  content: "Theorem "    counter(thm)  ". "; color: rgb(10, 185, 42); }
+body.post .lemma::before      { counter-increment: thm;  content: "Lemma "      counter(thm)  ". "; color: rgb(176, 230, 13); }
+body.post .corollary::before  { counter-increment: thm;  content: "Corollary "  counter(thm)  ". "; color: #e0a526; }
+body.post .definition::before { counter-increment: defn; content: "Definition " counter(defn) ". "; color: #4fc3d9; }
+
+body.post .proof {
     margin: 1rem 0 1.5rem 1rem;
+    padding-left: 1rem;
+    border-left: 1px dotted rgba(255, 255, 255, 0.3);
+}
+
+body.post .proof::before {
+    content: "Proof. ";
+    font-style: italic;
+    font-weight: bold;
+    color: #aaa;
+}
+
+/* ---------- Quote ---------- */
+body.post .content blockquote.quote {
+    margin: 1.8rem auto;
+    padding: 0.6rem 1.5rem;
+    max-width: 700px;
+    border-left: 4px solid rgb(176, 230, 13);
+    background: rgba(255, 255, 255, 0.04);
+    font-style: italic;
+    text-align: left;
+}
+
+body.post .content blockquote.quote p {
+    margin: 0 0 0.5rem;
+    font-size: 1.15em;
+}
+
+body.post .content blockquote.quote footer {
+    font-style: normal;
+    font-size: 0.85em;
+    color: rgb(10, 185, 42);
+    text-align: right;
 }
 
 /* ---------- Code ---------- */
-.content pre {
-    background-color: #111;
-    border: 1px solid #333;
-    padding: 12px;
-    overflow-x: auto;
+body.post .content pre {
+    background-color: rgb(30, 32, 31);
+    border: 1px solid rgba(10, 185, 42, 0.35);
+    border-radius: 8px;
+    padding: 14px;
     font-size: 16px;
     line-height: 1.4;
     text-align: left;
 }
 
-.content code {
-    background-color: #111;
-    padding: 1px 4px;
+body.post .content code {
+    background-color: rgb(30, 32, 31);
+    color: rgb(176, 230, 13);
+    padding: 1px 5px;
+    border-radius: 4px;
     font-size: 0.9em;
 }
 
-.content pre code {
+body.post .content pre code {
     padding: 0;
     background: none;
 }
 
 /* ---------- Media ---------- */
-.content img,
-.content video,
-.content iframe {
+body.post .content img,
+body.post .content video,
+body.post .content iframe {
     max-width: 100%;
+    border: 1px solid rgba(10, 185, 42, 0.4);
+    border-radius: 6px;
 }
 
-/* ---------- Blog index list ---------- */
-.post-list {
-    list-style: none;
-    padding: 0;
-}
-
-.post-list li {
-    padding: 12px 0;
-    border-bottom: 1px solid #333;
-}
-
-.post-list a {
-    color: #8ab4f8;
-    text-decoration: none;
-    font-size: 22px;
-}
-
-.post-list a:hover {
-    text-decoration: underline;
-}
-
-.post-list span {
-    display: block;
-    color: #aaa;
-    font-size: 16px;
+body.post .content hr {
+    border: none;
+    border-top: 1px dashed rgba(10, 185, 42, 0.5);
+    margin: 2.5rem 0;
 }
