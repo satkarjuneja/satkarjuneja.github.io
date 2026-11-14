@@ -41,7 +41,7 @@ body {
 /* CHANGED: full width instead of max-width 800px centered */
 .content {
     max-width: 950px;
-    margin: 0;
+    margin: 0 auto;
     box-sizing: border-box;
     padding: 20px 32px 60px;
     font-size: 22px;
