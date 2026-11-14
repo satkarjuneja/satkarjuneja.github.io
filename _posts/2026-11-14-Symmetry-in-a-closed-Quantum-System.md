@@ -19,8 +19,9 @@ In such a non-deterministic model of the universe, can symmetry, or the ideas of
 
 We will answer that question in this blog.
 
-## &sect; 2. From Schrödinger to Von Neumann
+## &sect; 2 From Schrödinger to Von Neumann
 
+### &sect; 2.1 What is a density operator?
 The Schrödinger equation gives a complete description of an isolated quantum system, under the following assumptions:
 
 1. The state of the system is described by a unit vector $\lvert\psi\rangle$ in a Hilbert space.
@@ -75,11 +76,48 @@ This motivates the following definition.
 
 <div class="definition" markdown="1">
 The **density operator** (or density matrix) of the system is
-</div>
 
 $$
 \rho = \sum_i p_i \,\lvert\psi_i\rangle\langle\psi_i\rvert ,
 \tag{2.6}
 $$
 
+</div>
+
 so that the expectation value of any observable takes the compact form $$\langle A\rangle = \operatorname{tr}(A\rho)$$.
+
+### § 2.1 Deriving the Von Neumann Equation
+
+Differentiating the density operator in time and using the Schrödinger equation gives a closed equation for $\rho$. The full derivation is collapsed below.
+
+<details class="derivation" markdown="1">
+<summary>Show derivation</summary>
+
+Each state in the ensemble evolves under Eq. (2.1), and the probabilities $p_i$ are fixed by the preparation, so they do not depend on time. Taking the adjoint of Eq. (2.1), and using $$H^\dagger = H$$, gives
+
+$$
+-i\hbar \frac{d}{dt}\langle\psi_i(t)\rvert = \langle\psi_i(t)\rvert H .
+\tag{2.7}
+$$
+
+Now differentiate Eq. (2.6) with the product rule and substitute Eqs. (2.1) and (2.7):
+
+$$
+i\hbar \frac{d\rho}{dt}
+= \sum_i p_i \Big( \big(i\hbar\,\lvert\dot\psi_i\rangle\big)\langle\psi_i\rvert + \lvert\psi_i\rangle\big(i\hbar\,\langle\dot\psi_i\rvert\big) \Big)
+= \sum_i p_i \Big( H\lvert\psi_i\rangle\langle\psi_i\rvert - \lvert\psi_i\rangle\langle\psi_i\rvert H \Big).
+\tag{2.8}
+$$
+
+Since $$H$$ is the same for every member of the ensemble, it factors out of the sum, and the sum is just $$\rho$$ again.
+
+</details>
+
+The result is the **Von Neumann equation**:
+
+$$
+i\hbar \frac{d\rho}{dt} = H\rho - \rho H = [H,\rho] .
+\tag{2.9}
+$$
+
+It is the Schrödinger equation rewritten for the density operator, and it holds whether or not the state is pure.
