@@ -4,4 +4,6 @@ title: "Symmetry in a Quantum System"
 date: 2026-11-14
 ---
 
-# Test
+# Symmetry in a Quantum System
+
+## &sect 1. Introduction and Setup
