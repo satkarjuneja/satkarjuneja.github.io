@@ -1,39 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.title }} | Satkar Juneja</title>
-  <link rel="stylesheet" href="{{ '/blog.css' | relative_url }}">
-
-  <script>
-    window.MathJax = {
-      tex: {
-        tags: 'ams',
-        inlineMath: [['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']],
-        macros: {
-          R: '\\mathbb{R}',
-          C: '\\mathbb{C}',
-          norm: ['\\left\\lVert #1 \\right\\rVert', 1]
-        }
-      }
-    };
-  </script>
+  <link rel="stylesheet" href="{{ site.baseurl }}/blog.css">
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
 </head>
-<body class="post">
+<body>
   <div class="header">
-    <h1><a href="{{ '/' | relative_url }}">Satkar Juneja</a></h1>
+    <h1><a href="{{ site.baseurl }}/">Satkar Juneja</a></h1>
     <div class="nav">
-      <a href="{{ '/' | relative_url }}">Home</a>
-      <a href="{{ '/blog/' | relative_url }}">Blog</a>
+      <a href="{{ site.baseurl }}/">Home</a>
+      <a href="{{ site.baseurl }}/blog/">Blog</a>
     </div>
   </div>
 
   <div class="content">
     <h1>{{ page.title }}</h1>
-    <p class="post-date">{{ page.date | date: "%B %-d, %Y" }}</p>
+    <p class="post-date">{{ page.date | date: "%B %d, %Y" }}</p>
     {{ content }}
   </div>
 </body>
