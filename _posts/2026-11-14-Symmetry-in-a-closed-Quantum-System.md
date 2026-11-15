@@ -121,3 +121,85 @@ i\hbar \frac{d\rho}{dt} = H\rho - \rho H = [H,\rho] .
 $$
 
 It is the Schrödinger equation rewritten for the density operator, and it holds whether or not the state is pure.
+
+### § 2.3 Properties of the Density Operator
+
+The density operator $\rho=\sum_i p_i\lvert\psi_i\rangle\langle\psi_i\rvert$ of Eq. (2.6) has the following basic properties.
+
+**1. Hermiticity.** $\rho^\dagger=\rho$, since each $\lvert\psi_i\rangle\langle\psi_i\rvert$ is Hermitian and the $p_i$ are real.
+
+**2. Unit trace.** Using $\langle\psi_i\vert\psi_i\rangle=1$ and Eq. (2.2),
+
+$$
+\operatorname{tr}\rho=\sum_i p_i\langle\psi_i\vert\psi_i\rangle=\sum_i p_i=1 .
+\tag{2.10}
+$$
+
+**3. Positivity.** For any vector $\lvert\phi\rangle$,
+
+$$
+\langle\phi\rvert\rho\lvert\phi\rangle=\sum_i p_i\,\big\lvert\langle\phi\vert\psi_i\rangle\big\rvert^2\ \ge\ 0 ,
+\tag{2.11}
+$$
+
+so $\rho\ge 0$. Together with the first two properties, this characterizes a density operator: any operator that is Hermitian, positive and has unit trace describes a valid state.
+
+**4. Expectation values.** For any observable $A$, $\langle A\rangle=\operatorname{tr}(A\rho)$, as shown in Eq. (2.5).
+
+**5. Purity.** $\operatorname{tr}\rho^2\le 1$, with equality if and only if $\rho$ is a pure state, $\rho=\lvert\psi\rangle\langle\psi\rvert$.
+
+<details class="derivation" markdown="1">
+<summary>Show derivation</summary>
+
+Let $\lambda_k$ be the eigenvalues of $\rho$. By properties 1 to 3 they satisfy $\lambda_k\in[0,1]$ and $\sum_k\lambda_k=1$. Since $$\lambda_k^2\le\lambda_k$$ on $[0,1]$,
+
+$$
+\operatorname{tr}\rho^2=\sum_k\lambda_k^2\ \le\ \sum_k\lambda_k=1 .
+\tag{2.12}
+$$
+
+Equality requires $\lambda_k^2=\lambda_k$ for every $k$, so each $\lambda_k$ is $0$ or $1$. Because they sum to $1$, exactly one eigenvalue equals $1$ and the rest vanish. That means $\rho=\lvert\psi\rangle\langle\psi\rvert$ for the corresponding eigenvector, which is a pure state. Conversely, a pure state has eigenvalues $(1,0,\dots,0)$, so $\operatorname{tr}\rho^2=1$.
+
+</details>
+
+with equality only when a single eigenvalue equals $1$ and the rest vanish.
+
+## § 3 Symmetry in the Von Neumann Equation
+
+### § 3.1 Properties of the Von Neumann Equation
+
+The Von Neumann equation can be written as $\dot\rho=\mathcal L\rho$, where $\mathcal L=-\tfrac{i}{\hbar}[H,\,\cdot\,]$ is a linear map acting on operators. It has the following properties.
+
+**1. Linearity.** Since $\mathcal L$ is linear, a mixture $$\rho=\sum_i p_i\rho_i$$ evolves as the mixture of the individual evolutions. It makes no difference whether we mix first and then evolve, or evolve first and then mix. This is what makes density operators a consistent description of ensembles.
+
+**2. Hermiticity is preserved.** If $\rho$ is Hermitian, then $[H,\rho]^\dagger=[\rho,H]=-[H,\rho]$, so $-\tfrac{i}{\hbar}[H,\rho]$ is Hermitian as well.
+
+**3. Trace is preserved.** By cyclicity of the trace,
+
+$$
+\frac{d}{dt}\operatorname{tr}\rho=-\frac{i}{\hbar}\operatorname{tr}[H,\rho]=0 .
+\tag{3.1}
+$$
+
+This is the first of a family of conserved quantities $\operatorname{tr}(\rho^n)$, which we return to below.
+
+**4. Positivity is preserved.** For a time-independent $H$, the solution of Eq. (2.9) is $\rho(t)=U\rho(0)U^\dagger$ with $U=e^{-iHt/\hbar}$. For any $\lvert\phi\rangle$,
+
+$$
+\langle\phi\rvert U\rho U^\dagger\lvert\phi\rangle=\langle\phi'\rvert\rho\lvert\phi'\rangle\ \ge\ 0 ,
+\qquad \lvert\phi'\rangle=U^\dagger\lvert\phi\rangle ,
+\tag{3.2}
+$$
+
+so $\rho(t)\ge0$ for all $t$.
+
+**5. Stationary states commute with $H$.** $\dot\rho=0$ if and only if $[H,\rho]=0$. For example, any function of $H$ is stationary, such as the thermal state $e^{-\beta H}/Z$ with $Z=\operatorname{tr}e^{-\beta H}$.
+
+**6. Conserved quantities.** For any time-independent observable $A$,
+
+$$
+\frac{d}{dt}\operatorname{tr}(\rho A)=\frac{i}{\hbar}\operatorname{tr}\big(\rho\,[H,A]\big) ,
+\tag{3.3}
+$$
+
+so every observable commuting with $H$ is conserved. In particular the energy $\operatorname{tr}(\rho H)$ is conserved.
