@@ -164,6 +164,27 @@ Equality requires $\lambda_k^2=\lambda_k$ for every $k$, so each $\lambda_k$ is 
 
 with equality only when a single eigenvalue equals $1$ and the rest vanish.
 
+### § 2.4 The Evolution Operator
+
+For a time-independent Hamiltonian $H$, the Schrödinger equation (2.1) is solved by
+
+$$
+\lvert\psi(t)\rangle = U(t)\lvert\psi(0)\rangle ,
+\qquad U(t)=e^{-iHt/\hbar} ,
+\tag{2.13}
+$$
+
+where $U(t)$ is the **evolution operator**. It is unitary, $U^\dagger U = UU^\dagger = I$, because $H$ is Hermitian. This is what guarantees that the norm of a state is preserved in time.
+
+Applying Eq. (2.13) to every member of the ensemble in Eq. (2.6), the density operator evolves as
+
+$$
+\rho(t) = U(t)\,\rho(0)\,U(t)^\dagger ,
+\tag{2.14}
+$$
+
+which is the solution of the Von Neumann equation (2.9) for a time-independent $$H$$. It says that the whole evolution is a unitary conjugation of the initial state.
+
 ## § 3 Symmetry in the Von Neumann Equation
 
 ### § 3.1 Properties of the Von Neumann Equation
@@ -203,3 +224,120 @@ $$
 $$
 
 so every observable commuting with $H$ is conserved. In particular the energy $\operatorname{tr}(\rho H)$ is conserved.
+
+### § 3.2 The Solution Is a Group
+
+Recall that $\rho(t)=U_t\,\rho(0)\,U_t^\dagger$ with $U_t=e^{-iHt/\hbar}$. The family of operators $\{U_t\}$ has more structure than a list of operators. Recall that a **group** is a set with an associative operation, an identity element, and an inverse for every element. The $U_t$ satisfy all of this:
+
+$$
+U_tU_s=U_{t+s},\qquad U_0=I,\qquad U_{-t}=U_t^{-1}=U_t^\dagger .
+\tag{3.4}
+$$
+
+The first relation holds because $H$ commutes with itself, so the exponents simply add. Evolving for a time $s$ and then for a time $t$ is the same as evolving for $t+s$, and every evolution can be undone by running it backwards. This is a **one-parameter group** of unitary operators.
+
+<details class="derivation" markdown="1">
+<summary>Show derivation</summary>
+
+To check that $\rho(t)=U_t\rho(0)U_t^\dagger$ solves Eq. (2.9), differentiate. Since $H$ commutes with $U_t$,
+
+$$
+\frac{d\rho}{dt}
+=-\frac{i}{\hbar}H\,U_t\rho(0)U_t^\dagger+U_t\rho(0)U_t^\dagger\,\frac{i}{\hbar}H
+=-\frac{i}{\hbar}\,[H,\rho(t)] .
+\tag{3.5}
+$$
+
+</details>
+
+### § 3.3 What Does the Evolution Conserve?
+
+Since the evolution is a conjugation, the conserved quantities are easy to find. For any $n$,
+
+$$
+\operatorname{tr}\big(\rho(t)^n\big)=\operatorname{tr}\big[(U\rho U^\dagger)^n\big]=\operatorname{tr}\big[U\rho^nU^\dagger\big]=\operatorname{tr}\big(\rho^n\big),
+\tag{3.6}
+$$
+
+where we used $U^\dagger U=I$ to collapse the product, and then cyclicity of the trace. The same fact is visible in the eigenvalues: if $\rho(0)\lvert v\rangle=\lambda\lvert v\rangle$, then $\rho(t)\,U_t\lvert v\rangle=\lambda\,U_t\lvert v\rangle$. So $\rho(t)$ and $\rho(0)$ have **exactly the same spectrum**.
+
+Two consequences stand out:
+
+- the purity $\operatorname{tr}\rho^2$ is conserved, so a pure state stays pure
+- the von Neumann entropy $S(\rho)=-\operatorname{tr}(\rho\ln\rho)$ is conserved, so a mixed state stays exactly as mixed as it started
+
+Unitary evolution can never turn our ignorance about the state into knowledge, or the other way around. The spectrum is the part of $\rho$ that the dynamics cannot touch.
+
+### § 3.4 Group Actions and Orbits
+
+To see why this is a statement about *groups*, we put the conjugation $\rho\mapsto U\rho U^\dagger$ in the language of group actions.
+
+<div class="definition" markdown="1">
+A group $G$ **acts** on a set $X$ if every $g\in G$ gives a map $x\mapsto g\cdot x$ such that $e\cdot x=x$ and $g\cdot(h\cdot x)=(gh)\cdot x$. The **orbit** of $x$ is the set $G\cdot x=\{g\cdot x: g\in G\}$ of everything that $x$ can be moved to.
+</div>
+
+Let $G=U(d)$ be the group of all $d\times d$ unitary matrices, where $d$ is the dimension of the Hilbert space, and let $X$ be the set of density operators. Define
+
+$$
+U\cdot\rho=U\rho U^\dagger .
+\tag{3.7}
+$$
+
+This is an action: $U\cdot(V\cdot\rho)=UV\rho V^\dagger U^\dagger=(UV)\cdot\rho$. It also sends density operators to density operators, by the argument of Eq. (3.2) together with the fact that trace and Hermiticity are preserved. Time evolution is then a curve $t\mapsto U_t\cdot\rho$ that stays inside a single orbit. The key fact is the following.
+
+<div class="definition" markdown="1">
+**Theorem.** Two density operators $\rho$ and $\sigma$ lie in the same orbit of $U(d)$ if and only if they have the same eigenvalues, counted with multiplicity.
+</div>
+
+<details class="derivation" markdown="1">
+<summary>Show derivation</summary>
+
+($\Rightarrow$) This is Eq. (3.6) and the eigenvector argument above: conjugation by a unitary preserves the spectrum.
+
+($\Leftarrow$) By the spectral theorem, $\rho=VDV^\dagger$ and $\sigma=WDW^\dagger$ for unitaries $V,W$ and the *same* diagonal matrix $D$ of eigenvalues, since the spectra agree. Then
+
+$$
+\sigma=WV^\dagger\,\rho\,\big(WV^\dagger\big)^\dagger ,
+\tag{3.8}
+$$
+
+and $WV^\dagger$ is unitary, so $\sigma\in U(d)\cdot\rho$.
+
+</details>
+
+So the orbits are labelled exactly by spectra: the set of density operators splits into layers, one for each possible spectrum, and unitary dynamics lives inside a single layer.
+
+One subtlety is worth stating clearly. A *single* Hamiltonian only traces out a curve inside an orbit. The whole orbit is what all Hamiltonians together can reach. By the spectral theorem every unitary can be written as $U=e^{-iK}$ for some Hermitian $K$, so every element of $U(d)$ is the evolution of some Hamiltonian over some time.
+
+### § 3.5 The Qubit: Orbits Are Spheres
+
+For a single qubit, $d=2$ and the picture is concrete. Use the Pauli matrices
+
+$$
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+\sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+\tag{3.9}
+$$
+
+Together with $I$ they form a basis of the $2\times2$ Hermitian matrices, and fixing the trace to $1$ fixes the coefficient of $I$ to $\tfrac12$. So every qubit density operator can be written as
+
+$$
+\rho=\tfrac12\big(I+\vec r\cdot\vec\sigma\big),\qquad \vec r\in\mathbb R^3 .
+\tag{3.10}
+$$
+
+Since $(\vec r\cdot\vec\sigma)^2=\lvert\vec r\rvert^2 I$, the eigenvalues of $\vec r\cdot\vec\sigma$ are $\pm\lvert\vec r\rvert$, and the eigenvalues of $\rho$ are
+
+$$
+\lambda_\pm=\frac{1\pm\lvert\vec r\rvert}{2} .
+\tag{3.11}
+$$
+
+Positivity of $\rho$ is exactly $\lvert\vec r\rvert\le1$. This gives the **Bloch ball**: pure states have $\lvert\vec r\rvert=1$ and sit on the surface, mixed states are inside, and the maximally mixed state $I/2$ is the center. Also $\operatorname{tr}\rho^2=\tfrac12(1+\lvert\vec r\rvert^2)$.
+
+By Eq. (3.11) the spectrum is determined by $\lvert\vec r\rvert$ alone, so the theorem of § 3.4 says that the orbits are the **concentric spheres** $\lvert\vec r\rvert=\text{const}$, and the center is an orbit by itself.
+
+<!-- INTERACTIVE: Bloch ball with a slider for |r| and a trajectory that stays on its sphere for any H. -->
+
+For a fixed Hamiltonian $H=\tfrac{\hbar\omega}{2}\,\hat n\cdot\vec\sigma$, the von Neumann equation becomes a
