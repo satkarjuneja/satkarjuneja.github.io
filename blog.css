@@ -233,3 +233,10 @@ details.derivation[open] summary {
     margin-bottom: 8px;
     border-bottom: 1px dashed lightgray;
 }
+
+.footnotes {
+    margin-top: 3em;
+    padding-top: 10px;
+    border-top: 1px dashed lightgray;
+    font-size: 0.8em;
+}

@@ -4,30 +4,42 @@ title: "Draft: Symmetry in a Quantum System"
 date: 2026-11-14
 ---
 
+## § 1. Introduction and Motivation
 
-## &sect; 1. Introduction and Motivation
-
-When quantum mechanics was first established, it shook the worldview of many physicists. Our classical model of the world had no room for non-deterministic models.
- Even Einstein is quoted as saying:
+When quantum mechanics was first established, it shook the worldview of many physicists. Our classical picture of the world had no room for non-deterministic models, and many questioned the correctness of the theory itself.
+Even Einstein is quoted as saying:
 
 <blockquote class="quote">
   <p>God does not play dice with the universe.</p>
   <footer>— Albert Einstein</footer>
 </blockquote>
 
+We now know that quantum mechanics correctly explains most of the phenomena observed in experiments, and it has become one of the most successful theories ever created.
+
 In such a non-deterministic model of the universe, can symmetry, or the ideas of group theory, introduce some determinism?
 
-We will answer that question in this blog.
+We will answer that question in this piece.
 
-## &sect; 2 From Schrödinger to Von Neumann
+## § 2. From Schrödinger to Von Neumann
 
-### &sect; 2.1 What is a density operator?
-The Schrödinger equation gives a complete description of an isolated quantum system, under the following assumptions:
+To see the simplicity of nature, we shall now move away from the complicated differential equations and language of the Schrödinger equation, and move to a cleaner model.
+<br>
+<br>
+This requires a bit of setup, but I promise it will be worth it :)
+
+### § 2.1 What is a density operator?
+
+The Schrödinger equation gives a complete description of an isolated quantum system, under four standard assumptions (collapsed below).
+
+<details class="derivation" markdown="1">
+<summary>Show assumptions</summary>
 
 1. The state of the system is described by a unit vector $\lvert\psi\rangle$ in a Hilbert space.
 2. Every observable is represented by a Hermitian operator $A$, and its expectation value in the state $\lvert\psi\rangle$ is $\langle\psi\rvert A\lvert\psi\rangle$.
 3. The system is isolated, so its time evolution is linear and unitary.
 4. We know the state of the system exactly (a *pure state*).
+
+</details>
 
 Under these assumptions, the state evolves according to
 
@@ -38,16 +50,21 @@ $$
 
 where $H$ is the Hamiltonian of the system.
 
- Assumption 4 is the one we now relax. To do so, we introduce a new way of describing a quantum system, in terms of the **density operator** $\rho$.
+Assumption 4 is the one we now relax. To do so, we introduce a new way of describing a quantum system, in terms of the **density operator** $\rho$.
 
-To motivate the idea, imagine a machine that prepares quantum systems in certain states. For instance, it could be an oven producing spin-1/2 particles, or a quantum-optics setup producing photons. Suppose the apparatus is imperfect, so it does not always produce the same state. That is, it produces the state $\lvert\psi_1\rangle$ with probability $p_1$, the state $\lvert\psi_2\rangle$ with probability $p_2$, and so on. Here we are introducing a *classical* uncertainty: each $\lvert\psi_i\rangle$ is a quantum state, but we simply do not know which one comes out of the machine. We may have as many $p_i$ as we like, provided they satisfy the usual properties of a probability distribution:
+To motivate the idea, imagine a machine that prepares quantum systems in certain states. <br>
+It could be an oven shooting out spin-1/2 particles, or a quantum-optics setup producing photons. <br>
+
+Now suppose the apparatus is imperfect, so it does not always produce the same state. That is, it produces the state $\lvert\psi_1\rangle$ with probability $p_1$, the state $\lvert\psi_2\rangle$ with probability $p_2$, and so on. Here we are introducing a *classical* uncertainty: each $\lvert\psi_i\rangle$ is a quantum state, but we simply do not know which one comes out of the machine. We may have as many $p_i$ as we like, provided they satisfy the usual properties of a probability distribution:
 
 $$
 p_i \in [0,1], \qquad \sum_i p_i = 1 .
 \tag{2.2}
 $$
 
-Now let $A$ be an observable. If the state is $\lvert\psi_1\rangle$, the expectation value of $A$ is $\langle\psi_1\rvert A\lvert\psi_1\rangle$. If it is $\lvert\psi_2\rangle$, it is $\langle\psi_2\rvert A\lvert\psi_2\rangle$. The actual expectation value must therefore be an average of quantum averages:
+Now let $A$ be an observable. If the state is $\lvert\psi_1\rangle$, the expectation value of $A$ is $\langle\psi_1\rvert A\lvert\psi_1\rangle$. If it is $\lvert\psi_2\rangle$, it is $\langle\psi_2\rvert A\lvert\psi_2\rangle$ (I sure hope you paid attention in Linear Algebra![^linear]).
+<br>
+The actual expectation value must therefore be an average of quantum averages:
 
 $$
 \langle A\rangle = \sum_i p_i \,\langle\psi_i\rvert A\lvert\psi_i\rangle .
@@ -84,8 +101,9 @@ $$
 
 </div>
 
-so that the expectation value of any observable takes the compact form $$\langle A\rangle = \operatorname{tr}(A\rho)$$.
+With this definition, the expectation value of any observable takes the compact form $\langle A\rangle = \operatorname{tr}(A\rho)$.
 
+[^linear]: Don't worry you can skip the derivations if you didn't.
 ### § 2.1 Deriving the Von Neumann Equation
 
 Differentiating the density operator in time and using the Schrödinger equation gives a closed equation for $\rho$. The full derivation is collapsed below.
