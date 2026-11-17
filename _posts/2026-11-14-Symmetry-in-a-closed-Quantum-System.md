@@ -55,7 +55,7 @@ Assumption 4 is the one we now relax. To do so, we introduce a new way of descri
 To motivate the idea, imagine a machine that prepares quantum systems in certain states. <br>
 It could be an oven shooting out spin-1/2 particles, or a quantum-optics setup producing photons. <br>
 
-Now suppose the apparatus is imperfect, so it does not always produce the same state. That is, it produces the state $\lvert\psi_1\rangle$ with probability $p_1$, the state $\lvert\psi_2\rangle$ with probability $p_2$, and so on. Here we are introducing a *classical* uncertainty: each $\lvert\psi_i\rangle$ is a quantum state, but we simply do not know which one comes out of the machine. We may have as many $p_i$ as we like, provided they satisfy the usual properties of a probability distribution:
+Now suppose the apparatus is imperfect (might be the toaster which always burns your bread), so it does not always produce the same state. That is, it produces the state $\lvert\psi_1\rangle$ with probability $p_1$, the state $\lvert\psi_2\rangle$ with probability $p_2$, and so on. Here we are introducing a *classical* uncertainty: each $\lvert\psi_i\rangle$ is a quantum state, but we simply do not know which one comes out of the machine. We may have as many $p_i$ as we like, provided they satisfy the usual properties of a probability distribution:
 
 $$
 p_i \in [0,1], \qquad \sum_i p_i = 1 .
@@ -105,7 +105,8 @@ With this definition, the expectation value of any observable takes the compact 
 
 [^linear]: Don't worry you can skip the derivations if you didn't.
 ### § 2.1 Deriving the Von Neumann Equation
-
+After all this setup we can now move on to the actual equation we are after ;)
+<br><br>
 Differentiating the density operator in time and using the Schrödinger equation gives a closed equation for $\rho$. The full derivation is collapsed below.
 
 <details class="derivation" markdown="1">
@@ -127,7 +128,7 @@ i\hbar \frac{d\rho}{dt}
 \tag{2.8}
 $$
 
-Since $$H$$ is the same for every member of the ensemble, it factors out of the sum, and the sum is just $$\rho$$ again.
+Since $H$ is the same for every member of the ensemble, it factors out of the sum, and the sum is just $\rho$ again.
 
 </details>
 
@@ -138,7 +139,7 @@ i\hbar \frac{d\rho}{dt} = H\rho - \rho H = [H,\rho] .
 \tag{2.9}
 $$
 
-It is the Schrödinger equation rewritten for the density operator, and it holds whether or not the state is pure.
+It is the Schrödinger equation rewritten for the density operator, and it holds whether or not the state is pure!!
 
 ### § 2.3 Properties of the Density Operator
 
@@ -184,6 +185,8 @@ with equality only when a single eigenvalue equals $1$ and the rest vanish.
 
 ### § 2.4 The Evolution Operator
 
+Now, the systems we observe are seldom independent of time (That would be a interesting world), to capture the effect of time we define a Evolution Operator.
+
 For a time-independent Hamiltonian $H$, the Schrödinger equation (2.1) is solved by
 
 $$
@@ -201,7 +204,24 @@ $$
 \tag{2.14}
 $$
 
-which is the solution of the Von Neumann equation (2.9) for a time-independent $$H$$. It says that the whole evolution is a unitary conjugation of the initial state.
+which is the solution of the Von Neumann equation (2.9) for a time-independent $H$. It says that the whole evolution is a unitary conjugation of the initial state.
+
+### § 2.5 The Bloch Sphere
+
+Any $2\times 2$ Hermitian operator can be expanded in the identity and the Pauli matrices. Using Hermiticity and unit trace from § 2.3, a qubit density operator must have the form
+
+$$
+\rho = \frac{1}{2}\big(I + \vec n\cdot\vec\sigma\big),
+\qquad \vec n = (n_x, n_y, n_z)\in\mathbb R^3 ,
+\tag{2.15}
+$$
+
+and positivity ($\rho\ge 0$) is equivalent to $\lvert\vec n\rvert\le 1$. So every qubit state is a point in the unit ball: pure states ($\lvert\vec n\rvert=1$) sit on the surface, and mixed states sit inside it. Drag the arrow below, or use the sliders.
+
+{% include bloch.html %}
+
+The expectation values are $\langle\sigma_i\rangle=\operatorname{tr}(\rho\sigma_i)=n_i$, so the components of $\vec n$ are exactly the measurable spin expectations.
+
 
 ## § 3 Symmetry in the Von Neumann Equation
 
