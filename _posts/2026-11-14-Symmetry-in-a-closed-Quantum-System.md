@@ -52,7 +52,7 @@ where $H$ is the Hamiltonian of the system.
 
 Assumption 4 is the one we now relax. To do so, we introduce a new way of describing a quantum system, in terms of the **density operator** $\rho$.
 
-To motivate the idea, imagine a machine that prepares quantum systems in certain states. <br>
+To understand why we would need to describe a system like this, imagine a machine that prepares quantum systems in certain states. <br>
 It could be an oven shooting out spin-1/2 particles, or a quantum-optics setup producing photons. <br>
 
 Now suppose the apparatus is imperfect (might be the toaster which always burns your bread), so it does not always produce the same state. That is, it produces the state $\lvert\psi_1\rangle$ with probability $p_1$, the state $\lvert\psi_2\rangle$ with probability $p_2$, and so on. Here we are introducing a *classical* uncertainty: each $\lvert\psi_i\rangle$ is a quantum state, but we simply do not know which one comes out of the machine. We may have as many $p_i$ as we like, provided they satisfy the usual properties of a probability distribution:
@@ -102,6 +102,11 @@ $$
 </div>
 
 With this definition, the expectation value of any observable takes the compact form $\langle A\rangle = \operatorname{tr}(A\rho)$.
+
+I would like to emphasize what is being done here. We have introduced a classical uncertainity in a quantum system! even electrons and photons can't save themselves from noisy environments.
+
+<!-- make this a foot note -->
+Note: Usually, when we talk about uncertainty in the quantum world, we are talking about Heisenberg’s Uncertainty Principle, built-in fuzziness of nature where a particle simply doesn't have a definite position and momentum at the same time. The uncertainty discussed here you could say is only introduced by human error!
 
 [^linear]: Don't worry you can skip the derivations if you didn't.
 ### § 2.1 Deriving the Von Neumann Equation
@@ -183,9 +188,11 @@ Equality requires $\lambda_k^2=\lambda_k$ for every $k$, so each $\lambda_k$ is 
 
 with equality only when a single eigenvalue equals $1$ and the rest vanish.
 
+Now, this is all well and done but now we introduce something which can actually capture the real world.
+
 ### § 2.4 The Evolution Operator
 
-Now, the systems we observe are seldom independent of time (That would be a interesting world), to capture the effect of time we define a Evolution Operator.
+The systems we observe are seldom independent of time (That would be a interesting world), to capture the effect of time we define a Evolution Operator.
 
 For a time-independent Hamiltonian $H$, the Schrödinger equation (2.1) is solved by
 
@@ -208,6 +215,13 @@ which is the solution of the Von Neumann equation (2.9) for a time-independent $
 
 ### § 2.5 The Bloch Sphere
 
+Since the evolution operator preserves the norm of a state, every unitary evolution can just be seen as a  rotation of a point on a sphere. This sphere is called the **Bloch sphere**, and it lets us see the conjugation in Eq. (2.14) as an arrow turning in 3D space.
+
+Every qubit state corresponds to a point in the unit ball. Pure states sit on the surface, and mixed states sit inside it.(don't worry about the formulas just look as the visualization)
+
+<details class="derivation" markdown="1">
+<summary>Show the math</summary>
+
 Any $2\times 2$ Hermitian operator can be expanded in the identity and the Pauli matrices. Using Hermiticity and unit trace from § 2.3, a qubit density operator must have the form
 
 $$
@@ -216,12 +230,22 @@ $$
 \tag{2.15}
 $$
 
-and positivity ($\rho\ge 0$) is equivalent to $\lvert\vec n\rvert\le 1$. So every qubit state is a point in the unit ball: pure states ($\lvert\vec n\rvert=1$) sit on the surface, and mixed states sit inside it. Drag the arrow below, or use the sliders.
+and positivity ($\rho\ge 0$) is equivalent to $\lvert\vec n\rvert\le 1$. Pure states have $\lvert\vec n\rvert=1$ and mixed states have $\lvert\vec n\rvert<1$.
+
+The components of $$\vec n$$ are the spin expectation values:
+
+$$
+\langle\sigma_i\rangle=\operatorname{tr}(\rho\,\sigma_i)=n_i .
+\tag{2.16}
+$$
+
+</details>
+
+Drag the arrow below, or use the sliders.
 
 {% include bloch.html %}
 
-The expectation values are $\langle\sigma_i\rangle=\operatorname{tr}(\rho\sigma_i)=n_i$, so the components of $\vec n$ are exactly the measurable spin expectations.
-
+Every time you move around the vector without changing the radius that corresponds to some evolution!
 
 ## § 3 Symmetry in the Von Neumann Equation
 
@@ -378,4 +402,92 @@ By Eq. (3.11) the spectrum is determined by $\lvert\vec r\rvert$ alone, so the t
 
 <!-- INTERACTIVE: Bloch ball with a slider for |r| and a trajectory that stays on its sphere for any H. -->
 
-For a fixed Hamiltonian $H=\tfrac{\hbar\omega}{2}\,\hat n\cdot\vec\sigma$, the von Neumann equation becomes a
+For a fixed Hamiltonian $H=\tfrac{\hbar\omega}{2}\,\hat n\cdot\vec\sigma$, the von Neumann equation becomes a rotation:
+
+$$
+\dot{\vec r}=\omega\,\hat n\times\vec r .
+\tag{3.12}
+$$
+
+<details class="derivation" markdown="1">
+<summary>Show derivation</summary>
+
+From $\sigma_i\sigma_j=\delta_{ij}I+i\epsilon_{ijk}\sigma_k$ we get $(\vec a\cdot\vec\sigma)(\vec b\cdot\vec\sigma)=\vec a\cdot\vec b\,I+i(\vec a\times\vec b)\cdot\vec\sigma$, so
+
+$$
+[\vec a\cdot\vec\sigma,\ \vec b\cdot\vec\sigma]=2i\,(\vec a\times\vec b)\cdot\vec\sigma .
+\tag{3.13}
+$$
+
+Then
+
+$$
+\dot\rho=-\frac{i}{\hbar}[H,\rho]
+=-\frac{i}{\hbar}\cdot\frac{\hbar\omega}{4}\,[\hat n\cdot\vec\sigma,\ \vec r\cdot\vec\sigma]
+=\frac{\omega}{2}\,(\hat n\times\vec r)\cdot\vec\sigma ,
+\tag{3.14}
+$$
+
+and comparing with $\dot\rho=\tfrac12\dot{\vec r}\cdot\vec\sigma$ gives Eq. (3.12).
+
+</details>
+
+This is a rotation about $\hat n$ at angular speed $\omega$, so the point travels along a **circle** on its sphere and never leaves it. A different axis $\hat n$ gives a different circle, and by varying $\hat n$ we reach every point of the sphere, as the theorem says.
+
+<!-- VIDEO: a point sweeping out the full sphere as the axis n changes. -->
+
+### § 3.6 Orbit–Stabilizer
+
+The **stabilizer** of a state is the set of group elements that leave it fixed:
+
+$$
+\operatorname{Stab}(\rho)=\{U:\ U\rho U^\dagger=\rho\}=\{U:\ [U,\rho]=0\} .
+\tag{3.15}
+$$
+
+It is a subgroup of $G$. This connects directly to the stationary states of § 3.1: $\rho$ is stationary under $H$ exactly when $[H,\rho]=0$, which holds exactly when the whole path $\{U_t\}$ lies in $\operatorname{Stab}(\rho)$.
+
+<div class="definition" markdown="1">
+**Orbit–stabilizer theorem.** If a group $G$ acts on $X$, then the map $g\operatorname{Stab}(x)\mapsto g\cdot x$ is a bijection between the cosets $G/\operatorname{Stab}(x)$ and the orbit $G\cdot x$. For a finite group this reads $\lvert G\cdot x\rvert=\lvert G\rvert/\lvert\operatorname{Stab}(x)\rvert$.
+</div>
+
+<details class="derivation" markdown="1">
+<summary>Show derivation</summary>
+
+We have $g\cdot x=h\cdot x$ if and only if $h^{-1}g\cdot x=x$, which holds if and only if $h^{-1}g\in\operatorname{Stab}(x)$, which holds if and only if $g\operatorname{Stab}(x)=h\operatorname{Stab}(x)$. So the map is well defined and injective, and it is surjective by definition of the orbit.
+
+</details>
+
+Now apply it to the qubit. Conjugation by $U\in SU(2)$ rotates the vector $\vec r$ by some $R\in SO(3)$, and this is the map $SU(2)\to SO(3)$ (two-to-one, since $U$ and $-U$ give the same rotation). We therefore read the action as $SO(3)$ rotating the ball:
+
+- **The center, $\vec r=0$.** $\rho=I/2$ commutes with every $U$, so the stabilizer is the whole group and the orbit $G/G$ is a single point.
+- **Any other state, $0<\lvert\vec r\rvert\le1$.** A rotation fixes $\vec r$ if and only if it is a rotation about the axis $\hat r$, so the stabilizer is $SO(2)$ and the orbit is
+$$
+SO(3)/SO(2)\;\cong\;S^2 ,
+\tag{3.16}
+$$
+the sphere. As a check on dimensions, $3-1=2$.
+
+The stationary states of the fixed Hamiltonian above are exactly those with $\hat n\times\vec r=0$, which are the points on the rotation axis. These are precisely the states whose stabilizer contains the rotations about $\hat n$.
+
+### § 3.7 Symmetries of the Hamiltonian
+
+So far the group $U(d)$ acted on states from outside. The symmetries of the system itself form a smaller group. Suppose a unitary $V$ commutes with $H$. If $\rho(t)$ solves Eq. (2.9), then $\sigma(t)=V\rho(t)V^\dagger$ solves it too:
+
+$$
+\dot\sigma=-\frac{i}{\hbar}V[H,\rho]V^\dagger=-\frac{i}{\hbar}[VHV^\dagger,\sigma]=-\frac{i}{\hbar}[H,\sigma] .
+\tag{3.17}
+$$
+
+So a symmetry sends solutions to solutions: transforming first and evolving second gives the same answer as evolving first and transforming second. The set of all such $V$ is a group, the **symmetry group of $H$**. Its infinitesimal generators are Hermitian operators commuting with $H$, and by Eq. (3.3) these are exactly the conserved quantities.
+
+## § 4 Conclusion
+
+We started by asking whether symmetry can bring some determinism into a quantum world. Both the Schrödinger and the von Neumann equations are already deterministic. What the group structure adds is a precise statement of what the dynamics can never change. The evolution is a group action, the group acts on the set of states with orbits labelled by spectrum, and each orbit is exactly the set of states with the same eigenvalues: all of the same purity, the same entropy, the same "amount of ignorance". For a qubit this is the picture of nested spheres inside the Bloch ball. Symmetries of $H$ add conserved quantities on top.
+
+This also marks the limit of the picture. Unitary evolution never leaves its orbit. A noisy evolution can: dephasing, for example, shrinks a pure state on the equator of the Bloch ball toward the center, changing its spectrum. Describing such evolution takes a larger framework, the Lindblad equation. In that setting the group of evolutions loses its inverses, and one is left with a semigroup.
+
+## References
+
+1. M. A. Nielsen and I. L. Chuang, *Quantum Computation and Quantum Information*, Cambridge University Press (chapter 2, density operators and the Bloch sphere).
+2. M. A. Armstrong, *Groups and Symmetry*, Springer (group actions, orbits and stabilizers).
