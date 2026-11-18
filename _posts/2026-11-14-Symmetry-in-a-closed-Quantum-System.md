@@ -215,28 +215,45 @@ which is the solution of the Von Neumann equation (2.9) for a time-independent $
 
 ### § 2.5 The Bloch Sphere
 
-Since the evolution operator preserves the norm of a state, every unitary evolution can just be seen as a  rotation of a point on a sphere. This sphere is called the **Bloch sphere**, and it lets us see the conjugation in Eq. (2.14) as an arrow turning in 3D space.
+Since the evolution operator preserves the norm of a state, the evolution of a single qubit can be seen as a rotation of a point on a sphere. This sphere is called the **Bloch sphere**, and it lets us see the conjugation in Eq. (2.14) as an arrow turning in 3D space.
 
-Every qubit state corresponds to a point in the unit ball. Pure states sit on the surface, and mixed states sit inside it.(don't worry about the formulas just look as the visualization)
+Every qubit state corresponds to a point in the unit ball. Pure states sit on the surface, and mixed states sit inside it.
+(don't worry about the formulas just look as the visualization)
 
 <details class="derivation" markdown="1">
 <summary>Show the math</summary>
 
-Any $2\times 2$ Hermitian operator can be expanded in the identity and the Pauli matrices. Using Hermiticity and unit trace from § 2.3, a qubit density operator must have the form
+The Pauli matrices are
 
 $$
-\rho = \frac{1}{2}\big(I + \vec n\cdot\vec\sigma\big),
-\qquad \vec n = (n_x, n_y, n_z)\in\mathbb R^3 ,
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+\sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
 \tag{2.15}
 $$
 
-and positivity ($\rho\ge 0$) is equivalent to $\lvert\vec n\rvert\le 1$. Pure states have $\lvert\vec n\rvert=1$ and mixed states have $\lvert\vec n\rvert<1$.
+Together with $I$ they form a basis of the $2\times 2$ Hermitian matrices, and fixing the trace to $1$ fixes the coefficient of $I$ to $\tfrac12$. Using Hermiticity and unit trace from § 2.3, every qubit density operator can therefore be written as
 
-The components of $$\vec n$$ are the spin expectation values:
+$$
+\rho = \frac{1}{2}\big(I + \vec n\cdot\vec\sigma\big),
+\qquad \vec n = (n_x, n_y, n_z)\in\mathbb R^3 .
+\tag{2.16}
+$$
+
+Since $$(\vec n\cdot\vec\sigma)^2=\lvert\vec n\rvert^2 I$$, the eigenvalues of $$\vec n\cdot\vec\sigma$$ are $$\pm\lvert\vec n\rvert$$, and the eigenvalues of $$\rho$$ are
+
+$$
+\lambda_\pm=\frac{1\pm\lvert\vec n\rvert}{2} .
+\tag{2.17}
+$$
+
+Positivity of $\rho$ is therefore exactly $\lvert\vec n\rvert\le 1$. Pure states have $\lvert\vec n\rvert=1$, mixed states have $\lvert\vec n\rvert<1$, and the maximally mixed state $I/2$ sits at the center. The purity is $$\operatorname{tr}\rho^2=\tfrac12\big(1+\lvert\vec n\rvert^2\big)$$.
+
+Finally, the components of $$\vec n$$ are the spin expectation values:
 
 $$
 \langle\sigma_i\rangle=\operatorname{tr}(\rho\,\sigma_i)=n_i .
-\tag{2.16}
+\tag{2.18}
 $$
 
 </details>
@@ -245,7 +262,39 @@ Drag the arrow below, or use the sliders.
 
 {% include bloch.html %}
 
-Every time you move around the vector without changing the radius that corresponds to some evolution!
+The components $$n_x, n_y, n_z$$ shown above are exactly the measurable spin expectations $$\langle\sigma_x\rangle, \langle\sigma_y\rangle, \langle\sigma_z\rangle$$.
+
+Now let us see what the Von Neumann equation does to this arrow. For a Hamiltonian $H=\tfrac{\hbar\omega}{2}\,\hat m\cdot\vec\sigma$, where $\hat m$ is a unit vector, Eq. (2.9) becomes a rotation:
+
+$$
+\dot{\vec n}=\omega\,\hat m\times\vec n .
+\tag{2.19}
+$$
+
+<details class="derivation" markdown="1">
+<summary>Show derivation</summary>
+
+From $$\sigma_i\sigma_j=\delta_{ij}I+i\epsilon_{ijk}\sigma_k$$ we get $$(\vec a\cdot\vec\sigma)(\vec b\cdot\vec\sigma)=\vec a\cdot\vec b\,I+i(\vec a\times\vec b)\cdot\vec\sigma$$, so
+
+$$
+[\vec a\cdot\vec\sigma,\ \vec b\cdot\vec\sigma]=2i\,(\vec a\times\vec b)\cdot\vec\sigma .
+\tag{2.20}
+$$
+
+The identity part of $\rho$ commutes with everything, so only $\vec n\cdot\vec\sigma$ contributes:
+
+$$
+\dot\rho=-\frac{i}{\hbar}[H,\rho]
+=-\frac{i}{\hbar}\cdot\frac{\hbar\omega}{4}\,[\hat m\cdot\vec\sigma,\ \vec n\cdot\vec\sigma]
+=\frac{\omega}{2}\,(\hat m\times\vec n)\cdot\vec\sigma ,
+\tag{2.21}
+$$
+
+and comparing with $$\dot\rho=\tfrac12\dot{\vec n}\cdot\vec\sigma$$ gives Eq. (2.19).
+
+</details>
+
+This is a rotation about $\hat m$ at angular speed $\omega$, so the arrow travels along a circle and its length $\lvert\vec n\rvert$ never changes. This matches Eq. (2.17), since the eigenvalues of $\rho$, and with them the purity, are conserved by unitary evolution. In the visualization, moving the arrow around while keeping $r$ fixed therefore corresponds to a possible evolution of the state, while changing $r$ would need something that is not unitary.
 
 ## § 3 Symmetry in the Von Neumann Equation
 
@@ -371,72 +420,8 @@ So the orbits are labelled exactly by spectra: the set of density operators spli
 
 One subtlety is worth stating clearly. A *single* Hamiltonian only traces out a curve inside an orbit. The whole orbit is what all Hamiltonians together can reach. By the spectral theorem every unitary can be written as $U=e^{-iK}$ for some Hermitian $K$, so every element of $U(d)$ is the evolution of some Hamiltonian over some time.
 
-### § 3.5 The Qubit: Orbits Are Spheres
 
-For a single qubit, $d=2$ and the picture is concrete. Use the Pauli matrices
-
-$$
-\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
-\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
-\sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
-\tag{3.9}
-$$
-
-Together with $I$ they form a basis of the $2\times2$ Hermitian matrices, and fixing the trace to $1$ fixes the coefficient of $I$ to $\tfrac12$. So every qubit density operator can be written as
-
-$$
-\rho=\tfrac12\big(I+\vec r\cdot\vec\sigma\big),\qquad \vec r\in\mathbb R^3 .
-\tag{3.10}
-$$
-
-Since $(\vec r\cdot\vec\sigma)^2=\lvert\vec r\rvert^2 I$, the eigenvalues of $\vec r\cdot\vec\sigma$ are $\pm\lvert\vec r\rvert$, and the eigenvalues of $\rho$ are
-
-$$
-\lambda_\pm=\frac{1\pm\lvert\vec r\rvert}{2} .
-\tag{3.11}
-$$
-
-Positivity of $\rho$ is exactly $\lvert\vec r\rvert\le1$. This gives the **Bloch ball**: pure states have $\lvert\vec r\rvert=1$ and sit on the surface, mixed states are inside, and the maximally mixed state $I/2$ is the center. Also $\operatorname{tr}\rho^2=\tfrac12(1+\lvert\vec r\rvert^2)$.
-
-By Eq. (3.11) the spectrum is determined by $\lvert\vec r\rvert$ alone, so the theorem of § 3.4 says that the orbits are the **concentric spheres** $\lvert\vec r\rvert=\text{const}$, and the center is an orbit by itself.
-
-<!-- INTERACTIVE: Bloch ball with a slider for |r| and a trajectory that stays on its sphere for any H. -->
-
-For a fixed Hamiltonian $H=\tfrac{\hbar\omega}{2}\,\hat n\cdot\vec\sigma$, the von Neumann equation becomes a rotation:
-
-$$
-\dot{\vec r}=\omega\,\hat n\times\vec r .
-\tag{3.12}
-$$
-
-<details class="derivation" markdown="1">
-<summary>Show derivation</summary>
-
-From $\sigma_i\sigma_j=\delta_{ij}I+i\epsilon_{ijk}\sigma_k$ we get $(\vec a\cdot\vec\sigma)(\vec b\cdot\vec\sigma)=\vec a\cdot\vec b\,I+i(\vec a\times\vec b)\cdot\vec\sigma$, so
-
-$$
-[\vec a\cdot\vec\sigma,\ \vec b\cdot\vec\sigma]=2i\,(\vec a\times\vec b)\cdot\vec\sigma .
-\tag{3.13}
-$$
-
-Then
-
-$$
-\dot\rho=-\frac{i}{\hbar}[H,\rho]
-=-\frac{i}{\hbar}\cdot\frac{\hbar\omega}{4}\,[\hat n\cdot\vec\sigma,\ \vec r\cdot\vec\sigma]
-=\frac{\omega}{2}\,(\hat n\times\vec r)\cdot\vec\sigma ,
-\tag{3.14}
-$$
-
-and comparing with $\dot\rho=\tfrac12\dot{\vec r}\cdot\vec\sigma$ gives Eq. (3.12).
-
-</details>
-
-This is a rotation about $\hat n$ at angular speed $\omega$, so the point travels along a **circle** on its sphere and never leaves it. A different axis $\hat n$ gives a different circle, and by varying $\hat n$ we reach every point of the sphere, as the theorem says.
-
-<!-- VIDEO: a point sweeping out the full sphere as the axis n changes. -->
-
-### § 3.6 Orbit–Stabilizer
+### § 3.5 Orbit–Stabilizer
 
 The **stabilizer** of a state is the set of group elements that leave it fixed:
 
@@ -470,7 +455,7 @@ the sphere. As a check on dimensions, $3-1=2$.
 
 The stationary states of the fixed Hamiltonian above are exactly those with $\hat n\times\vec r=0$, which are the points on the rotation axis. These are precisely the states whose stabilizer contains the rotations about $\hat n$.
 
-### § 3.7 Symmetries of the Hamiltonian
+### § 3.6 Symmetries of the Hamiltonian
 
 So far the group $U(d)$ acted on states from outside. The symmetries of the system itself form a smaller group. Suppose a unitary $V$ commutes with $H$. If $\rho(t)$ solves Eq. (2.9), then $\sigma(t)=V\rho(t)V^\dagger$ solves it too:
 
