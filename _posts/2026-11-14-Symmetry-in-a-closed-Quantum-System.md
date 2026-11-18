@@ -50,9 +50,11 @@ $$
 
 where $H$ is the Hamiltonian of the system.
 
-Assumption 4 is the one we now relax. To do so, we introduce a new way of describing a quantum system, in terms of the **density operator** $\rho$.
+Let's relax assumption 4 and introduce a new way of describing a quantum system, in terms of the **density operator** $\rho$.
 
-To understand why we would need to describe a system like this, imagine a machine that prepares quantum systems in certain states. <br>
+Why we would need to describe a system like this ?
+<br>
+ imagine a machine that prepares quantum systems in certain states. <br>
 It could be an oven shooting out spin-1/2 particles, or a quantum-optics setup producing photons. <br>
 
 Now suppose the apparatus is imperfect (might be the toaster which always burns your bread), so it does not always produce the same state. That is, it produces the state $\lvert\psi_1\rangle$ with probability $p_1$, the state $\lvert\psi_2\rangle$ with probability $p_2$, and so on. Here we are introducing a *classical* uncertainty: each $\lvert\psi_i\rangle$ is a quantum state, but we simply do not know which one comes out of the machine. We may have as many $p_i$ as we like, provided they satisfy the usual properties of a probability distribution:
@@ -103,10 +105,10 @@ $$
 
 With this definition, the expectation value of any observable takes the compact form $\langle A\rangle = \operatorname{tr}(A\rho)$.
 
-I would like to emphasize what is being done here. We have introduced a classical uncertainity in a quantum system! even electrons and photons can't save themselves from noisy environments.
+I would like to emphasize what is being done here. We have introduced a classical uncertainity in a quantum system! even electrons and photons can't save themselves from noisy environments.[^classical]
 
-<!-- make this a foot note -->
-Note: Usually, when we talk about uncertainty in the quantum world, we are talking about Heisenberg’s Uncertainty Principle, built-in fuzziness of nature where a particle simply doesn't have a definite position and momentum at the same time. The uncertainty discussed here you could say is only introduced by human error!
+[^classical]: Usually, when we talk about uncertainty in the quantum world, we are talking about Heisenberg’s Uncertainty Principle, built-in fuzziness of nature where a particle simply doesn't have a definite position and momentum at the same time. The uncertainty discussed here is purely classical
+
 
 [^linear]: Don't worry you can skip the derivations if you didn't.
 ### § 2.1 Deriving the Von Neumann Equation
@@ -202,7 +204,7 @@ $$
 \tag{2.13}
 $$
 
-where $U(t)$ is the **evolution operator**. It is unitary, $U^\dagger U = UU^\dagger = I$, because $H$ is Hermitian. This is what guarantees that the norm of a state is preserved in time.
+where $U(t)$ is the **evolution operator**. It is unitary, $U^\dagger U = UU^\dagger = I$, This guarantees that the norm of a state is preserved in time. (Implications of this is huge, which we will realise later)
 
 Applying Eq. (2.13) to every member of the ensemble in Eq. (2.6), the density operator evolves as
 
