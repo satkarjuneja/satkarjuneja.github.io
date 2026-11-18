@@ -240,3 +240,9 @@ details.derivation[open] summary {
     border-top: 1px dashed lightgray;
     font-size: 0.8em;
 }
+.aside {
+    color: #888;
+    font-style: italic;
+    text-align: center;
+    margin: 0.8em 0;
+}
