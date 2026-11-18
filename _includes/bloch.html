@@ -1,111 +1,206 @@
 <div id="bl-wrap">
-<canvas id="bl-canvas" width="300" height="300"></canvas>
-<div id="bl-panel">
-<div class="bl-row"><label>θ <span id="bl-th-v"></span></label><input type="range" id="bl-th" min="0" max="180" step="1"></div>
-<div class="bl-row"><label>φ <span id="bl-ph-v"></span></label><input type="range" id="bl-ph" min="-180" max="180" step="1"></div>
-<div class="bl-row"><label>r <span id="bl-r-v"></span></label><input type="range" id="bl-r" min="0" max="1" step="0.01"></div>
-<div class="bl-out" id="bl-comp"></div>
-<div class="bl-out" id="bl-rho"></div>
-</div>
+  <canvas id="bl-canvas" width="300" height="300"></canvas>
+  <div id="bl-panel">
+    <div class="bl-row"><label>θ <span id="bl-th-v"></span></label><input type="range" id="bl-th" min="0" max="180"
+        step="1"></div>
+    <div class="bl-row"><label>φ <span id="bl-ph-v"></span></label><input type="range" id="bl-ph" min="-180" max="180"
+        step="1"></div>
+    <div class="bl-row"><label>r <span id="bl-r-v"></span></label><input type="range" id="bl-r" min="0" max="1"
+        step="0.01"></div>
+    <div class="bl-out" id="bl-comp"></div>
+    <div id="bl-rho"><span class="bl-half">ρ = ½</span>
+      <div class="bl-mat"><span id="m00"></span><span id="m01"></span><span id="m10"></span><span id="m11"></span></div>
+    </div>
+  </div>
 </div>
 <style>
-#bl-wrap { display:flex; flex-wrap:wrap; gap:20px; align-items:center; justify-content:center; margin:1.5em 0; padding:14px; background:rgba(59,62,58,0.6); border-left:4px solid rgb(10,185,42); border-radius:0 10px 10px 0; }
-#bl-canvas { touch-action:none; cursor:grab; max-width:100%; }
-#bl-panel { min-width:230px; font-size:18px; }
-.bl-row { margin-bottom:8px; }
-.bl-row label { display:block; color:rgb(176,230,13); }
-.bl-row input { width:100%; accent-color:rgb(10,185,42); }
-.bl-out { margin-top:10px; font-size:16px; line-height:1.5; white-space:pre; }
+  #bl-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    margin: 1.5em 0;
+    padding: 14px;
+    background: rgba(59, 62, 58, 0.6);
+    border-left: 4px solid rgb(10, 185, 42);
+    border-radius: 0 10px 10px 0;
+  }
+
+  #bl-canvas {
+    touch-action: none;
+    cursor: grab;
+    max-width: 100%;
+  }
+
+  #bl-panel {
+    width: 300px;
+    max-width: 100%;
+    font-size: 18px;
+  }
+
+  .bl-row {
+    margin-bottom: 8px;
+  }
+
+  .bl-row label {
+    display: block;
+    color: rgb(176, 230, 13);
+  }
+
+  .bl-row input {
+    width: 100%;
+    accent-color: rgb(10, 185, 42);
+  }
+
+  .bl-out {
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    white-space: pre;
+    min-height: 6em;
+  }
+
+  #bl-rho {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    font-size: 16px;
+  }
+
+  .bl-half {
+    white-space: nowrap;
+  }
+
+  .bl-mat {
+    position: relative;
+    display: inline-grid;
+    grid-template-columns: 13ch 13ch;
+    gap: 6px 14px;
+    padding: 4px 16px;
+    font-family: monospace;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .bl-mat span {
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .bl-mat::before,
+  .bl-mat::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 7px;
+    border: 2px solid whitesmoke;
+  }
+
+  .bl-mat::before {
+    left: 0;
+    border-right: none;
+  }
+
+  .bl-mat::after {
+    right: 0;
+    border-left: none;
+  }
 </style>
 <script>
-(function () {
-  var cv = document.getElementById("bl-canvas"), ctx = cv.getContext("2d");
-  var C = 150, R = 110, AZ = -0.6, EL = 0.35;
-  var S = { th: 1.0, ph: 0.8, r: 1.0 };
-  var cA = Math.cos(AZ), sA = Math.sin(AZ), cE = Math.cos(EL), sE = Math.sin(EL);
-  function proj(x, y, z) {
-    var x1 = x * cA - y * sA, y1 = x * sA + y * cA;
-    return { sx: C + R * x1, sy: C - R * (y1 * sE + z * cE), d: -y1 * cE + z * sE };
-  }
-  function line(a, b, col, w) {
-    var p = proj(a[0], a[1], a[2]), q = proj(b[0], b[1], b[2]);
-    ctx.strokeStyle = col; ctx.lineWidth = w || 1;
-    ctx.beginPath(); ctx.moveTo(p.sx, p.sy); ctx.lineTo(q.sx, q.sy); ctx.stroke();
-  }
-  function circle(fn, col) {
-    ctx.strokeStyle = col; ctx.lineWidth = 1; ctx.beginPath();
-    for (var i = 0; i <= 100; i++) {
-      var t = 2 * Math.PI * i / 100, v = fn(t), p = proj(v[0], v[1], v[2]);
-      if (i === 0) ctx.moveTo(p.sx, p.sy); else ctx.lineTo(p.sx, p.sy);
+  (function () {
+    var cv = document.getElementById("bl-canvas"), ctx = cv.getContext("2d");
+    var C = 150, R = 110, AZ = -0.6, EL = 0.35;
+    var S = { th: 1.0, ph: 0.8, r: 1.0 };
+    var cA = Math.cos(AZ), sA = Math.sin(AZ), cE = Math.cos(EL), sE = Math.sin(EL);
+    function proj(x, y, z) {
+      var x1 = x * cA - y * sA, y1 = x * sA + y * cA;
+      return { sx: C + R * x1, sy: C - R * (y1 * sE + z * cE), d: -y1 * cE + z * sE };
     }
-    ctx.stroke();
-  }
-  function label(txt, v, dx, dy) {
-    var p = proj(v[0], v[1], v[2]);
-    ctx.fillStyle = "whitesmoke"; ctx.font = "14px monospace";
-    ctx.fillText(txt, p.sx + dx, p.sy + dy);
-  }
-  function vec() {
-    return [S.r * Math.sin(S.th) * Math.cos(S.ph), S.r * Math.sin(S.th) * Math.sin(S.ph), S.r * Math.cos(S.th)];
-  }
-  function draw() {
-    ctx.clearRect(0, 0, 300, 300);
-    ctx.strokeStyle = "rgba(255,255,255,0.5)"; ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.arc(C, C, R, 0, 2 * Math.PI); ctx.stroke();
-    circle(function (t) { return [Math.cos(t), Math.sin(t), 0]; }, "rgba(255,255,255,0.3)");
-    circle(function (t) { return [Math.cos(t), 0, Math.sin(t)]; }, "rgba(255,255,255,0.15)");
-    circle(function (t) { return [0, Math.cos(t), Math.sin(t)]; }, "rgba(255,255,255,0.15)");
-    line([-1, 0, 0], [1, 0, 0], "rgba(255,255,255,0.4)");
-    line([0, -1, 0], [0, 1, 0], "rgba(255,255,255,0.4)");
-    line([0, 0, -1], [0, 0, 1], "rgba(255,255,255,0.4)");
-    label("|0⟩", [0, 0, 1], 6, -4); label("|1⟩", [0, 0, -1], 6, 12);
-    label("x", [1, 0, 0], 6, 4); label("y", [0, 1, 0], 6, 4);
-    var v = vec(), p = proj(v[0], v[1], v[2]), o = proj(0, 0, 0);
-    ctx.strokeStyle = "rgb(176,230,13)"; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.moveTo(o.sx, o.sy); ctx.lineTo(p.sx, p.sy); ctx.stroke();
-    var ang = Math.atan2(p.sy - o.sy, p.sx - o.sx), L = 10;
-    ctx.fillStyle = "rgb(176,230,13)"; ctx.beginPath();
-    ctx.moveTo(p.sx, p.sy);
-    ctx.lineTo(p.sx - L * Math.cos(ang - 0.4), p.sy - L * Math.sin(ang - 0.4));
-    ctx.lineTo(p.sx - L * Math.cos(ang + 0.4), p.sy - L * Math.sin(ang + 0.4));
-    ctx.closePath(); ctx.fill();
-  }
-  function f(x) { return (x >= 0 ? "+" : "−") + Math.abs(x).toFixed(3); }
-  function readout() {
-    var v = vec(), deg = 180 / Math.PI;
-    document.getElementById("bl-th").value = S.th * deg;
-    document.getElementById("bl-ph").value = S.ph * deg;
-    document.getElementById("bl-r").value = S.r;
-    document.getElementById("bl-th-v").textContent = "= " + (S.th * deg).toFixed(0) + "°";
-    document.getElementById("bl-ph-v").textContent = "= " + (S.ph * deg).toFixed(0) + "°";
-    document.getElementById("bl-r-v").textContent = "= " + S.r.toFixed(2);
-    document.getElementById("bl-comp").textContent =
-      "nx = " + f(v[0]) + "\nny = " + f(v[1]) + "\nnz = " + f(v[2]) +
-      "\ntr ρ² = " + ((1 + S.r * S.r) / 2).toFixed(3);
-    document.getElementById("bl-rho").textContent =
-      "ρ = ½ [ " + (1 + v[2]).toFixed(3) + "   " + v[0].toFixed(3) + (v[1] >= 0 ? " − " : " + ") + Math.abs(v[1]).toFixed(3) + "i ]\n" +
-      "    [ " + v[0].toFixed(3) + (v[1] >= 0 ? " + " : " − ") + Math.abs(v[1]).toFixed(3) + "i   " + (1 - v[2]).toFixed(3) + " ]";
-    draw();
-  }
-  function pick(e) {
-    var rc = cv.getBoundingClientRect(), k = 300 / rc.width;
-    var sx = ((e.clientX - rc.left) * k - C) / R, su = -((e.clientY - rc.top) * k - C) / R;
-    var m = Math.sqrt(sx * sx + su * su);
-    if (m > 1) { sx /= m; su /= m; m = 1; }
-    var d = Math.sqrt(Math.max(0, 1 - m * m));
-    var z1 = su * cE + d * sE, y1 = su * sE - d * cE;
-    var x = sx * cA + y1 * sA, y = -sx * sA + y1 * cA;
-    S.th = Math.acos(Math.max(-1, Math.min(1, z1)));
-    S.ph = Math.atan2(y, x);
+    function line(a, b, col, w) {
+      var p = proj(a[0], a[1], a[2]), q = proj(b[0], b[1], b[2]);
+      ctx.strokeStyle = col; ctx.lineWidth = w || 1;
+      ctx.beginPath(); ctx.moveTo(p.sx, p.sy); ctx.lineTo(q.sx, q.sy); ctx.stroke();
+    }
+    function circle(fn, col) {
+      ctx.strokeStyle = col; ctx.lineWidth = 1; ctx.beginPath();
+      for (var i = 0; i <= 100; i++) {
+        var t = 2 * Math.PI * i / 100, v = fn(t), p = proj(v[0], v[1], v[2]);
+        if (i === 0) ctx.moveTo(p.sx, p.sy); else ctx.lineTo(p.sx, p.sy);
+      }
+      ctx.stroke();
+    }
+    function label(txt, v, dx, dy) {
+      var p = proj(v[0], v[1], v[2]);
+      ctx.fillStyle = "whitesmoke"; ctx.font = "14px monospace";
+      ctx.fillText(txt, p.sx + dx, p.sy + dy);
+    }
+    function vec() {
+      return [S.r * Math.sin(S.th) * Math.cos(S.ph), S.r * Math.sin(S.th) * Math.sin(S.ph), S.r * Math.cos(S.th)];
+    }
+    function draw() {
+      ctx.clearRect(0, 0, 300, 300);
+      ctx.strokeStyle = "rgba(255,255,255,0.5)"; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(C, C, R, 0, 2 * Math.PI); ctx.stroke();
+      circle(function (t) { return [Math.cos(t), Math.sin(t), 0]; }, "rgba(255,255,255,0.3)");
+      circle(function (t) { return [Math.cos(t), 0, Math.sin(t)]; }, "rgba(255,255,255,0.15)");
+      circle(function (t) { return [0, Math.cos(t), Math.sin(t)]; }, "rgba(255,255,255,0.15)");
+      line([-1, 0, 0], [1, 0, 0], "rgba(255,255,255,0.4)");
+      line([0, -1, 0], [0, 1, 0], "rgba(255,255,255,0.4)");
+      line([0, 0, -1], [0, 0, 1], "rgba(255,255,255,0.4)");
+      label("|0⟩", [0, 0, 1], 6, -4); label("|1⟩", [0, 0, -1], 6, 12);
+      label("x", [1, 0, 0], 6, 4); label("y", [0, 1, 0], 6, 4);
+      var v = vec(), p = proj(v[0], v[1], v[2]), o = proj(0, 0, 0);
+      ctx.strokeStyle = "rgb(176,230,13)"; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(o.sx, o.sy); ctx.lineTo(p.sx, p.sy); ctx.stroke();
+      var ang = Math.atan2(p.sy - o.sy, p.sx - o.sx), L = 10;
+      ctx.fillStyle = "rgb(176,230,13)"; ctx.beginPath();
+      ctx.moveTo(p.sx, p.sy);
+      ctx.lineTo(p.sx - L * Math.cos(ang - 0.4), p.sy - L * Math.sin(ang - 0.4));
+      ctx.lineTo(p.sx - L * Math.cos(ang + 0.4), p.sy - L * Math.sin(ang + 0.4));
+      ctx.closePath(); ctx.fill();
+    }
+    function f(x) { return (x >= 0 ? "+" : "−") + Math.abs(x).toFixed(3); }
+    function sg(x) { x = Math.round(x * 1000) / 1000; return (x >= 0 ? "+" : "−") + Math.abs(x).toFixed(3); }
+    function dg(x) { return Math.max(0, x).toFixed(3); }
+    function readout() {
+      var v = vec(), deg = 180 / Math.PI;
+      document.getElementById("bl-th").value = S.th * deg;
+      document.getElementById("bl-ph").value = S.ph * deg;
+      document.getElementById("bl-r").value = S.r;
+      document.getElementById("bl-th-v").textContent = "= " + (S.th * deg).toFixed(0) + "°";
+      document.getElementById("bl-ph-v").textContent = "= " + (S.ph * deg).toFixed(0) + "°";
+      document.getElementById("bl-r-v").textContent = "= " + S.r.toFixed(2);
+      document.getElementById("bl-comp").textContent =
+        "nx = " + f(v[0]) + "\nny = " + f(v[1]) + "\nnz = " + f(v[2]) +
+        "\ntr ρ² = " + ((1 + S.r * S.r) / 2).toFixed(3);
+      document.getElementById("m00").textContent = dg(1 + v[2]);
+      document.getElementById("m11").textContent = dg(1 - v[2]);
+      document.getElementById("m01").textContent = sg(v[0]) + sg(-v[1]) + "i";
+      document.getElementById("m10").textContent = sg(v[0]) + sg(v[1]) + "i";
+      draw();
+    }
+    function pick(e) {
+      var rc = cv.getBoundingClientRect(), k = 300 / rc.width;
+      var sx = ((e.clientX - rc.left) * k - C) / R, su = -((e.clientY - rc.top) * k - C) / R;
+      var m = Math.sqrt(sx * sx + su * su);
+      if (m > 1) { sx /= m; su /= m; m = 1; }
+      var d = Math.sqrt(Math.max(0, 1 - m * m));
+      var z1 = su * cE + d * sE, y1 = su * sE - d * cE;
+      var x = sx * cA + y1 * sA, y = -sx * sA + y1 * cA;
+      S.th = Math.acos(Math.max(-1, Math.min(1, z1)));
+      S.ph = Math.atan2(y, x);
+      readout();
+    }
+    var down = false;
+    cv.addEventListener("pointerdown", function (e) { down = true; cv.setPointerCapture(e.pointerId); pick(e); });
+    cv.addEventListener("pointermove", function (e) { if (down) pick(e); });
+    cv.addEventListener("pointerup", function () { down = false; });
+    document.getElementById("bl-th").addEventListener("input", function (e) { S.th = e.target.value * Math.PI / 180; readout(); });
+    document.getElementById("bl-ph").addEventListener("input", function (e) { S.ph = e.target.value * Math.PI / 180; readout(); });
+    document.getElementById("bl-r").addEventListener("input", function (e) { S.r = parseFloat(e.target.value); readout(); });
     readout();
-  }
-  var down = false;
-  cv.addEventListener("pointerdown", function (e) { down = true; cv.setPointerCapture(e.pointerId); pick(e); });
-  cv.addEventListener("pointermove", function (e) { if (down) pick(e); });
-  cv.addEventListener("pointerup", function () { down = false; });
-  document.getElementById("bl-th").addEventListener("input", function (e) { S.th = e.target.value * Math.PI / 180; readout(); });
-  document.getElementById("bl-ph").addEventListener("input", function (e) { S.ph = e.target.value * Math.PI / 180; readout(); });
-  document.getElementById("bl-r").addEventListener("input", function (e) { S.r = parseFloat(e.target.value); readout(); });
-  readout();
-})();
+  })();
 </script>
