@@ -22,10 +22,10 @@ We will answer that question in this piece.
 
 ## § 2. From Schrödinger to Von Neumann
 
-To see the simplicity of nature, we shall now move away from the complicated differential equations and language of the Schrödinger equation, and move to a cleaner model.
+To see the simplicity of nature, we shall now move away from language of the Schrödinger equation, and move to a cleaner model.
 <br>
 <br>
-This requires a bit of setup, but I promise it will be worth it :)
+This requires a bit of setup, but I promise it will be worth it ;)
 
 ### § 2.1 What is a density operator?
 
@@ -50,19 +50,16 @@ $$
 
 where $H$ is the Hamiltonian of the system.
 
-Let's relax assumption 4 and introduce a new way of describing a quantum system, in terms of the **density operator** $\rho$.
+Now,let's relax assumption 4 and introduce a new way of describing a quantum system, in terms of 
+<!-- Drum roll write in gray text -->
+**The Density Operator** $\rho$.
 
-Why we would need to describe a system like this ?
+Why would we ever need to describe a system like this ?
 <br>
  imagine a machine that prepares quantum systems in certain states. <br>
 It could be an oven shooting out spin-1/2 particles, or a quantum-optics setup producing photons. <br>
 
-Now suppose the apparatus is imperfect (might be the toaster which always burns your bread), so it does not always produce the same state. That is, it produces the state $\lvert\psi_1\rangle$ with probability $p_1$, the state $\lvert\psi_2\rangle$ with probability $p_2$, and so on. Here we are introducing a *classical* uncertainty: each $\lvert\psi_i\rangle$ is a quantum state, but we simply do not know which one comes out of the machine. We may have as many $p_i$ as we like, provided they satisfy the usual properties of a probability distribution:
-
-$$
-p_i \in [0,1], \qquad \sum_i p_i = 1 .
-\tag{2.2}
-$$
+Now suppose the apparatus is imperfect (might be the toaster which always burns your bread), so it does not always produce the same state. That is, it produces the state $\lvert\psi_1\rangle$ with probability $p_1$, the state $\lvert\psi_2\rangle$ with probability $p_2$, and so on. Here we are introducing a *classical* uncertainty: each $\lvert\psi_i\rangle$ is a quantum state, but we simply do not know which one comes out of the machine! We may have as many $p_i$ as we like, provided they satisfy the usual properties of a probability distribution.
 
 Now let $A$ be an observable. If the state is $\lvert\psi_1\rangle$, the expectation value of $A$ is $\langle\psi_1\rvert A\lvert\psi_1\rangle$. If it is $\lvert\psi_2\rangle$, it is $\langle\psi_2\rvert A\lvert\psi_2\rangle$ (I sure hope you paid attention in Linear Algebra![^linear]).
 <br>
@@ -75,7 +72,7 @@ $$
 
 We simply weight each possible expectation value $\langle\psi_i\rvert A\lvert\psi_i\rangle$ by the probability $p_i$ that it occurs.
 
-It is important to realize that this type of average cannot, in general, be written as $\langle\varphi\rvert A\lvert\varphi\rangle$ for some single ket $\lvert\varphi\rangle$. If we want to attribute a "state" to our system, we must therefore generalize the idea of a ket. To do so, we write
+It is important to realize that this type of average cannot, in general, be written as $\langle\varphi\rvert A\lvert\varphi\rangle$ for some single ket $\lvert\varphi\rangle$ (as can be seen above). If we want to attribute a "state" to our system, we must therefore generalize the idea of a ket. To do so, we write
 
 $$
 \langle\psi_i\rvert A\lvert\psi_i\rangle = \operatorname{tr}\!\big(A\,\lvert\psi_i\rangle\langle\psi_i\rvert\big).
@@ -105,13 +102,15 @@ $$
 
 With this definition, the expectation value of any observable takes the compact form $\langle A\rangle = \operatorname{tr}(A\rho)$.
 
+This has a important caveat, the density operator of a system is not unique! (but let's not think about that right now)
+
 I would like to emphasize what is being done here. We have introduced a classical uncertainity in a quantum system! even electrons and photons can't save themselves from noisy environments.[^classical]
 
 [^classical]: Usually, when we talk about uncertainty in the quantum world, we are talking about Heisenberg’s Uncertainty Principle, built-in fuzziness of nature where a particle simply doesn't have a definite position and momentum at the same time. The uncertainty discussed here is purely classical
 
 
 [^linear]: Don't worry you can skip the derivations if you didn't.
-### § 2.1 Deriving the Von Neumann Equation
+### § 2.2 Deriving the Von Neumann Equation
 After all this setup we can now move on to the actual equation we are after ;)
 <br><br>
 Differentiating the density operator in time and using the Schrödinger equation gives a closed equation for $\rho$. The full derivation is collapsed below.
