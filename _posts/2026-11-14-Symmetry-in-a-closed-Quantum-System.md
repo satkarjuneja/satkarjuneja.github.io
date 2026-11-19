@@ -28,7 +28,6 @@ To see the simplicity of nature, we shall now step away from language of the Sch
 This requires a bit of setup, but I promise it will be worth it ;)
 
 ### § 2.1 What is a density operator?
-Fair warning: this section contains more brackets than a Lisp program. Stay with me.
 
 The Schrödinger equation gives a complete description of an isolated quantum system, under four standard assumptions (collapsed below).
 
@@ -343,18 +342,30 @@ $$
 
 so every observable commuting with $H$ is conserved. In particular the energy $\operatorname{tr}(\rho H)$ is conserved.
 
-### § 3.2 The Evolution Operators form a Group
+### § 3.2 The Evolution Operators Form a Group
 
-<!-- hidden tag defination of a group -->
+<details class="derivation" markdown="1">
+<summary>Show the definition of a group</summary>
 
-Recall that $\rho(t)=U_t\,\rho(0)\,U_t^\dagger$ with $U_t=e^{-iHt/\hbar}$. We shall see now that the family of operators $\{U_t\}$ has more structure than a list of operators. The $U_t$ operators satisfy all properties of a group:
+A **group** is a set $G$ together with an operation $\cdot$ that satisfies four rules:
+
+1. **Closure:** for all $a,b\in G$, the product $a\cdot b$ is also in $G$.
+2. **Associativity:** $(a\cdot b)\cdot c=a\cdot(b\cdot c)$ for all $a,b,c\in G$.
+3. **Identity:** there is an element $e\in G$ with $e\cdot a=a\cdot e=a$ for all $a\in G$.
+4. **Inverses:** for every $a\in G$ there is an element $a^{-1}\in G$ with $a\cdot a^{-1}=a^{-1}\cdot a=e$.
+
+Below, the set is $\{U_t\}$, the operation is matrix multiplication, the identity is $U_0=I$, and the inverse of $U_t$ is $U_{-t}$.
+
+</details>
+
+Recall that $\rho(t)=U_t\,\rho(0)\,U_t^\dagger$ with $U_t=e^{-iHt/\hbar}$. We shall now see that the family of operators $\{U_t\}$ has more structure than a mere list of operators. The $U_t$ satisfy all the properties of a group:
 
 $$
 U_tU_s=U_{t+s},\qquad U_0=I,\qquad U_{-t}=U_t^{-1}=U_t^\dagger .
 \tag{3.4}
 $$
 
-The first relation holds because $H$ commutes with itself, so the exponents simply add. Evolving for a time $s$ and then for a time $t$ is the same as evolving for $t+s$, and every evolution can be undone by running it backwards. This is a **one-parameter group** of unitary operators.
+The first relation holds because $H$ commutes with itself, so the exponents simply add. Evolving for a time $s$ and then for a time $t$ is the same as evolving for a time $t+s$, and every evolution can be undone by running it backwards. This is a **one-parameter group** of unitary operators.
 
 <details class="derivation" markdown="1">
 <summary>Show derivation</summary>
@@ -371,7 +382,21 @@ $$
 </details>
 
 ### § 3.3 What Does the Evolution Conserve?
-<!-- hidden conjugation defination here also tell if you know linear aljebra this might be familiar to you  -->
+
+<details class="derivation" markdown="1">
+<summary>Show the definition of conjugation</summary>
+
+**Conjugating** an operator $A$ by an invertible operator $V$ means forming
+
+$
+A \;\longmapsto\; V A V^{-1} .
+$
+
+For a unitary $U$ we have $U^{-1}=U^\dagger$, so conjugation reads $A\mapsto UAU^\dagger$, which is exactly the form of the evolution in Eq. (2.14).
+
+If you know linear algebra, this might look familiar. It is a **similarity transformation**, the same operation as a change of basis. Matrices related by conjugation describe the same linear map in different bases, and they always have the same eigenvalues.
+
+</details>
 
 Since the evolution is a conjugation, the conserved quantities are easy to find. For any $n$,
 
@@ -380,16 +405,16 @@ $$
 \tag{3.6}
 $$
 
-where we used $U^\dagger U=I$ to collapse the product, and then cyclicity of the trace. The same fact is visible in the eigenvalues: if $\rho(0)\lvert v\rangle=\lambda\lvert v\rangle$, then $\rho(t)\,U_t\lvert v\rangle=\lambda\,U_t\lvert v\rangle$. So $\rho(t)$ and $\rho(0)$ have **exactly the same spectrum**.
+where we used $U^\dagger U=I$ to collapse the product, and then the cyclicity of the trace. The same fact is visible in the eigenvalues: if $$\rho(0)\lvert v\rangle=\lambda\lvert v\rangle$$, then $$\rho(t)\,U_t\lvert v\rangle=\lambda\,U_t\lvert v\rangle$$. So $\rho(t)$ and $\rho(0)$ have **exactly the same spectrum**.
 
 Two consequences stand out:
 
-- the purity $\operatorname{tr}\rho^2$ is conserved, so a pure state stays pure
-- the von Neumann entropy $S(\rho)=-\operatorname{tr}(\rho\ln\rho)$ is conserved, so a mixed state stays exactly as mixed as it started
+- The purity $\operatorname{tr}\rho^2$ is conserved, so a pure state stays pure.
+- The von Neumann entropy $S(\rho)=-\operatorname{tr}(\rho\ln\rho)$ is conserved, so a mixed state stays exactly as mixed as it started.
 
-<!-- Unitary evolution can never turn our ignorance about the state into knowledge, or the other way around. The spectrum is the part of $\rho$ that the dynamics cannot touch. -->
-That means the classical uncertainty we introduced at the start always remain there in a evolution.
+Unitary evolution can never turn our ignorance about the state into knowledge, or the other way around. The spectrum is the part of $\rho$ that the dynamics cannot touch.
 
+That means the classical uncertainty we introduced at the start always remains there throughout the evolution.
 ### § 3.4 Group Actions and Orbits
 
 Now, we shall formalize what our state can explore, we put the conjugation $\rho\mapsto U\rho U^\dagger$ in the language of group actions.
