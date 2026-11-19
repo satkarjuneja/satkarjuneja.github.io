@@ -53,7 +53,6 @@ where $H$ is the Hamiltonian of the system.
 
 Now,let's relax assumption 4 and introduce a new way of describing a quantum system, in terms of 
 
-<p class="aside">drum roll, please…</p>
 **The Density Operator** $\rho$.
 
 Why would we ever need to describe a system like this ?
@@ -104,7 +103,7 @@ $$
 
 With this definition, the expectation value of any observable takes the compact form $\langle A\rangle = \operatorname{tr}(A\rho)$.
 
-This has a important caveat: the density operator of a system is not unique! (but let's not think about that right now)
+This has a important caveat: the density operator of a system is not unique. (but let's not think about that right now)
 
 I would like to emphasize what is being done here. We have introduced a classical uncertainty in a quantum system! even electrons and photons can't save themselves from noisy environments.[^classical]
 
@@ -308,7 +307,9 @@ This is a rotation about $\hat m$ at angular speed $\omega$, so the arrow travel
 
 The Von Neumann equation can be written as $\dot\rho=\mathcal L\rho$, where $\mathcal L=-\tfrac{i}{\hbar}[H,\,\cdot\,]$ is a linear map acting on operators. It has the following properties.
 
-**1. Linearity.** Since $\mathcal L$ is linear, a mixture $$\rho=\sum_i p_i\rho_i$$ evolves as the mixture of the individual evolutions. It makes no difference whether we mix first and then evolve, or evolve first and then mix. This is what makes density operators a consistent description of ensembles.
+**1. Linearity.** Since $\mathcal L$ is linear, a mixture $$\rho=\sum_i p_i\rho_i$$ evolves as the mixture of the individual evolutions. It makes no difference whether we mix first and then evolve, or evolve first and then mix!
+<br>
+This is what makes density operators a consistent description of classical ensembles.
 
 **2. Hermiticity is preserved.** If $\rho$ is Hermitian, then $[H,\rho]^\dagger=[\rho,H]=-[H,\rho]$, so $-\tfrac{i}{\hbar}[H,\rho]$ is Hermitian as well.
 
@@ -342,9 +343,11 @@ $$
 
 so every observable commuting with $H$ is conserved. In particular the energy $\operatorname{tr}(\rho H)$ is conserved.
 
-### § 3.2 The Solution Is a Group
+### § 3.2 The Evolution Operators form a Group
 
-Recall that $\rho(t)=U_t\,\rho(0)\,U_t^\dagger$ with $U_t=e^{-iHt/\hbar}$. The family of operators $\{U_t\}$ has more structure than a list of operators. Recall that a **group** is a set with an associative operation, an identity element, and an inverse for every element. The $U_t$ satisfy all of this:
+<!-- hidden tag defination of a group -->
+
+Recall that $\rho(t)=U_t\,\rho(0)\,U_t^\dagger$ with $U_t=e^{-iHt/\hbar}$. We shall see now that the family of operators $\{U_t\}$ has more structure than a list of operators. The $U_t$ operators satisfy all properties of a group:
 
 $$
 U_tU_s=U_{t+s},\qquad U_0=I,\qquad U_{-t}=U_t^{-1}=U_t^\dagger .
@@ -368,6 +371,7 @@ $$
 </details>
 
 ### § 3.3 What Does the Evolution Conserve?
+<!-- hidden conjugation defination here also tell if you know linear aljebra this might be familiar to you  -->
 
 Since the evolution is a conjugation, the conserved quantities are easy to find. For any $n$,
 
@@ -383,11 +387,12 @@ Two consequences stand out:
 - the purity $\operatorname{tr}\rho^2$ is conserved, so a pure state stays pure
 - the von Neumann entropy $S(\rho)=-\operatorname{tr}(\rho\ln\rho)$ is conserved, so a mixed state stays exactly as mixed as it started
 
-Unitary evolution can never turn our ignorance about the state into knowledge, or the other way around. The spectrum is the part of $\rho$ that the dynamics cannot touch.
+<!-- Unitary evolution can never turn our ignorance about the state into knowledge, or the other way around. The spectrum is the part of $\rho$ that the dynamics cannot touch. -->
+That means the classical uncertainty we introduced at the start always remain there in a evolution.
 
 ### § 3.4 Group Actions and Orbits
 
-To see why this is a statement about *groups*, we put the conjugation $\rho\mapsto U\rho U^\dagger$ in the language of group actions.
+Now, we shall formalize what our state can explore, we put the conjugation $\rho\mapsto U\rho U^\dagger$ in the language of group actions.
 
 <div class="definition" markdown="1">
 A group $G$ **acts** on a set $X$ if every $g\in G$ gives a map $x\mapsto g\cdot x$ such that $e\cdot x=x$ and $g\cdot(h\cdot x)=(gh)\cdot x$. The **orbit** of $x$ is the set $G\cdot x=\{g\cdot x: g\in G\}$ of everything that $x$ can be moved to.
@@ -405,13 +410,37 @@ This is an action: $U\cdot(V\cdot\rho)=UV\rho V^\dagger U^\dagger=(UV)\cdot\rho$
 <div class="definition" markdown="1">
 **Theorem.** Two density operators $\rho$ and $\sigma$ lie in the same orbit of $U(d)$ if and only if they have the same eigenvalues, counted with multiplicity.
 </div>
-
+<!-- add footnote of what multiplicity means -->
 <details class="derivation" markdown="1">
 <summary>Show derivation</summary>
 
 ($\Rightarrow$) This is Eq. (3.6) and the eigenvector argument above: conjugation by a unitary preserves the spectrum.
 
-($\Leftarrow$) By the spectral theorem, $\rho=VDV^\dagger$ and $\sigma=WDW^\dagger$ for unitaries $V,W$ and the *same* diagonal matrix $D$ of eigenvalues, since the spectra agree. Then
+($\Leftarrow$) A Hermitian matrix has an orthonormal basis of eigenvectors. Let $\lvert e_k\rangle$ be such a basis for $\rho$, and $\lvert f_k\rangle$ one for $\sigma$. Since the two spectra agree (with multiplicity), we can number the vectors so that both have the same eigenvalue $\lambda_k$ for the same $k$:
+
+$$
+\rho=\sum_k\lambda_k\lvert e_k\rangle\langle e_k\rvert,\qquad
+\sigma=\sum_k\lambda_k\lvert f_k\rangle\langle f_k\rvert .
+\tag{3.8}
+$$
+
+Define the operator that sends the first basis to the second,
+
+$$
+U=\sum_k\lvert f_k\rangle\langle e_k\rvert .
+\tag{3.9}
+$$
+
+It is unitary, since $$U^\dagger U=\sum_{k,l}\lvert e_k\rangle\langle f_k\vert f_l\rangle\langle e_l\rvert=\sum_k\lvert e_k\rangle\langle e_k\rvert=I$$
+<br>
+And because $U\lvert e_k\rangle=\lvert f_k\rangle$,
+
+$$
+U\rho U^\dagger=\sum_k\lambda_k\,U\lvert e_k\rangle\langle e_k\rvert U^\dagger=\sum_k\lambda_k\lvert f_k\rangle\langle f_k\rvert=\sigma ,
+\tag{3.10}
+$$
+
+so $\sigma\in U(d)\cdot\rho$.
 
 $$
 \sigma=WV^\dagger\,\rho\,\big(WV^\dagger\big)^\dagger ,
@@ -424,7 +453,7 @@ and $WV^\dagger$ is unitary, so $\sigma\in U(d)\cdot\rho$.
 
 So the orbits are labelled exactly by spectra: the set of density operators splits into layers, one for each possible spectrum, and unitary dynamics lives inside a single layer.
 
-One subtlety is worth stating clearly. A *single* Hamiltonian only traces out a curve inside an orbit. The whole orbit is what all Hamiltonians together can reach. By the spectral theorem every unitary can be written as $U=e^{-iK}$ for some Hermitian $K$, so every element of $U(d)$ is the evolution of some Hamiltonian over some time.
+One caveat though. A *single* Hamiltonian only traces out a curve inside an orbit. The whole orbit is what all Hamiltonians together can reach. By the spectral theorem(which we basically derived above) every unitary can be written as $U=e^{-iK}$ for some Hermitian $K$, so every element of $U(d)$ is the evolution of some Hamiltonian over some time.
 
 
 ### § 3.5 Orbit–Stabilizer
