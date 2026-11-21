@@ -240,9 +240,46 @@ details.derivation[open] summary {
     border-top: 1px dashed lightgray;
     font-size: 0.8em;
 }
+
 .aside {
     color: #888;
     font-style: italic;
     text-align: center;
     margin: 0.8em 0;
+}
+
+.ref {
+    color: rgb(176, 230, 13);
+    border-bottom: 1px dotted rgb(176, 230, 13);
+    cursor: pointer;
+}
+
+#ref-pop {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    max-width: min(92vw, 720px);
+    padding: 10px 16px;
+    background: rgb(30, 32, 31);
+    border: 1px solid rgb(10, 185, 42);
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-x: auto;
+}
+
+#ref-pop h2,
+#ref-pop h3 {
+    margin: 0 0 6px;
+    font-size: 18px;
+    color: rgb(10, 185, 42);
+}
+
+#ref-pop p {
+    margin: 0;
+}
+
+#ref-pop mjx-container[display="true"] {
+    margin: 0 !important;
 }

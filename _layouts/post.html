@@ -33,6 +33,112 @@
     <p class="post-date">{{ page.date | date: "%B %d, %Y" }}</p>
     {{ content }}
   </div>
+
+  <script>
+    window.addEventListener("load", function () {
+      if (!window.MathJax || !MathJax.startup) return;
+      MathJax.startup.promise.then(function () {
+        var content = document.querySelector(".content");
+        var eqs = {}, secs = {};
+
+        // equation number -> rendered equation
+        Array.from(MathJax.startup.document.math).forEach(function (m) {
+          var t = /\\tag\{([^}]*)\}/.exec(m.math || "");
+          if (t && m.typesetRoot) eqs[t[1].trim()] = m.typesetRoot;
+        });
+        // section number -> heading
+        content.querySelectorAll("h2, h3").forEach(function (h) {
+          var s = /^§\s*(\d+(?:\.\d+)?)/.exec(h.textContent.trim());
+          if (s) secs[s[1]] = h;
+        });
+
+        // wrap "(2.3)" and "§ 3.5" in text with hoverable spans
+        var re = /§[\s\u00a0]?(\d+(?:\.\d+)?)|\((\d+\.\d+)\)/g;
+        var walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT, null);
+        var nodes = [], n;
+        while ((n = walker.nextNode())) {
+          if (n.parentElement.closest("mjx-container, script, style, pre, code, h1, h2, h3, summary, .footnotes")) continue;
+          re.lastIndex = 0;
+          if (re.test(n.nodeValue)) nodes.push(n);
+        }
+        nodes.forEach(function (node) {
+          var txt = node.nodeValue, frag = document.createDocumentFragment(), last = 0, m;
+          re.lastIndex = 0;
+          while ((m = re.exec(txt))) {
+            var isSec = !!m[1], key = m[1] || m[2];
+            var target = isSec ? secs[key] : eqs[key];
+            frag.appendChild(document.createTextNode(txt.slice(last, m.index)));
+            if (target) {
+              var s = document.createElement("span");
+              s.className = "ref";
+              s.textContent = m[0];
+              s._t = target;
+              s._sec = isSec;
+              frag.appendChild(s);
+            } else {
+              frag.appendChild(document.createTextNode(m[0]));
+            }
+            last = m.index + m[0].length;
+          }
+          frag.appendChild(document.createTextNode(txt.slice(last)));
+          node.parentNode.replaceChild(frag, node);
+        });
+
+        // popup
+        var pop = document.createElement("div");
+        pop.id = "ref-pop";
+        document.body.appendChild(pop);
+        var timer;
+
+        function show(span) {
+          clearTimeout(timer);
+          pop.innerHTML = "";
+          var c;
+          if (span._sec) {
+            c = document.createElement("div");
+            c.appendChild(span._t.cloneNode(true));
+            var p = span._t.nextElementSibling;
+            while (p && p.tagName !== "P") p = p.nextElementSibling;
+            if (p) c.appendChild(p.cloneNode(true));
+          } else {
+            c = span._t.cloneNode(true);
+          }
+          c.querySelectorAll("[id]").forEach(function (e) { e.removeAttribute("id"); });
+          pop.appendChild(c);
+          pop.style.display = "block";
+          var r = span.getBoundingClientRect();
+          var w = pop.offsetWidth, h = pop.offsetHeight;
+          var left = Math.max(8, Math.min(r.left + window.scrollX, window.scrollX + document.documentElement.clientWidth - w - 8));
+          var top = r.bottom + window.scrollY + 6;
+          if (r.bottom + h + 12 > window.innerHeight && r.top > h + 12) top = r.top + window.scrollY - h - 6;
+          pop.style.left = left + "px";
+          pop.style.top = top + "px";
+        }
+        function hide() { timer = setTimeout(function () { pop.style.display = "none"; }, 150); }
+
+        content.addEventListener("mouseover", function (e) {
+          var s = e.target.closest(".ref");
+          if (s) show(s);
+        });
+        content.addEventListener("mouseout", function (e) {
+          if (e.target.closest(".ref")) hide();
+        });
+        pop.addEventListener("mouseenter", function () { clearTimeout(timer); });
+        pop.addEventListener("mouseleave", hide);
+
+        // click jumps to the target and opens any dropdown around it
+        content.addEventListener("click", function (e) {
+          var s = e.target.closest(".ref");
+          if (!s) return;
+          var d = s._t.closest("details");
+          while (d) { d.open = true; d = d.parentElement.closest("details"); }
+          s._t.scrollIntoView({ behavior: "smooth", block: "center" });
+          pop.style.display = "none";
+        });
+      });
+    });
+  </script>
+
 </body>
 
 </html>

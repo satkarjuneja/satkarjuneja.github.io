@@ -20,11 +20,10 @@ So how does this theory handle the most important aspect of our world, **dynamic
 **Given a quantum system undergoing unitary evolution, which properties of its state are invariant under the dynamics?**
 
 To answer it, we first reformulate quantum mechanics using density operators (§ 2). Then we study the structure of the evolution itself (§ 3).
-We will answer that question in this piece.
 
 ## § 2. From Schrödinger to Von Neumann
 
-To see the simplicity of nature, we shall now step away from language of the Schrödinger equation, and move to a cleaner model.
+To see the simplicity of nature, we shall now step away from the language of the Schrödinger equation and move to a cleaner model.
 <br>
 <br>
 This requires a bit of setup, but I promise it will be worth it ;)
@@ -52,13 +51,13 @@ $$
 
 where $H$ is the Hamiltonian of the system.
 
-Now,let's relax assumption 4 and introduce a new way of describing a quantum system, in terms of 
+Now, let's relax assumption 4 and introduce a new way of describing a quantum system, in terms of
 
 **The Density Operator** $\rho$.
 
-Why would we ever need to describe a system like this ?
+Why would we ever need to describe a system like this?
 <br>
- Imagine a machine that prepares quantum systems in certain states. <br>
+Imagine a machine that prepares quantum systems in certain states. <br>
 It could be an oven shooting out spin-1/2 particles, or a quantum-optics setup producing photons. <br>
 
 Now suppose the apparatus is imperfect (perhaps a toaster that always burns your bread), so it does not always produce the same state. That is, it produces the state $\lvert\psi_1\rangle$ with probability $p_1$, the state $\lvert\psi_2\rangle$ with probability $p_2$, and so on. Here we are introducing a *classical* uncertainty: each $\lvert\psi_i\rangle$ is a quantum state, but we simply do not know which one comes out of the machine! We may have as many $p_i$ as we like, provided they satisfy the usual properties of a probability distribution.
@@ -104,16 +103,16 @@ $$
 
 With this definition, the expectation value of any observable takes the compact form $\langle A\rangle = \operatorname{tr}(A\rho)$.
 
-This has a important caveat: There can be different ensembles representing the same density operator. (but let's not think about that right now)
+This has an important caveat: there can be different ensembles representing the same density operator (but let's not think about that right now).
 
-I would like to emphasize what is being done here. We have introduced a classical uncertainty in a quantum system! even electrons and photons can't save themselves from noisy environments.[^classical]
+I would like to emphasize what is being done here. We have introduced a classical uncertainty in a quantum system! Even electrons and photons can't save themselves from noisy environments.[^classical]
 
-[^classical]: Usually, when we talk about uncertainty in the quantum world, we are talking about Heisenberg’s Uncertainty Principle, built-in fuzziness of nature where a particle simply doesn't have a definite position and momentum at the same time. The uncertainty discussed here is purely classical
+[^classical]: Usually, when we talk about uncertainty in the quantum world, we are talking about Heisenberg's uncertainty principle, the built-in fuzziness of nature, where a particle simply doesn't have a definite position and momentum at the same time. The uncertainty discussed here is purely classical.
 
-
-[^linear]: Don't worry you can still follow along if you didn't.
+[^linear]: Don't worry, you can still follow along if you didn't.
 
 ### § 2.2 Deriving the Von Neumann Equation
+
 After all this setup we can now move on to the actual equation we are after ;)
 <br><br>
 Differentiating the density operator in time and using the Schrödinger equation gives a closed equation for $\rho$. The full derivation is collapsed below.
@@ -148,7 +147,7 @@ i\hbar \frac{d\rho}{dt} = H\rho - \rho H = [H,\rho] .
 \tag{2.9}
 $$
 
-It is the Schrödinger equation rewritten for the density operator, and it holds whether or not the state is pure!!
+It is the Schrödinger equation rewritten for the density operator, and it holds whether or not the state is pure!
 
 ### § 2.3 Properties of the Density Operator
 
@@ -156,7 +155,7 @@ The density operator $\rho=\sum_i p_i\lvert\psi_i\rangle\langle\psi_i\rvert$ of 
 
 **1. Hermiticity.** $\rho^\dagger=\rho$, since each $\lvert\psi_i\rangle\langle\psi_i\rvert$ is Hermitian and the $p_i$ are real.
 
-**2. Unit trace.** Using $\langle\psi_i\vert\psi_i\rangle=1$ and Eq. (2.2),
+**2. Unit trace.** Using $\langle\psi_i\vert\psi_i\rangle=1$ and $\sum_i p_i=1$,
 
 $$
 \operatorname{tr}\rho=\sum_i p_i\langle\psi_i\vert\psi_i\rangle=\sum_i p_i=1 .
@@ -188,13 +187,13 @@ Equality requires $\lambda_k^2=\lambda_k$ for every $k$, so each $\lambda_k$ is 
 
 </details>
 <br>
-That's a lot of properties, but we still need one more thing to describe the real world
+That's a lot of properties, but we still need one more thing to describe the real world.
 
 <p class="aside">cue the Star Wars music…<br>a long time ago, in a Hilbert space far, far away…</p>
 
 ### § 2.4 The Evolution Operator
 
-The systems we observe are seldom independent of time (That would be a interesting world), to capture the effect of time we define a Evolution Operator.
+The systems we observe are seldom independent of time (that would be an interesting world!). To capture the effect of time, we define an evolution operator.
 
 For a time-independent Hamiltonian $H$, the Schrödinger equation (2.1) is solved by
 
@@ -204,7 +203,7 @@ $$
 \tag{2.13}
 $$
 
-where $U(t)$ is the **evolution operator**. It is unitary, $U^\dagger U = UU^\dagger = I$, This guarantees that the norm of a state is preserved in time. (Implications of this is huge, which we will realise later)
+where $U(t)$ is the **evolution operator**. It is unitary, $U^\dagger U = UU^\dagger = I$. This guarantees that the norm of a state is preserved in time. (The implications of this are huge, as we will realise later.)
 
 Applying Eq. (2.13) to every member of the ensemble in Eq. (2.6), the density operator evolves as
 
@@ -220,7 +219,7 @@ which is the solution of the Von Neumann equation (2.9) for a time-independent $
 Since the evolution operator preserves the norm of a state, the evolution of a single qubit can be seen as a rotation of a point on a sphere. This sphere is called the **Bloch sphere**, and it lets us see the conjugation in Eq. (2.14) as an arrow turning in 3D space.
 
 Every qubit state corresponds to a point in the unit ball. Pure states sit on the surface, and mixed states sit inside it.
-(don't worry about the formulas just look as the visualization)
+(Don't worry about the formulas, just look at the visualization.)
 
 <details class="derivation" markdown="1">
 <summary>Show the math</summary>
@@ -298,16 +297,17 @@ and comparing with $$\dot\rho=\tfrac12\dot{\vec n}\cdot\vec\sigma$$ gives Eq. (2
 
 This is a rotation about $\hat m$ at angular speed $\omega$, so the arrow travels along a circle and its length $\lvert\vec n\rvert$ never changes. This matches Eq. (2.17), since the eigenvalues of $\rho$, and with them the purity, are conserved by unitary evolution. In the visualization, moving the arrow around while keeping $r$ fixed therefore corresponds to a possible evolution of the state, while changing $r$ would need something that is not unitary.
 
-## § 3 Symmetry in the Von Neumann Equation
+## § 3. Symmetry in the Von Neumann Equation
 
-### § 3.1 Properties of the Von Neumann Equation
-<!-- in footnote uhh properties again -->
+### § 3.1 Properties of the Von Neumann Equation[^props]
+
+[^props]: Yes, properties again. We just did this for $\rho$ in § 2.3, and now it is the turn of the equation that governs it.
 
 The Von Neumann equation can be written as $\dot\rho=\mathcal L\rho$, where $\mathcal L=-\tfrac{i}{\hbar}[H,\,\cdot\,]$ is a linear map acting on operators. It has the following properties.
 
 **1. Linearity.** Since $\mathcal L$ is linear, a mixture $$\rho=\sum_i p_i\rho_i$$ evolves as the mixture of the individual evolutions. It makes no difference whether we mix first and then evolve, or evolve first and then mix!
 <br>
-This is what makes density operators a consistent description of classical ensembles. Linearity is special to this equation, and we will see in § 3.5 that the structure uncovered below survives without it.
+This is what makes density operators a consistent description of classical ensembles. Linearity is special to this equation (we will see in § 3.5 that we might not require it after all).
 
 **2. Trace is preserved.** By cyclicity of the trace,
 
@@ -337,9 +337,9 @@ $$
 
 so every observable commuting with $H$ is conserved. In particular the energy $\operatorname{tr}(\rho H)$ is conserved.
 
-### § 3.2 What's so special about Evolution Operators ?
+### § 3.2 What's so special about Evolution Operators?
 
-Let's step back for a second recall that, for a time-independent $H$, $\rho(t)=U_t\,\rho(0)\,U_t^\dagger$ with $U_t=e^{-iHt/\hbar}$. The family of operators $\{U_t\}$ has three simple properties:
+Let's step back for a second and recall that, for a time-independent $H$, $\rho(t)=U_t\,\rho(0)\,U_t^\dagger$ with $U_t=e^{-iHt/\hbar}$. The family of operators $\{U_t\}$ has three simple properties:
 
 $$
 U_tU_s=U_{t+s},\qquad U_0=I,\qquad U_{-t}=U_t^{-1}=U_t^\dagger .
@@ -352,7 +352,7 @@ In words:
 - **Doing nothing is an evolution.** At $t=0$ nothing happens, and $U_0=I$.
 - **Every evolution can be undone.** Running the evolution backwards, with $U_{-t}$, returns the state to where it started.
 
-Now, if this sounds familier you are on the right track. Combining two evolutions gives another evolution, there is an evolution that does nothing, and every evolution has an undo. These are exactly the rules of a **group**!
+Now, if this sounds familiar, you are on the right track. Combining two evolutions gives another evolution, there is an evolution that does nothing, and every evolution has an undo. These are exactly the rules of a **group**!
 
 <details class="derivation" markdown="1">
 <summary>Show the definition of a group</summary>
@@ -391,9 +391,9 @@ $$
 
 **Conjugating** an operator $A$ by an invertible operator $V$ means forming
 
-$
+$$
 A \;\longmapsto\; V A V^{-1} .
-$
+$$
 
 For a unitary $U$ we have $U^{-1}=U^\dagger$, so conjugation reads $A\mapsto UAU^\dagger$, which is exactly the form of the evolution in Eq. (2.14).
 
@@ -407,9 +407,10 @@ $$
 \operatorname{tr}\big(\rho(t)^n\big)=\operatorname{tr}\big[(U\rho U^\dagger)^n\big]=\operatorname{tr}\big[U\rho^nU^\dagger\big]=\operatorname{tr}\big(\rho^n\big),
 \tag{3.6}
 $$
-<!-- footnote that remember a trace is cyclic -->
 
-where we used $U^\dagger U=I$ to collapse the product, and then the cyclicity of the trace. The same fact is visible in the eigenvalues: if $$\rho(0)\lvert v\rangle=\lambda\lvert v\rangle$$, then $$\rho(t)\,U_t\lvert v\rangle=\lambda\,U_t\lvert v\rangle$$. So $\rho(t)$ and $\rho(0)$ have **exactly the same spectrum**.
+where we used $U^\dagger U=I$ to collapse the product, and then the cyclicity of the trace.[^cyclic] The same fact is visible in the eigenvalues: if $$\rho(0)\lvert v\rangle=\lambda\lvert v\rangle$$, then $$\rho(t)\,U_t\lvert v\rangle=\lambda\,U_t\lvert v\rangle$$. So $\rho(t)$ and $\rho(0)$ have **exactly the same spectrum**.
+
+[^cyclic]: Remember that the trace is cyclic: $\operatorname{tr}(XY)=\operatorname{tr}(YX)$ for any two matrices, so we may move a matrix from the front of a product to the back. Here that gives $\operatorname{tr}(U\rho^nU^\dagger)=\operatorname{tr}(U^\dagger U\rho^n)=\operatorname{tr}(\rho^n)$.
 
 Two consequences stand out:
 
@@ -419,9 +420,10 @@ Two consequences stand out:
 Unitary evolution can never turn our ignorance about the state into knowledge, or the other way around. The spectrum is the part of $\rho$ that the dynamics cannot touch.
 
 That means the classical uncertainty we introduced at the start always remains there throughout the evolution.
+
 ### § 3.4 Group Actions and Orbits
 
-Now, we shall formalize what our state can explore, we put the conjugation $\rho\mapsto U\rho U^\dagger$ in the language of group actions.
+Now we shall formalize what our state can explore: we put the conjugation $\rho\mapsto U\rho U^\dagger$ in the language of group actions.
 
 <div class="definition" markdown="1">
 A group $G$ **acts** on a set $X$ if every $g\in G$ gives a map $x\mapsto g\cdot x$ such that $e\cdot x=x$ and $g\cdot(h\cdot x)=(gh)\cdot x$. The **orbit** of $x$ is the set $G\cdot x=\{g\cdot x: g\in G\}$ of everything that $x$ can be moved to.
@@ -437,9 +439,11 @@ $$
 This is an action: $U\cdot(V\cdot\rho)=UV\rho V^\dagger U^\dagger=(UV)\cdot\rho$. It also sends density operators to density operators, by the argument of Eq. (3.2) together with the fact that trace and Hermiticity are preserved. Time evolution is then a curve $t\mapsto U_t\cdot\rho$ that stays inside a single orbit. The key fact is the following.
 
 <div class="definition" markdown="1">
-**Theorem.** Two density operators $\rho$ and $\sigma$ lie in the same orbit of $U(d)$ if and only if they have the same eigenvalues, counted with multiplicity.
+**Theorem.** Two density operators $\rho$ and $\sigma$ lie in the same orbit of $U(d)$ if and only if they have the same eigenvalues, counted with multiplicity.[^mult]
 </div>
-<!-- add footnote of what multiplicity means -->
+
+[^mult]: The multiplicity of an eigenvalue is the number of linearly independent eigenvectors that share it. For example, the maximally mixed qubit state $I/2$ has the eigenvalue $\tfrac12$ with multiplicity $2$, so its spectrum is $\{\tfrac12,\tfrac12\}$ and not just $\{\tfrac12\}$.
+
 <details class="derivation" markdown="1">
 <summary>Show derivation</summary>
 
@@ -460,7 +464,12 @@ U=\sum_k\lvert f_k\rangle\langle e_k\rvert .
 \tag{3.9}
 $$
 
-It is unitary, since $$U^\dagger U=\sum_{k,l}\lvert e_k\rangle\langle f_k\vert f_l\rangle\langle e_l\rvert=\sum_k\lvert e_k\rangle\langle e_k\rvert=I$$
+It is unitary, since
+
+$$
+U^\dagger U=\sum_{k,l}\lvert e_k\rangle\langle f_k\vert f_l\rangle\langle e_l\rvert=\sum_k\lvert e_k\rangle\langle e_k\rvert=I .
+$$
+
 <br>
 And because $U\lvert e_k\rangle=\lvert f_k\rangle$,
 
@@ -471,19 +480,11 @@ $$
 
 so $\sigma\in U(d)\cdot\rho$.
 
-$$
-\sigma=WV^\dagger\,\rho\,\big(WV^\dagger\big)^\dagger ,
-\tag{3.8}
-$$
-
-and $WV^\dagger$ is unitary, so $\sigma\in U(d)\cdot\rho$.
-
 </details>
 
 So the orbits are labelled exactly by spectra: the set of density operators splits into layers, one for each possible spectrum, and unitary dynamics lives inside a single layer.
 
-One caveat though. A *single* Hamiltonian only traces out a curve inside an orbit. The whole orbit is what all Hamiltonians together can reach. By the spectral theorem(don't worry about it if you are not familier) every unitary can be written as $U=e^{-iK}$ for some Hermitian $K$, so every element of $U(d)$ is the evolution of some Hamiltonian over some time.
-
+One caveat though. A *single* Hamiltonian only traces out a curve inside an orbit. The whole orbit is what all Hamiltonians together can reach. By the spectral theorem (don't worry about it if you are not familiar with it), every unitary can be written as $U=e^{-iK}$ for some Hermitian $K$, so every element of $U(d)$ is the evolution of some Hamiltonian over some time.
 
 ### § 3.5 The Lax Form
 
@@ -501,11 +502,11 @@ $$
 \tag{3.12}
 $$
 
-for matrices $L(t)$ and $M(t)$ is called a **Lax equation**, after Peter Lax, who introduced it in 1968 to study nonlinear wave equations. 
-<r>
+for matrices $L(t)$ and $M(t)$ is called a **Lax equation**, after Peter Lax, who introduced it in 1968 to study nonlinear wave equations.
+<br>
 The Von Neumann equation is the simplest case of this: $M$ is a fixed matrix, so the equation is linear in $L=\rho$.
-<br> 
-In general life is not so simple, $M$ may depend on time, and even on $L$ itself! and then the equation is **nonlinear**. The conservation law of § 3.3 survives anyway.
+<br>
+In general, life is not so simple: $M$ may depend on time, and even on $L$ itself! Then the equation is <b>nonlinear</b>. The conservation law of § 3.3 survives anyway.
 
 Suppose $L(t)$ solves Eq. (3.12), and let $U(t)$ solve $\dot U=MU$ with $U(0)=I$. Then
 
@@ -537,27 +538,28 @@ $$
 
 The conservation law of § 3.3 is therefore not special to quantum mechanics. It is a feature of the commutator form itself. Equations of this type are central in the study of integrable systems, a subject we only point to here.
 
-
 ### § 3.6 Symmetries of the Hamiltonian
 
 So far the group $U(d)$ acted on states from outside. The symmetries of the system itself form a smaller group. Suppose a unitary $V$ commutes with $H$. If $\rho(t)$ solves Eq. (2.9), then $\sigma(t)=V\rho(t)V^\dagger$ solves it too:
 
 $$
 \dot\sigma=-\frac{i}{\hbar}V[H,\rho]V^\dagger=-\frac{i}{\hbar}[VHV^\dagger,\sigma]=-\frac{i}{\hbar}[H,\sigma] .
-\tag{3.17}
+\tag{3.14}
 $$
 
 So a symmetry sends solutions to solutions: transforming first and evolving second gives the same answer as evolving first and transforming second. The set of all such $V$ is a group, the **symmetry group of $H$**. Its infinitesimal generators are Hermitian operators commuting with $H$, and by Eq. (3.3) these are exactly the conserved quantities.
 
-## § 4 Conclusion
+## § 4. Conclusion
 
 We started by asking whether symmetry can bring some determinism into a quantum world. Both the Schrödinger and the von Neumann equations are already deterministic.
-We explored adding a group structure on top and saw what is invartiant in the dynamics. The evolution is a conjugation, a group action, and its orbits are labelled by the spectrum of $\rho$. So a state keeps the same purity, the same entropy, the same "amount of ignorance". Symmetries of $H$ add conserved quantities on top.
+We explored adding a group structure on top and saw what is invariant in the dynamics. The evolution is a conjugation, a group action, and its orbits are labelled by the spectrum of $\rho$. So a state keeps the same purity, the same entropy, the same "amount of ignorance". Symmetries of $H$ add conserved quantities on top.
 
 The Lax form of § 3.5 shows that this is not special to quantum mechanics. Any equation of the form $\dot L=[M,L]$ is a conjugation flow, even a nonlinear one, and so conserves the spectrum of $L$.
 
 The picture does have limits. Unitary evolution never leaves its orbit, but a noisy evolution can, for example by turning a pure state into a mixed one and so changing its spectrum. Describing such evolution takes a larger framework, the Lindblad equation[^topic]. In that setting the group of evolutions loses its inverses, and one is left with a semigroup.
-[^topic]: A topic for some another day.
+
+[^topic]: A topic for another day.
+
 ## References
 
 1. P. D. Lax, "Integrals of nonlinear equations of evolution and solitary waves", *Comm. Pure Appl. Math.* 21 (1968).
