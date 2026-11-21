@@ -6,18 +6,20 @@ date: 2026-11-14
 
 ## § 1. Introduction and Motivation
 
-When quantum mechanics was first established, it shook the worldview of many physicists. Our classical picture of the world had no room for non-deterministic models, and many questioned the correctness of the theory itself.
-Even Einstein is quoted as saying:
+Quantum mechanics is known for its confusing conclusions. Richard Feynman put it best:
 
 <blockquote class="quote">
-  <p>God does not play dice with the universe.</p>
-  <footer>— Albert Einstein</footer>
+  <p>I think I can safely say that nobody understands quantum mechanics.</p>
+  <footer>— Richard Feynman, <em>The Character of Physical Law</em></footer>
 </blockquote>
 
-We now know that quantum mechanics correctly explains most of the phenomena observed in experiments, and it has become one of the most successful theories ever created.
+And yet it is the most successful theory we have: it correctly explains almost every phenomenon observed in experiments.
 
-In such a non-deterministic model of the universe, can symmetry, or the ideas of group theory, introduce some determinism?
+So how does this theory handle the most important aspect of our world, **dynamics**? Everything we care about changes with time, and a theory that cannot say how things change is not much use. In this piece we ask the following question:
 
+**Given a quantum system undergoing unitary evolution, which properties of its state are invariant under the dynamics?**
+
+To answer it, we first reformulate quantum mechanics using density operators (§ 2). Then we study the structure of the evolution itself (§ 3).
 We will answer that question in this piece.
 
 ## § 2. From Schrödinger to Von Neumann
@@ -102,7 +104,7 @@ $$
 
 With this definition, the expectation value of any observable takes the compact form $\langle A\rangle = \operatorname{tr}(A\rho)$.
 
-This has a important caveat: the density operator of a system is not unique. (but let's not think about that right now)
+This has a important caveat: There can be different ensembles representing the same density operator. (but let's not think about that right now)
 
 I would like to emphasize what is being done here. We have introduced a classical uncertainty in a quantum system! even electrons and photons can't save themselves from noisy environments.[^classical]
 
@@ -308,11 +310,9 @@ The Von Neumann equation can be written as $\dot\rho=\mathcal L\rho$, where $\ma
 
 **1. Linearity.** Since $\mathcal L$ is linear, a mixture $$\rho=\sum_i p_i\rho_i$$ evolves as the mixture of the individual evolutions. It makes no difference whether we mix first and then evolve, or evolve first and then mix!
 <br>
-This is what makes density operators a consistent description of classical ensembles.
+This is what makes density operators a consistent description of classical ensembles. Linearity is special to this equation, and we will see in § 3.5 that the structure uncovered below survives without it.
 
-**2. Hermiticity is preserved.** If $\rho$ is Hermitian, then $[H,\rho]^\dagger=[\rho,H]=-[H,\rho]$, so $-\tfrac{i}{\hbar}[H,\rho]$ is Hermitian as well.
-
-**3. Trace is preserved.** By cyclicity of the trace,
+**2. Trace is preserved.** By cyclicity of the trace,
 
 $$
 \frac{d}{dt}\operatorname{tr}\rho=-\frac{i}{\hbar}\operatorname{tr}[H,\rho]=0 .
@@ -321,7 +321,7 @@ $$
 
 This is the first of a family of conserved quantities $\operatorname{tr}(\rho^n)$, which we return to below.
 
-**4. Positivity is preserved.** For a time-independent $H$, the solution of Eq. (2.9) is $\rho(t)=U\rho(0)U^\dagger$ with $U=e^{-iHt/\hbar}$. For any $\lvert\phi\rangle$,
+**3. Positivity is preserved.** For a time-independent $H$, the solution of Eq. (2.9) is $\rho(t)=U\rho(0)U^\dagger$ with $U=e^{-iHt/\hbar}$. For any $\lvert\phi\rangle$,
 
 $$
 \langle\phi\rvert U\rho U^\dagger\lvert\phi\rangle=\langle\phi'\rvert\rho\lvert\phi'\rangle\ \ge\ 0 ,
@@ -331,9 +331,7 @@ $$
 
 so $\rho(t)\ge0$ for all $t$.
 
-**5. Stationary states commute with $H$.** $\dot\rho=0$ if and only if $[H,\rho]=0$. For example, any function of $H$ is stationary, such as the thermal state $e^{-\beta H}/Z$ with $Z=\operatorname{tr}e^{-\beta H}$.
-
-**6. Conserved quantities.** For any time-independent observable $A$,
+**4. Conserved quantities.** For any time-independent observable $A$,
 
 $$
 \frac{d}{dt}\operatorname{tr}(\rho A)=\frac{i}{\hbar}\operatorname{tr}\big(\rho\,[H,A]\big) ,
@@ -381,7 +379,7 @@ $$
 
 </details>
 
-### § 3.3 What Does the Evolution Conserve?
+### § 3.3 What path can the evolution follow?
 
 <details class="derivation" markdown="1">
 <summary>Show the definition of conjugation</summary>
@@ -481,39 +479,54 @@ So the orbits are labelled exactly by spectra: the set of density operators spli
 One caveat though. A *single* Hamiltonian only traces out a curve inside an orbit. The whole orbit is what all Hamiltonians together can reach. By the spectral theorem(which we basically derived above) every unitary can be written as $U=e^{-iK}$ for some Hermitian $K$, so every element of $U(d)$ is the evolution of some Hamiltonian over some time.
 
 
-### § 3.5 Orbit–Stabilizer
+### § 3.5 The Lax Form
 
-The **stabilizer** of a state is the set of group elements that leave it fixed:
+Eq. (2.9) can be written in a way that hides the quantum mechanics. Define the matrix $M=-\tfrac{i}{\hbar}H$, so that
 
 $$
-\operatorname{Stab}(\rho)=\{U:\ U\rho U^\dagger=\rho\}=\{U:\ [U,\rho]=0\} .
-\tag{3.15}
+\dot\rho=[M,\rho] .
+\tag{3.11}
 $$
 
-It is a subgroup of $G$. This connects directly to the stationary states of § 3.1: $\rho$ is stationary under $H$ exactly when $[H,\rho]=0$, which holds exactly when the whole path $\{U_t\}$ lies in $\operatorname{Stab}(\rho)$.
+An equation of the form
 
-<div class="definition" markdown="1">
-**Orbit–stabilizer theorem.** If a group $G$ acts on $X$, then the map $g\operatorname{Stab}(x)\mapsto g\cdot x$ is a bijection between the cosets $G/\operatorname{Stab}(x)$ and the orbit $G\cdot x$. For a finite group this reads $\lvert G\cdot x\rvert=\lvert G\rvert/\lvert\operatorname{Stab}(x)\rvert$.
-</div>
+$$
+\dot L=[M,L]
+\tag{3.12}
+$$
+
+for matrices $L(t)$ and $M(t)$ is called a **Lax equation**, after Peter Lax, who introduced it in 1968 to study nonlinear wave equations. The Von Neumann equation is the simplest case: $M$ is a fixed matrix, so the equation is linear in $L=\rho$. In general $M$ may depend on time, and even on $L$ itself, and then the equation is **nonlinear**. The conservation law of § 3.3 survives anyway.
+
+Suppose $L(t)$ solves Eq. (3.12), and let $U(t)$ solve $\dot U=MU$ with $U(0)=I$. Then
+
+$$
+L(t)=U(t)\,L(0)\,U(t)^{-1} .
+\tag{3.13}
+$$
+
+So $L(t)$ is a conjugation of $L(0)$, exactly as in § 3.3, and **the spectrum of $L$ is conserved**. Equivalently, every $\operatorname{tr}L^n$ is conserved. If $M$ is anti-Hermitian, as it is for the Von Neumann equation, then $U(t)$ is unitary and the flow stays inside an orbit of § 3.4.
 
 <details class="derivation" markdown="1">
 <summary>Show derivation</summary>
 
-We have $g\cdot x=h\cdot x$ if and only if $h^{-1}g\cdot x=x$, which holds if and only if $h^{-1}g\in\operatorname{Stab}(x)$, which holds if and only if $g\operatorname{Stab}(x)=h\operatorname{Stab}(x)$. So the map is well defined and injective, and it is surjective by definition of the orbit.
+The matrix $U(t)$ is invertible, since it solves a linear differential equation and $\det U=\exp\int_0^t\operatorname{tr}M$. Using $\tfrac{d}{dt}U^{-1}=-U^{-1}\dot U\,U^{-1}=-U^{-1}M$,
+
+$$
+\frac{d}{dt}\big(U^{-1}LU\big)=-U^{-1}MLU+U^{-1}(ML-LM)U+U^{-1}LMU=0 .
+$$
+
+So $U^{-1}LU$ is constant, and it equals $L(0)$ at $t=0$. This gives Eq. (3.13).
+
+The statement about traces also has a one-line proof that does not use $U$. By cyclicity of the trace,
+
+$$
+\frac{d}{dt}\operatorname{tr}L^n=n\operatorname{tr}\big(L^{n-1}[M,L]\big)=n\Big(\operatorname{tr}(L^nM)-\operatorname{tr}(L^nM)\Big)=0 .
+$$
 
 </details>
 
-Now apply it to the qubit. Conjugation by $U\in SU(2)$ rotates the vector $\vec r$ by some $R\in SO(3)$, and this is the map $SU(2)\to SO(3)$ (two-to-one, since $U$ and $-U$ give the same rotation). We therefore read the action as $SO(3)$ rotating the ball:
+The conservation law of § 3.3 is therefore not special to quantum mechanics. It is a feature of the commutator form itself. Equations of this type are central in the study of integrable systems, a subject we only point to here.
 
-- **The center, $\vec r=0$.** $\rho=I/2$ commutes with every $U$, so the stabilizer is the whole group and the orbit $G/G$ is a single point.
-- **Any other state, $0<\lvert\vec r\rvert\le1$.** A rotation fixes $\vec r$ if and only if it is a rotation about the axis $\hat r$, so the stabilizer is $SO(2)$ and the orbit is
-$$
-SO(3)/SO(2)\;\cong\;S^2 ,
-\tag{3.16}
-$$
-the sphere. As a check on dimensions, $3-1=2$.
-
-The stationary states of the fixed Hamiltonian above are exactly those with $\hat n\times\vec r=0$, which are the points on the rotation axis. These are precisely the states whose stabilizer contains the rotations about $\hat n$.
 
 ### § 3.6 Symmetries of the Hamiltonian
 
@@ -528,11 +541,16 @@ So a symmetry sends solutions to solutions: transforming first and evolving seco
 
 ## § 4 Conclusion
 
-We started by asking whether symmetry can bring some determinism into a quantum world. Both the Schrödinger and the von Neumann equations are already deterministic. What the group structure adds is a precise statement of what the dynamics can never change. The evolution is a group action, the group acts on the set of states with orbits labelled by spectrum, and each orbit is exactly the set of states with the same eigenvalues: all of the same purity, the same entropy, the same "amount of ignorance". For a qubit this is the picture of nested spheres inside the Bloch ball. Symmetries of $H$ add conserved quantities on top.
+We started by asking whether symmetry can bring some determinism into a quantum world. Both the Schrödinger and the von Neumann equations are already deterministic. What the group structure adds is a precise statement of what the dynamics can never change. The evolution is a conjugation, a group action, and its orbits are labelled by the spectrum of $\rho$. So a state keeps the same purity, the same entropy, the same "amount of ignorance". Symmetries of $H$ add conserved quantities on top.
 
-This also marks the limit of the picture. Unitary evolution never leaves its orbit. A noisy evolution can: dephasing, for example, shrinks a pure state on the equator of the Bloch ball toward the center, changing its spectrum. Describing such evolution takes a larger framework, the Lindblad equation. In that setting the group of evolutions loses its inverses, and one is left with a semigroup.
+The Lax form of § 3.5 shows that this is not special to quantum mechanics. Any equation of the form $\dot L=[M,L]$ is a conjugation flow, even a nonlinear one such as the Toda chain, and so conserves the spectrum of $L$.
+
+The picture does have limits. Unitary evolution never leaves its orbit, but a noisy evolution can, for example by turning a pure state into a mixed one and so changing its spectrum. Describing such evolution takes a larger framework, the Lindblad equation. In that setting the group of evolutions loses its inverses, and one is left with a semigroup.
 
 ## References
 
-1. M. A. Nielsen and I. L. Chuang, *Quantum Computation and Quantum Information*, Cambridge University Press (chapter 2, density operators and the Bloch sphere).
-2. M. A. Armstrong, *Groups and Symmetry*, Springer (group actions, orbits and stabilizers).
+1. P. D. Lax, "Integrals of nonlinear equations of evolution and solitary waves", *Comm. Pure Appl. Math.* 21 (1968).
+2. H. Flaschka, "The Toda lattice. I. Existence of integrals", *Phys. Rev. B* 9 (1974).
+3. M. Toda, *Theory of Nonlinear Lattices*, Springer.
+4. M. A. Nielsen and I. L. Chuang, *Quantum Computation and Quantum Information*, Cambridge University Press (chapter 2).
+5. M. A. Armstrong, *Groups and Symmetry*, Springer.
