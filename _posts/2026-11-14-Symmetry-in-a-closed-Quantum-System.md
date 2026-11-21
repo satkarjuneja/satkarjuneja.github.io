@@ -6,14 +6,14 @@ date: 2026-11-14
 
 ## § 1. Introduction and Motivation
 
-Quantum mechanics is known for its confusing conclusions. Richard Feynman put it best:
+Quantum mechanics is known for its confusing conclusions and quirky features. Richard Feynman put it best:
 
 <blockquote class="quote">
   <p>I think I can safely say that nobody understands quantum mechanics.</p>
   <footer>— Richard Feynman, <em>The Character of Physical Law</em></footer>
 </blockquote>
 
-And yet it is the most successful theory we have: it correctly explains almost every phenomenon observed in experiments.
+And yet somehow it is the most successful theory we have: it correctly explains almost every phenomenon observed in experiments.
 
 So how does this theory handle the most important aspect of our world, **dynamics**? Everything we care about changes with time, and a theory that cannot say how things change is not much use. In this piece we ask the following question:
 
@@ -172,14 +172,12 @@ $$
 
 so $\rho\ge 0$. Together with the first two properties, this characterizes a density operator: any operator that is Hermitian, positive and has unit trace describes a valid state.
 
-**4. Expectation values.** For any observable $A$, $\langle A\rangle=\operatorname{tr}(A\rho)$, as shown in Eq. (2.5).
-
-**5. Purity.** $\operatorname{tr}\rho^2\le 1$, with equality if and only if $\rho$ is a pure state, $\rho=\lvert\psi\rangle\langle\psi\rvert$.
+**4. Purity.** $\operatorname{tr}\rho^2\le 1$, with equality if and only if $\rho$ is a pure state, $\rho=\lvert\psi\rangle\langle\psi\rvert$.
 
 <details class="derivation" markdown="1">
 <summary>Show derivation</summary>
 
-Let $\lambda_k$ be the eigenvalues of $\rho$. By properties 1 to 3 they satisfy $\lambda_k\in[0,1]$ and $\sum_k\lambda_k=1$. Since $$\lambda_k^2\le\lambda_k$$ on $[0,1]$,
+Let $\lambda_k$ be the eigenvalues of $\rho$. By properties 1 to 3 they satisfy $\lambda_k\in[0,1]$ and $\sum_k\lambda_k=1$. Since $\lambda_k^2\le\lambda_k$ on $[0,1]$,
 
 $$
 \operatorname{tr}\rho^2=\sum_k\lambda_k^2\ \le\ \sum_k\lambda_k=1 .
@@ -189,9 +187,7 @@ $$
 Equality requires $\lambda_k^2=\lambda_k$ for every $k$, so each $\lambda_k$ is $0$ or $1$. Because they sum to $1$, exactly one eigenvalue equals $1$ and the rest vanish. That means $\rho=\lvert\psi\rangle\langle\psi\rvert$ for the corresponding eigenvector, which is a pure state. Conversely, a pure state has eigenvalues $(1,0,\dots,0)$, so $\operatorname{tr}\rho^2=1$.
 
 </details>
-
-with equality only when a single eigenvalue equals $1$ and the rest vanish.
-
+<br>
 That's a lot of properties, but we still need one more thing to describe the real world
 
 <p class="aside">cue the Star Wars music…<br>a long time ago, in a Hilbert space far, far away…</p>
@@ -305,6 +301,7 @@ This is a rotation about $\hat m$ at angular speed $\omega$, so the arrow travel
 ## § 3 Symmetry in the Von Neumann Equation
 
 ### § 3.1 Properties of the Von Neumann Equation
+<!-- in footnote uhh properties again -->
 
 The Von Neumann equation can be written as $\dot\rho=\mathcal L\rho$, where $\mathcal L=-\tfrac{i}{\hbar}[H,\,\cdot\,]$ is a linear map acting on operators. It has the following properties.
 
@@ -340,7 +337,22 @@ $$
 
 so every observable commuting with $H$ is conserved. In particular the energy $\operatorname{tr}(\rho H)$ is conserved.
 
-### § 3.2 The Evolution Operators Form a Group
+### § 3.2 What's so special about Evolution Operators ?
+
+Let's step back for a second recall that, for a time-independent $H$, $\rho(t)=U_t\,\rho(0)\,U_t^\dagger$ with $U_t=e^{-iHt/\hbar}$. The family of operators $\{U_t\}$ has three simple properties:
+
+$$
+U_tU_s=U_{t+s},\qquad U_0=I,\qquad U_{-t}=U_t^{-1}=U_t^\dagger .
+\tag{3.4}
+$$
+
+In words:
+
+- **Evolutions compose.** Evolving for a time $s$ and then for a time $t$ is the same as evolving for a time $t+s$. This holds because $H$ commutes with itself, so the exponents simply add.
+- **Doing nothing is an evolution.** At $t=0$ nothing happens, and $U_0=I$.
+- **Every evolution can be undone.** Running the evolution backwards, with $U_{-t}$, returns the state to where it started.
+
+Now, if this sounds familier you are on the right track. Combining two evolutions gives another evolution, there is an evolution that does nothing, and every evolution has an undo. These are exactly the rules of a **group**!
 
 <details class="derivation" markdown="1">
 <summary>Show the definition of a group</summary>
@@ -352,18 +364,11 @@ A **group** is a set $G$ together with an operation $\cdot$ that satisfies four 
 3. **Identity:** there is an element $e\in G$ with $e\cdot a=a\cdot e=a$ for all $a\in G$.
 4. **Inverses:** for every $a\in G$ there is an element $a^{-1}\in G$ with $a\cdot a^{-1}=a^{-1}\cdot a=e$.
 
-Below, the set is $\{U_t\}$, the operation is matrix multiplication, the identity is $U_0=I$, and the inverse of $U_t$ is $U_{-t}$.
+Here the set is $\{U_t\}$ and the operation is matrix multiplication, which is automatically associative. Closure is the relation $U_tU_s=U_{t+s}$, the identity is $U_0=I$, and the inverse of $U_t$ is $U_{-t}$.
 
 </details>
 
-Recall that $\rho(t)=U_t\,\rho(0)\,U_t^\dagger$ with $U_t=e^{-iHt/\hbar}$. We shall now see that the family of operators $\{U_t\}$ has more structure than a mere list of operators. The $U_t$ satisfy all the properties of a group:
-
-$$
-U_tU_s=U_{t+s},\qquad U_0=I,\qquad U_{-t}=U_t^{-1}=U_t^\dagger .
-\tag{3.4}
-$$
-
-The first relation holds because $H$ commutes with itself, so the exponents simply add. Evolving for a time $s$ and then for a time $t$ is the same as evolving for a time $t+s$, and every evolution can be undone by running it backwards. This is a **one-parameter group** of unitary operators.
+So $\{U_t\}$ is a group, and since it is labelled by the single number $t$, it is called a **one-parameter group** of unitary operators.
 
 <details class="derivation" markdown="1">
 <summary>Show derivation</summary>
@@ -402,6 +407,7 @@ $$
 \operatorname{tr}\big(\rho(t)^n\big)=\operatorname{tr}\big[(U\rho U^\dagger)^n\big]=\operatorname{tr}\big[U\rho^nU^\dagger\big]=\operatorname{tr}\big(\rho^n\big),
 \tag{3.6}
 $$
+<!-- footnote that remember a trace is cyclic -->
 
 where we used $U^\dagger U=I$ to collapse the product, and then the cyclicity of the trace. The same fact is visible in the eigenvalues: if $$\rho(0)\lvert v\rangle=\lambda\lvert v\rangle$$, then $$\rho(t)\,U_t\lvert v\rangle=\lambda\,U_t\lvert v\rangle$$. So $\rho(t)$ and $\rho(0)$ have **exactly the same spectrum**.
 
@@ -476,7 +482,7 @@ and $WV^\dagger$ is unitary, so $\sigma\in U(d)\cdot\rho$.
 
 So the orbits are labelled exactly by spectra: the set of density operators splits into layers, one for each possible spectrum, and unitary dynamics lives inside a single layer.
 
-One caveat though. A *single* Hamiltonian only traces out a curve inside an orbit. The whole orbit is what all Hamiltonians together can reach. By the spectral theorem(which we basically derived above) every unitary can be written as $U=e^{-iK}$ for some Hermitian $K$, so every element of $U(d)$ is the evolution of some Hamiltonian over some time.
+One caveat though. A *single* Hamiltonian only traces out a curve inside an orbit. The whole orbit is what all Hamiltonians together can reach. By the spectral theorem(don't worry about it if you are not familier) every unitary can be written as $U=e^{-iK}$ for some Hermitian $K$, so every element of $U(d)$ is the evolution of some Hamiltonian over some time.
 
 
 ### § 3.5 The Lax Form
@@ -495,7 +501,11 @@ $$
 \tag{3.12}
 $$
 
-for matrices $L(t)$ and $M(t)$ is called a **Lax equation**, after Peter Lax, who introduced it in 1968 to study nonlinear wave equations. The Von Neumann equation is the simplest case: $M$ is a fixed matrix, so the equation is linear in $L=\rho$. In general $M$ may depend on time, and even on $L$ itself, and then the equation is **nonlinear**. The conservation law of § 3.3 survives anyway.
+for matrices $L(t)$ and $M(t)$ is called a **Lax equation**, after Peter Lax, who introduced it in 1968 to study nonlinear wave equations. 
+<r>
+The Von Neumann equation is the simplest case of this: $M$ is a fixed matrix, so the equation is linear in $L=\rho$.
+<br> 
+In general life is not so simple, $M$ may depend on time, and even on $L$ itself! and then the equation is **nonlinear**. The conservation law of § 3.3 survives anyway.
 
 Suppose $L(t)$ solves Eq. (3.12), and let $U(t)$ solve $\dot U=MU$ with $U(0)=I$. Then
 
@@ -541,16 +551,15 @@ So a symmetry sends solutions to solutions: transforming first and evolving seco
 
 ## § 4 Conclusion
 
-We started by asking whether symmetry can bring some determinism into a quantum world. Both the Schrödinger and the von Neumann equations are already deterministic. What the group structure adds is a precise statement of what the dynamics can never change. The evolution is a conjugation, a group action, and its orbits are labelled by the spectrum of $\rho$. So a state keeps the same purity, the same entropy, the same "amount of ignorance". Symmetries of $H$ add conserved quantities on top.
+We started by asking whether symmetry can bring some determinism into a quantum world. Both the Schrödinger and the von Neumann equations are already deterministic.
+We explored adding a group structure on top and saw what is invartiant in the dynamics. The evolution is a conjugation, a group action, and its orbits are labelled by the spectrum of $\rho$. So a state keeps the same purity, the same entropy, the same "amount of ignorance". Symmetries of $H$ add conserved quantities on top.
 
-The Lax form of § 3.5 shows that this is not special to quantum mechanics. Any equation of the form $\dot L=[M,L]$ is a conjugation flow, even a nonlinear one such as the Toda chain, and so conserves the spectrum of $L$.
+The Lax form of § 3.5 shows that this is not special to quantum mechanics. Any equation of the form $\dot L=[M,L]$ is a conjugation flow, even a nonlinear one, and so conserves the spectrum of $L$.
 
-The picture does have limits. Unitary evolution never leaves its orbit, but a noisy evolution can, for example by turning a pure state into a mixed one and so changing its spectrum. Describing such evolution takes a larger framework, the Lindblad equation. In that setting the group of evolutions loses its inverses, and one is left with a semigroup.
-
+The picture does have limits. Unitary evolution never leaves its orbit, but a noisy evolution can, for example by turning a pure state into a mixed one and so changing its spectrum. Describing such evolution takes a larger framework, the Lindblad equation[^topic]. In that setting the group of evolutions loses its inverses, and one is left with a semigroup.
+[^topic]: A topic for some another day.
 ## References
 
 1. P. D. Lax, "Integrals of nonlinear equations of evolution and solitary waves", *Comm. Pure Appl. Math.* 21 (1968).
-2. H. Flaschka, "The Toda lattice. I. Existence of integrals", *Phys. Rev. B* 9 (1974).
-3. M. Toda, *Theory of Nonlinear Lattices*, Springer.
-4. M. A. Nielsen and I. L. Chuang, *Quantum Computation and Quantum Information*, Cambridge University Press (chapter 2).
-5. M. A. Armstrong, *Groups and Symmetry*, Springer.
+2. M. A. Nielsen and I. L. Chuang, *Quantum Computation and Quantum Information*, Cambridge University Press (chapter 2).
+3. M. A. Armstrong, *Groups and Symmetry*, Springer.
