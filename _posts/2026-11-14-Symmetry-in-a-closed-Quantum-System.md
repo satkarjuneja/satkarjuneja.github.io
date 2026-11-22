@@ -68,25 +68,25 @@ The actual expectation value must therefore be an average of quantum averages:
 
 $$
 \langle A\rangle = \sum_i p_i \,\langle\psi_i\rvert A\lvert\psi_i\rangle .
-\tag{2.3}
+\tag{2.2}
 $$
 
 We simply weight each possible expectation value $\langle\psi_i\rvert A\lvert\psi_i\rangle$ by the probability $p_i$ that it occurs.
 
-Now, we can see that in general this kind of average cannot, be written as $\langle\varphi\rvert A\lvert\varphi\rangle$ for some single ket $\lvert\varphi\rangle$ (as can be seen above). If we want to attribute a "state" to our system, we must therefore generalize the idea of a ket. To do so, we write
+Now, we can see that in general this kind of average cannot be written as $\langle\varphi\rvert A\lvert\varphi\rangle$ for some single ket $\lvert\varphi\rangle$ (as can be seen above). If we want to attribute a "state" to our system, we must therefore generalize the idea of a ket. To do so, we write
 
 $$
 \langle\psi_i\rvert A\lvert\psi_i\rangle = \operatorname{tr}\!\big(A\,\lvert\psi_i\rangle\langle\psi_i\rvert\big).
-\tag{2.4}
+\tag{2.3}
 $$
 
-Substituting this into Eq. (2.3) and using the linearity of the trace gives
+Substituting this into Eq. (2.2) and using the linearity of the trace gives
 
 $$
 \langle A\rangle
 = \sum_i p_i \operatorname{tr}\!\big(A\,\lvert\psi_i\rangle\langle\psi_i\rvert\big)
 = \operatorname{tr}\!\Big(A \sum_i p_i \lvert\psi_i\rangle\langle\psi_i\rvert\Big).
-\tag{2.5}
+\tag{2.4}
 $$
 
 This motivates the following definition.
@@ -96,7 +96,7 @@ The **density operator** (or density matrix) of the system is
 
 $$
 \rho = \sum_i p_i \,\lvert\psi_i\rangle\langle\psi_i\rvert ,
-\tag{2.6}
+\tag{2.5}
 $$
 
 </div>
@@ -120,20 +120,20 @@ Differentiating the density operator in time and using the Schrödinger equation
 <details class="derivation" markdown="1">
 <summary>Show derivation</summary>
 
-Each state in the ensemble evolves under Eq. (2.1), and the probabilities $p_i$ are fixed by the preparation, so they do not depend on time. Taking the adjoint of Eq. (2.1), and using $$H^\dagger = H$$, gives
+Each state in the ensemble evolves under Eq. (2.1), and the probabilities $p_i$ are fixed by the preparation, so they do not depend on time. Taking the adjoint of Eq. (2.1), and using $H^\dagger = H$, gives
 
 $$
 -i\hbar \frac{d}{dt}\langle\psi_i(t)\rvert = \langle\psi_i(t)\rvert H .
-\tag{2.7}
+\tag{2.6}
 $$
 
-Now differentiate Eq. (2.6) with the product rule and substitute Eqs. (2.1) and (2.7):
+Now differentiate Eq. (2.5) with the product rule and substitute Eqs. (2.1) and (2.6):
 
 $$
 i\hbar \frac{d\rho}{dt}
 = \sum_i p_i \Big( \big(i\hbar\,\lvert\dot\psi_i\rangle\big)\langle\psi_i\rvert + \lvert\psi_i\rangle\big(i\hbar\,\langle\dot\psi_i\rvert\big) \Big)
 = \sum_i p_i \Big( H\lvert\psi_i\rangle\langle\psi_i\rvert - \lvert\psi_i\rangle\langle\psi_i\rvert H \Big).
-\tag{2.8}
+\tag{2.7}
 $$
 
 Since $H$ is the same for every member of the ensemble, it factors out of the sum, and the sum is just $\rho$ again.
@@ -144,14 +144,14 @@ The result is the **Von Neumann equation**:
 
 $$
 i\hbar \frac{d\rho}{dt} = H\rho - \rho H = [H,\rho] .
-\tag{2.9}
+\tag{2.8}
 $$
 
 It is the Schrödinger equation rewritten for the density operator, and it holds whether or not the state is pure!
 
 ### § 2.3 Properties of the Density Operator
 
-The density operator $\rho=\sum_i p_i\lvert\psi_i\rangle\langle\psi_i\rvert$ of Eq. (2.6) has the following basic properties.
+The density operator $\rho=\sum_i p_i\lvert\psi_i\rangle\langle\psi_i\rvert$ of Eq. (2.5) has the following basic properties.
 
 **1. Hermiticity.** $\rho^\dagger=\rho$, since each $\lvert\psi_i\rangle\langle\psi_i\rvert$ is Hermitian and the $p_i$ are real.
 
@@ -159,14 +159,14 @@ The density operator $\rho=\sum_i p_i\lvert\psi_i\rangle\langle\psi_i\rvert$ of 
 
 $$
 \operatorname{tr}\rho=\sum_i p_i\langle\psi_i\vert\psi_i\rangle=\sum_i p_i=1 .
-\tag{2.10}
+\tag{2.9}
 $$
 
 **3. Positivity.** For any vector $\lvert\phi\rangle$,
 
 $$
 \langle\phi\rvert\rho\lvert\phi\rangle=\sum_i p_i\,\big\lvert\langle\phi\vert\psi_i\rangle\big\rvert^2\ \ge\ 0 ,
-\tag{2.11}
+\tag{2.10}
 $$
 
 so $\rho\ge 0$. Together with the first two properties, this characterizes a density operator: any operator that is Hermitian, positive and has unit trace describes a valid state.
@@ -180,7 +180,7 @@ Let $\lambda_k$ be the eigenvalues of $\rho$. By properties 1 to 3 they satisfy 
 
 $$
 \operatorname{tr}\rho^2=\sum_k\lambda_k^2\ \le\ \sum_k\lambda_k=1 .
-\tag{2.12}
+\tag{2.11}
 $$
 
 Equality requires $\lambda_k^2=\lambda_k$ for every $k$, so each $\lambda_k$ is $0$ or $1$. Because they sum to $1$, exactly one eigenvalue equals $1$ and the rest vanish. That means $\rho=\lvert\psi\rangle\langle\psi\rvert$ for the corresponding eigenvector, which is a pure state. Conversely, a pure state has eigenvalues $(1,0,\dots,0)$, so $\operatorname{tr}\rho^2=1$.
@@ -191,7 +191,7 @@ That's a lot of properties, but we still need one more thing to describe the rea
 
 <p class="aside">cue the Star Wars music…<br>a long time ago, in a Hilbert space far, far away…</p>
 
-### § 2.4 Introducing the Evolution Operator !
+### § 2.4 Introducing the Evolution Operator
 
 The systems we observe are seldom independent of time (that would be an interesting world). To capture the effect of time, we define an evolution operator.
 
@@ -200,25 +200,40 @@ For a time-independent Hamiltonian $H$, the Schrödinger equation (2.1) is solve
 $$
 \lvert\psi(t)\rangle = U(t)\lvert\psi(0)\rangle ,
 \qquad U(t)=e^{-iHt/\hbar} ,
-\tag{2.13}
+\tag{2.12}
 $$
 
 where $U(t)$ is the **evolution operator**. It is unitary, $U^\dagger U = UU^\dagger = I$. This guarantees that the norm of a state is preserved in time. (The implications of this are huge, as we will realise later.)
 
-Applying Eq. (2.13) to every member of the ensemble in Eq. (2.6), the density operator evolves as
+Applying Eq. (2.12) to every member of the ensemble in Eq. (2.5), the density operator evolves as
 
 $$
 \rho(t) = U(t)\,\rho(0)\,U(t)^\dagger ,
-\tag{2.14}
+\tag{2.13}
 $$
 
-which is the solution of the Von Neumann equation (2.9) for a time-independent $H$. It says that the whole evolution is a unitary conjugation of the initial state.
+which is the solution of the Von Neumann equation (2.8) for a time-independent $H$. It says that the whole evolution is a unitary **conjugation** of the initial state. If that word is new to you, the definition is collapsed below.
+
+<details class="derivation" markdown="1">
+<summary>Show the definition of conjugation</summary>
+
+**Conjugating** an operator $A$ by an invertible operator $V$ means forming
+
+$$
+A \;\longmapsto\; V A V^{-1} .
+$$
+
+For a unitary $U$ we have $U^{-1}=U^\dagger$, so conjugation reads $A\mapsto UAU^\dagger$, which is exactly the form of the evolution in Eq. (2.13).
+
+If you know linear algebra, this might look familiar. It is a **similarity transformation**, the same operation as a change of basis. Matrices related by conjugation describe the same linear map in different bases, and they always have the same eigenvalues.
+
+</details>
 
 ### § 2.5 The Bloch Sphere
 
-Since the evolution operator preserves the norm of a state, the evolution of a single qubit can be seen as a rotation of a point on a sphere. This sphere is called the **Bloch sphere**, and it lets us see the conjugation in Eq. (2.14) as an arrow turning in 3D space.
-<!-- make this foot note -->
-(I haven't told you why this is true, but you'll have to trust me for now)
+Since the evolution operator preserves the norm of a state, the evolution of a single qubit can be seen as a rotation of a point on a sphere. This sphere is called the **Bloch sphere**, and it lets us see the conjugation in Eq. (2.13) as an arrow turning in 3D space.[^trust]
+
+[^trust]: I haven't told you why this is true yet, but you'll have to trust me for now. The collapsed math below and the rotation equation (2.18) give the details.
 
 Every qubit state corresponds to a point in the unit ball. Pure states sit on the surface, and mixed states sit inside it.
 (Don't worry about the formulas, just look at the visualization.)
@@ -232,7 +247,7 @@ $$
 \sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
 \sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
 \sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
-\tag{2.15}
+\tag{2.14}
 $$
 
 Together with $I$ they form a basis of the $2\times 2$ Hermitian matrices, and fixing the trace to $1$ fixes the coefficient of $I$ to $\tfrac12$. Using Hermiticity and unit trace from § 2.3, every qubit density operator can therefore be written as
@@ -240,23 +255,23 @@ Together with $I$ they form a basis of the $2\times 2$ Hermitian matrices, and f
 $$
 \rho = \frac{1}{2}\big(I + \vec n\cdot\vec\sigma\big),
 \qquad \vec n = (n_x, n_y, n_z)\in\mathbb R^3 .
-\tag{2.16}
+\tag{2.15}
 $$
 
-Since $$(\vec n\cdot\vec\sigma)^2=\lvert\vec n\rvert^2 I$$, the eigenvalues of $$\vec n\cdot\vec\sigma$$ are $$\pm\lvert\vec n\rvert$$, and the eigenvalues of $$\rho$$ are
+Since $(\vec n\cdot\vec\sigma)^2=\lvert\vec n\rvert^2 I$, the eigenvalues of $\vec n\cdot\vec\sigma$ are $\pm\lvert\vec n\rvert$, and the eigenvalues of $\rho$ are
 
 $$
 \lambda_\pm=\frac{1\pm\lvert\vec n\rvert}{2} .
-\tag{2.17}
+\tag{2.16}
 $$
 
-Positivity of $\rho$ is therefore exactly $\lvert\vec n\rvert\le 1$. Pure states have $\lvert\vec n\rvert=1$, mixed states have $\lvert\vec n\rvert<1$, and the maximally mixed state $I/2$ sits at the center. The purity is $$\operatorname{tr}\rho^2=\tfrac12\big(1+\lvert\vec n\rvert^2\big)$$.
+Positivity of $\rho$ is therefore exactly $\lvert\vec n\rvert\le 1$. Pure states have $\lvert\vec n\rvert=1$, mixed states have $\lvert\vec n\rvert<1$, and the maximally mixed state $I/2$ sits at the center. The purity is $\operatorname{tr}\rho^2=\tfrac12\big(1+\lvert\vec n\rvert^2\big)$.
 
-Finally, the components of $$\vec n$$ are the spin expectation values:
+Finally, the components of $\vec n$ are the spin expectation values:
 
 $$
 \langle\sigma_i\rangle=\operatorname{tr}(\rho\,\sigma_i)=n_i .
-\tag{2.18}
+\tag{2.17}
 $$
 
 </details>
@@ -265,25 +280,25 @@ Drag the arrow below, or use the sliders.
 
 {% include bloch.html %}
 
-Every time you click and drag your arrow around thats a unitary operation on the qubit
+Every time you click and drag the arrow around, that is a unitary operation on the qubit.
 
-The components $$n_x, n_y, n_z$$ shown above are exactly the measurable spin expectations $$\langle\sigma_x\rangle, \langle\sigma_y\rangle, \langle\sigma_z\rangle$$.
+The components $n_x, n_y, n_z$ shown above are exactly the measurable spin expectations $\langle\sigma_x\rangle, \langle\sigma_y\rangle, \langle\sigma_z\rangle$.
 
-Now let's see what the Von Neumann equation does to this arrow. For a Hamiltonian $H=\tfrac{\hbar\omega}{2}\,\hat m\cdot\vec\sigma$, where $\hat m$ is a unit vector, Eq. (2.9) becomes a rotation:
+Now let's see what the Von Neumann equation does to this arrow. For a Hamiltonian $H=\tfrac{\hbar\omega}{2}\,\hat m\cdot\vec\sigma$, where $\hat m$ is a unit vector, Eq. (2.8) becomes a rotation:
 
 $$
 \dot{\vec n}=\omega\,\hat m\times\vec n .
-\tag{2.19}
+\tag{2.18}
 $$
 
 <details class="derivation" markdown="1">
 <summary>Show derivation</summary>
 
-From $$\sigma_i\sigma_j=\delta_{ij}I+i\epsilon_{ijk}\sigma_k$$ we get $$(\vec a\cdot\vec\sigma)(\vec b\cdot\vec\sigma)=\vec a\cdot\vec b\,I+i(\vec a\times\vec b)\cdot\vec\sigma$$, so
+From $\sigma_i\sigma_j=\delta_{ij}I+i\epsilon_{ijk}\sigma_k$ we get $(\vec a\cdot\vec\sigma)(\vec b\cdot\vec\sigma)=\vec a\cdot\vec b\,I+i(\vec a\times\vec b)\cdot\vec\sigma$, so
 
 $$
 [\vec a\cdot\vec\sigma,\ \vec b\cdot\vec\sigma]=2i\,(\vec a\times\vec b)\cdot\vec\sigma .
-\tag{2.20}
+\tag{2.19}
 $$
 
 The identity part of $\rho$ commutes with everything, so only $\vec n\cdot\vec\sigma$ contributes:
@@ -292,16 +307,14 @@ $$
 \dot\rho=-\frac{i}{\hbar}[H,\rho]
 =-\frac{i}{\hbar}\cdot\frac{\hbar\omega}{4}\,[\hat m\cdot\vec\sigma,\ \vec n\cdot\vec\sigma]
 =\frac{\omega}{2}\,(\hat m\times\vec n)\cdot\vec\sigma ,
-\tag{2.21}
+\tag{2.20}
 $$
 
-and comparing with $$\dot\rho=\tfrac12\dot{\vec n}\cdot\vec\sigma$$ gives Eq. (2.19).
+and comparing with $\dot\rho=\tfrac12\dot{\vec n}\cdot\vec\sigma$ gives Eq. (2.18).
 
 </details>
 
-This is a rotation about $\hat m$ at angular speed $\omega$, so the arrow travels along a circle and its length $\lvert\vec n\rvert$ never changes. This matches Eq. (2.17), since the eigenvalues of $\rho$, and with them the purity, are conserved by unitary evolution. In the visualization, moving the arrow around while keeping $r$ fixed therefore corresponds to a possible evolution of the state, while changing $r$ would need something that is not unitary.
-
-## § 3. Symmetry in the Von Neumann Equation
+This is a rotation about $\hat m$ at angular speed $\omega$, so the arrow travels along a circle and its length $\lvert\vec n\rvert$ never changes. This matches Eq. (2.16), since the eigenvalues of $\rho$, and with them the purity, are conserved by unitary evolution. In the visualization, moving the arrow around while keeping $r=\lvert\vec n\rvert$ fixed therefore corresponds to a possible evolution of the state, while changing $r$ would need something that is not unitary.## § 3. Symmetry in the Von Neumann Equation
 
 ### § 3.1 Properties of the Von Neumann Equation[^props]
 
@@ -392,22 +405,7 @@ $$
 
 ### § 3.3 What path can the evolution follow?
 
-<details class="derivation" markdown="1">
-<summary>Show the definition of conjugation</summary>
-
-**Conjugating** an operator $A$ by an invertible operator $V$ means forming
-
-$$
-A \;\longmapsto\; V A V^{-1} .
-$$
-
-For a unitary $U$ we have $U^{-1}=U^\dagger$, so conjugation reads $A\mapsto UAU^\dagger$, which is exactly the form of the evolution in Eq. (2.14).
-
-If you know linear algebra, this might look familiar. It is a **similarity transformation**, the same operation as a change of basis. Matrices related by conjugation describe the same linear map in different bases, and they always have the same eigenvalues.
-
-</details>
-
-Since the evolution is a conjugation, the conserved quantities are easy to find. For any $n$,
+Since the evolution is a conjugation (see § 2.4), the conserved quantities are easy to find. For any $n$,
 
 $$
 \operatorname{tr}\big(\rho(t)^n\big)=\operatorname{tr}\big[(U\rho U^\dagger)^n\big]=\operatorname{tr}\big[U\rho^nU^\dagger\big]=\operatorname{tr}\big(\rho^n\big),
@@ -421,8 +419,9 @@ where we used $U^\dagger U=I$ to collapse the product, and then the cyclicity of
 Two consequences stand out:
 
 - The purity $\operatorname{tr}\rho^2$ is conserved, so a pure state stays pure.
-- The von Neumann entropy $S(\rho)=-\operatorname{tr}(\rho\ln\rho)$ is conserved, so a mixed state stays exactly as mixed as it started.(Now this is huge)
-<!-- Footnote: meaning any evolution operator cant even change the entropy or a state and whatever else this implies -->
+- The von Neumann entropy $S(\rho)=-\operatorname{tr}(\rho\ln\rho)$ is conserved, so a mixed state stays exactly as mixed as it started. (Now this is huge.)[^entropy]
+
+[^entropy]: The entropy depends only on the eigenvalues of $\rho$, $S(\rho)=-\sum_k\lambda_k\ln\lambda_k$, and unitary evolution cannot change the spectrum. So no evolution operator, however cleverly chosen, can turn a mixed state into a pure one, or the other way around. Lowering the entropy of a system (cooling it, resetting a qubit) needs something that is not unitary, such as a measurement or a coupling to a larger system that carries the entropy away. It also means that when the entropy of a subsystem does change, the subsystem is not isolated: it is entangled with something else.
 
 Unitary evolution can never turn our ignorance about the state into knowledge, or the other way around. The spectrum is the part of $\rho$ that the dynamics cannot touch.
 
@@ -513,7 +512,7 @@ for matrices $L(t)$ and $M(t)$ is called a **Lax equation**, after Peter Lax, wh
 <br>
 The Von Neumann equation is the simplest case of this: $M$ is a fixed matrix, so the equation is linear in $L=\rho$.
 <br>
-In general, life is not so simple: $M$ may depend on time, and even on $L$ itself! Then the equation is <b>nonlinear</b>. The conservation law of § 3.3 survives anyway.
+In general, life is not so simple: $M$ may depend on time, and even on $L$ itself! Then the equation is **nonlinear**. The conservation law of § 3.3 survives anyway.
 
 Suppose $L(t)$ solves Eq. (3.12), and let $U(t)$ solve $\dot U=MU$ with $U(0)=I$. Then
 
@@ -522,7 +521,7 @@ L(t)=U(t)\,L(0)\,U(t)^{-1} .
 \tag{3.13}
 $$
 
-So $L(t)$ is a conjugation of $L(0)$, exactly as in § 3.3, and **the spectrum of $L$ is conserved**. Equivalently, every $\operatorname{tr}L^n$ is conserved. If $M$ is anti-Hermitian, as it is for the Von Neumann equation, then $U(t)$ is unitary and the flow stays inside an orbit of § 3.4.
+So $L(t)$ is a conjugation of $L(0)$, exactly as in § 2.4, and **the spectrum of $L$ is conserved**. Equivalently, every $\operatorname{tr}L^n$ is conserved. If $M$ is anti-Hermitian, as it is for the Von Neumann equation, then $U(t)$ is unitary and the flow stays inside an orbit of § 3.4.
 
 <details class="derivation" markdown="1">
 <summary>Show derivation</summary>
@@ -543,8 +542,7 @@ $$
 
 </details>
 <br>
-The conservation law of § 3.3 is therefore not special to quantum mechanics! It is a feature of the commutator form itself. Equations of this type are central in the study of integrable systems.
-<!-- maybe a wiki link to integrable systems -->
+The conservation law of § 3.3 is therefore not special to quantum mechanics! It is a feature of the commutator form itself. Equations of this type are central in the study of [integrable systems](https://en.wikipedia.org/wiki/Integrable_system).
 
 To see this in action, take a $2\times 2$ example where $M$ is built out of $L$ itself:
 
@@ -559,11 +557,11 @@ $$
 \dot b_1=2a^2,\qquad \dot b_2=-2a^2,\qquad \dot a=a\,(b_2-b_1),
 $$
 
-so the entries of $L$ clearly change in time. Yet the eigenvalues, $\lambda_\pm=s\pm\sqrt{d^2+a^2}$ with $s=\tfrac{b_1+b_2}{2}$ and $d=\tfrac{b_1-b_2}{2}$, do not. Pick a starting matrix below and watch.
+so the entries of $L$ clearly change in time. Yet the eigenvalues, $\lambda_\pm=s\pm\sqrt{d^2+a^2}$ with $s=\tfrac{b_1+b_2}{2}$ and $d=\tfrac{b_1-b_2}{2}$, do not. Pick a starting matrix below and press restart.
 
 {% include lax.html %}
 
-The coloured curves are the entries of $L$, the dashed lines are $\lambda_\pm$ recomputed from the current matrix at every instant. The entries move, the dashed lines do not.
+The coloured curves are the entries of $L$, and the dashed lines are $\lambda_\pm$ recomputed from the current matrix at every instant. The entries move, the dashed lines do not.
 
 <details class="derivation" markdown="1">
 <summary>Show why</summary>
@@ -578,7 +576,12 @@ Both $s$ and $d^2+a^2$ are constant, and so are $\lambda_\pm$.
 
 </details>
 
-In this example the flow also does something extra: unless $a=0$, the off-diagonal entry decays to zero and $L$ settles into a diagonal matrix with the eigenvalues on the diagonal, $b_1\to\lambda_+$ and $b_2\to\lambda_-$. The spectrum never changed, it just became visible.
+In this example the flow also does something extra: unless $a=0$, the off-diagonal entry decays to zero and $L$ settles into a diagonal matrix with the eigenvalues on the diagonal, $b_1\to\lambda_+$ and $b_2\to\lambda_-$. The spectrum never changed.
+<br>
+This is the isospectrality of the Lax equation!
+<br>
+Now why should we care about this example, or even about the Lax equation?
+Writing a nonlinear equation as $\dot L=[M,L]$ handed us conserved quantities for free, namely every $\operatorname{tr}L^n$, with no need to look for symmetries. Lax introduced it for the Korteweg-de Vries equation, where $L$ is a Schrödinger operator and its conserved eigenvalues are the speeds of the solitons. The example above is the two-particle Toda lattice, and its flow towards a diagonal matrix is a continuous cousin of the QR algorithm used to compute eigenvalues. Having a Lax pair does not by itself guarantee that a system is solvable, but it is the standard first sign that one is dealing with an integrable system.
 
 ### § 3.6 Symmetries of the Hamiltonian
 
@@ -593,12 +596,15 @@ So a symmetry sends solutions to solutions: transforming first and evolving seco
 
 ## § 4. Conclusion
 
-We started by asking whether symmetry can bring some determinism into a quantum world. Both the Schrödinger and the von Neumann equations are already deterministic.
-We explored adding a group structure on top and saw what is invariant in the dynamics. The evolution is a conjugation, a group action, and its orbits are labelled by the spectrum of $\rho$. So a state keeps the same purity, the same entropy, the same "amount of ignorance". Symmetries of $H$ add conserved quantities on top.
+We started by asking which properties of a quantum state are invariant under unitary evolution. We got an interesting answer: **the spectrum of $\rho$ never changes**.
+<br>
+Every $\operatorname{tr}(\rho^n)$ is conserved, and with them the purity and the entropy: a pure state stays pure, and a mixed state stays exactly as mixed as it began. Unitary evolution can never turn our ignorance about the state into knowledge, or the other way around. On top of this, the expectation value of every observable that commutes with $H$ is conserved too, and the symmetries of $H$ are the source of such observables.
 
-The Lax form of § 3.5 shows that this is not special to quantum mechanics. Any equation of the form $\dot L=[M,L]$ is a conjugation flow, even a nonlinear one, and so conserves the spectrum of $L$.
+The reason was group structure. The evolution operators form a group, and acting on states by conjugation, $\rho\mapsto U\rho U^\dagger$, this group moves a state only within its own orbit. Two density operators lie in the same orbit exactly when they have the same eigenvalues, so the spectrum is precisely the label of the orbit.
 
-The picture does have limits. Unitary evolution never leaves its orbit, but a noisy evolution can, for example by turning a pure state into a mixed one and so changing its spectrum. Describing such evolution takes a larger framework, the Lindblad equation[^topic]. In that setting the group of evolutions loses its inverses, and one is left with a semigroup.
+Finally, the Lax form of § 3.5 shows that this is not special to quantum mechanics. Any equation of the form $\dot L=[M,L]$ is a conjugation flow, even a nonlinear one, and so conserves the spectrum of $L$. The conservation law is a feature of the commutator itself.
+
+The picture does have limits. Unitary evolution never leaves its orbit, but a noisy evolution can, for example by turning a pure state into a mixed one and so changing its spectrum. Describing such evolution takes a larger framework, the Lindblad equation.[^topic] In that setting the group of evolutions loses its inverses, and one is left with a semigroup.
 
 [^topic]: A topic for another day.
 
