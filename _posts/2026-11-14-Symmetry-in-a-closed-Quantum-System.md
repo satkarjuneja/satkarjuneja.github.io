@@ -579,26 +579,20 @@ Both $s$ and $d^2+a^2$ are constant, and so are $\lambda_\pm$.
 In this example the flow also does something extra: unless $a=0$, the off-diagonal entry decays to zero and $L$ settles into a diagonal matrix with the eigenvalues on the diagonal, $b_1\to\lambda_+$ and $b_2\to\lambda_-$. The spectrum never changed.
 <br>
 This is the isospectrality of the Lax equation!
-<br>
+
+### § 3.6 Why Care About the Lax Equation?
+
 Now why should we care about this example, or even about the Lax equation?
-Writing a nonlinear equation as $\dot L=[M,L]$ handed us conserved quantities for free, namely every $\operatorname{tr}L^n$, with no need to look for symmetries. Lax introduced it for the Korteweg-de Vries equation, where $L$ is a Schrödinger operator and its conserved eigenvalues are the speeds of the solitons. The example above is the two-particle Toda lattice, and its flow towards a diagonal matrix is a continuous cousin of the QR algorithm used to compute eigenvalues. Having a Lax pair does not by itself guarantee that a system is solvable, but it is the standard first sign that one is dealing with an integrable system.
 
-### § 3.6 Symmetries of the Hamiltonian
+Writing a nonlinear equation as $\dot L=[M,L]$ handed us conserved quantities for free, namely every $\operatorname{tr}L^n$, with no need to look for symmetries. Lax introduced it for the Korteweg-de Vries equation, where $L$ is a Schrödinger operator and its conserved eigenvalues are the speeds of the solitons.
 
-So far the group $U(d)$ acted on states from outside. The symmetries of the system itself form a smaller group. Suppose a unitary $V$ commutes with $H$. If $\rho(t)$ solves Eq. (2.9), then $\sigma(t)=V\rho(t)V^\dagger$ solves it too:
-
-$$
-\dot\sigma=-\frac{i}{\hbar}V[H,\rho]V^\dagger=-\frac{i}{\hbar}[VHV^\dagger,\sigma]=-\frac{i}{\hbar}[H,\sigma] .
-\tag{3.14}
-$$
-
-So a symmetry sends solutions to solutions: transforming first and evolving second gives the same answer as evolving first and transforming second. The set of all such $V$ is a group, the **symmetry group of $H$**. Its infinitesimal generators are Hermitian operators commuting with $H$, and by Eq. (3.3) these are exactly the conserved quantities.
+The example above is the two-particle Toda lattice, and its flow towards a diagonal matrix is a continuous cousin of the QR algorithm used to compute eigenvalues. Having a Lax pair does not by itself guarantee that a system is solvable, but it is the standard first sign that one is dealing with an integrable system.
 
 ## § 4. Conclusion
 
 We started by asking which properties of a quantum state are invariant under unitary evolution. We got an interesting answer: **the spectrum of $\rho$ never changes**.
 <br>
-Every $\operatorname{tr}(\rho^n)$ is conserved, and with them the purity and the entropy: a pure state stays pure, and a mixed state stays exactly as mixed as it began. Unitary evolution can never turn our ignorance about the state into knowledge, or the other way around. On top of this, the expectation value of every observable that commutes with $H$ is conserved too, and the symmetries of $H$ are the source of such observables.
+Every $\operatorname{tr}(\rho^n)$ is conserved, and with them the purity and the entropy: a pure state stays pure, and a mixed state stays exactly as mixed as it began. Unitary evolution can never turn our ignorance about the state into knowledge, or the other way around. On top of this, the expectation value of every observable that commutes with $H$ is conserved too.
 
 The reason was group structure. The evolution operators form a group, and acting on states by conjugation, $\rho\mapsto U\rho U^\dagger$, this group moves a state only within its own orbit. Two density operators lie in the same orbit exactly when they have the same eigenvalues, so the spectrum is precisely the label of the orbit.
 
