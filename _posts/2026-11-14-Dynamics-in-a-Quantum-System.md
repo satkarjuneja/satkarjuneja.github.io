@@ -314,7 +314,9 @@ and comparing with $\dot\rho=\tfrac12\dot{\vec n}\cdot\vec\sigma$ gives Eq. (2.1
 
 </details>
 
-This is a rotation about $\hat m$ at angular speed $\omega$, so the arrow travels along a circle and its length $\lvert\vec n\rvert$ never changes. This matches Eq. (2.16), since the eigenvalues of $\rho$, and with them the purity, are conserved by unitary evolution. In the visualization, moving the arrow around while keeping $r=\lvert\vec n\rvert$ fixed therefore corresponds to a possible evolution of the state, while changing $r$ would need something that is not unitary.## § 3. Symmetry in the Von Neumann Equation
+This is a rotation about $\hat m$ at angular speed $\omega$, so the arrow travels along a circle and its length $\lvert\vec n\rvert$ never changes. This matches Eq. (2.16), since the eigenvalues of $\rho$, and with them the purity, are conserved by unitary evolution. In the visualization, moving the arrow around while keeping $r=\lvert\vec n\rvert$ fixed therefore corresponds to a possible evolution of the state, while changing $r$ would need something that is not unitary.
+<br>
+## § 3. Symmetry in the Von Neumann Equation
 
 ### § 3.1 Properties of the Von Neumann Equation[^props]
 
