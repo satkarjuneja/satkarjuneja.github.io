@@ -582,7 +582,7 @@ This is the isospectrality of the Lax equation!
 
 ### § 3.6 Why Care About the Lax Equation?
 
-Now why should we care about this example, or even about the Lax equation?
+Now, you would be thinking "Why should I care ?" about this example, or even about the Lax equation hold that thought.
 
 Writing a nonlinear equation as $\dot L=[M,L]$ handed us conserved quantities for free, namely every $\operatorname{tr}L^n$, with no need to look for symmetries. Lax introduced it for the Korteweg-de Vries equation, where $L$ is a Schrödinger operator and its conserved eigenvalues are the speeds of the solitons.
 
@@ -594,7 +594,7 @@ We started by asking which properties of a quantum state are invariant under uni
 <br>
 Every $\operatorname{tr}(\rho^n)$ is conserved, and with them the purity and the entropy: a pure state stays pure, and a mixed state stays exactly as mixed as it began. Unitary evolution can never turn our ignorance about the state into knowledge, or the other way around. On top of this, the expectation value of every observable that commutes with $H$ is conserved too.
 
-The reason was group structure. The evolution operators form a group, and acting on states by conjugation, $\rho\mapsto U\rho U^\dagger$, this group moves a state only within its own orbit. Two density operators lie in the same orbit exactly when they have the same eigenvalues, so the spectrum is precisely the label of the orbit.
+The reason was group structure. The evolution operators form a group, and acting on states by conjugation, $\rho\mapsto U\rho U^\dagger$, this group moves a state only within its own orbit.
 
 Finally, the Lax form of § 3.5 shows that this is not special to quantum mechanics. Any equation of the form $\dot L=[M,L]$ is a conjugation flow, even a nonlinear one, and so conserves the spectrum of $L$. The conservation law is a feature of the commutator itself.
 
