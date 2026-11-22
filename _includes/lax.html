@@ -1,0 +1,123 @@
+<div id="lx-wrap">
+<canvas id="lx-canvas" width="360" height="260"></canvas>
+<div id="lx-panel">
+<div class="lx-row"><label>b₁(0) <span id="lx-b1-v"></span></label><input type="range" id="lx-b1" min="-2" max="2" step="0.05" value="1.5"></div>
+<div class="lx-row"><label>b₂(0) <span id="lx-b2-v"></span></label><input type="range" id="lx-b2" min="-2" max="2" step="0.05" value="-0.5"></div>
+<div class="lx-row"><label>a(0) <span id="lx-a-v"></span></label><input type="range" id="lx-a" min="-2" max="2" step="0.05" value="1"></div>
+<div class="lx-btns"><button id="lx-play" type="button">Pause</button><button id="lx-reset" type="button">Restart</button></div>
+<div id="lx-L"><span class="lx-half">L(t) =</span><div class="lx-mat"><span id="lx-m00"></span><span id="lx-m01"></span><span id="lx-m10"></span><span id="lx-m11"></span></div></div>
+<div class="lx-out" id="lx-eig"></div>
+</div>
+</div>
+<style>
+#lx-wrap { display:flex; flex-wrap:wrap; gap:20px; align-items:center; justify-content:center; margin:1.5em 0; padding:14px; background:rgba(59,62,58,0.6); border-left:4px solid rgb(10,185,42); border-radius:0 10px 10px 0; }
+#lx-canvas { max-width:100%; }
+#lx-panel { width:300px; max-width:100%; font-size:18px; }
+.lx-row { margin-bottom:8px; }
+.lx-row label { display:block; color:rgb(176,230,13); }
+.lx-row input { width:100%; accent-color:rgb(10,185,42); }
+.lx-btns { display:flex; gap:10px; margin:10px 0; }
+.lx-btns button { flex:1; padding:6px 0; font-family:inherit; font-size:16px; color:whitesmoke; background:rgb(50,52,53); border:1px solid rgb(10,185,42); border-radius:6px; cursor:pointer; }
+.lx-btns button:hover { background:rgb(10,185,42); color:#000; }
+#lx-L { display:flex; align-items:center; gap:10px; margin-top:12px; font-size:16px; }
+.lx-half { white-space:nowrap; }
+.lx-mat { position:relative; display:inline-grid; grid-template-columns:8ch 8ch; gap:6px 14px; padding:4px 16px; font-family:monospace; font-size:14px; font-variant-numeric:tabular-nums; }
+.lx-mat span { text-align:center; white-space:nowrap; }
+.lx-mat::before, .lx-mat::after { content:""; position:absolute; top:0; bottom:0; width:7px; border:2px solid whitesmoke; }
+.lx-mat::before { left:0; border-right:none; }
+.lx-mat::after { right:0; border-left:none; }
+.lx-out { margin-top:10px; font-size:16px; line-height:1.5; white-space:pre; min-height:4.6em; }
+</style>
+<script>
+(function () {
+  var cv = document.getElementById("lx-canvas"), ctx = cv.getContext("2d");
+  var W = 360, H = 260, PL = 34, PR = 10, PT = 12, PB = 22;
+  var YMAX = 5, TWIN = 8, DT = 0.005, STEPS = 6;
+  var st, t, hist, playing = true;
+  var GREEN = "rgb(10,185,42)", AMBER = "#e0a526", CYAN = "#4fc3d9";
+  function F(s) { return [2 * s[2] * s[2], -2 * s[2] * s[2], s[2] * (s[1] - s[0])]; }
+  function add(s, k, h) { return [s[0] + h * k[0], s[1] + h * k[1], s[2] + h * k[2]]; }
+  function rk4(s) {
+    var k1 = F(s), k2 = F(add(s, k1, DT / 2)), k3 = F(add(s, k2, DT / 2)), k4 = F(add(s, k3, DT));
+    return [0, 1, 2].map(function (i) { return s[i] + DT / 6 * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]); });
+  }
+  function eig(s) {
+    var m = (s[0] + s[1]) / 2, d = (s[0] - s[1]) / 2, r = Math.sqrt(d * d + s[2] * s[2]);
+    return [m + r, m - r, d * d + s[2] * s[2]];
+  }
+  function sg(x, n) { var k = Math.pow(10, n); x = Math.round(x * k) / k; return (x >= 0 ? "+" : "−") + Math.abs(x).toFixed(n); }
+  function X(tt, t0) { return PL + (tt - t0) / TWIN * (W - PL - PR); }
+  function Y(v) { return PT + (YMAX - v) / (2 * YMAX) * (H - PT - PB); }
+  function series(t0, pick, col, dash) {
+    ctx.strokeStyle = col; ctx.lineWidth = dash ? 1.5 : 2; ctx.setLineDash(dash ? [5, 4] : []);
+    ctx.beginPath();
+    for (var i = 0; i < hist.length; i++) {
+      var p = hist[i], x = X(p.t, t0), y = Y(pick(p));
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  function draw() {
+    var t0 = Math.max(0, t - TWIN), v;
+    ctx.clearRect(0, 0, W, H);
+    ctx.font = "11px monospace"; ctx.textAlign = "right"; ctx.textBaseline = "middle";
+    for (v = -4; v <= 4; v += 2) {
+      ctx.strokeStyle = v === 0 ? "rgba(255,255,255,0.45)" : "rgba(255,255,255,0.12)"; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(PL, Y(v)); ctx.lineTo(W - PR, Y(v)); ctx.stroke();
+      ctx.fillStyle = "lightgray"; ctx.fillText(String(v), PL - 6, Y(v));
+    }
+    ctx.strokeStyle = "rgba(255,255,255,0.5)"; ctx.strokeRect(PL, PT, W - PL - PR, H - PT - PB);
+    ctx.textAlign = "right"; ctx.textBaseline = "alphabetic"; ctx.fillStyle = "lightgray";
+    ctx.fillText("t = " + t.toFixed(1), W - PR, H - 6);
+    ctx.save(); ctx.beginPath(); ctx.rect(PL, PT, W - PL - PR, H - PT - PB); ctx.clip();
+    series(t0, function (p) { return p.s[0]; }, GREEN, false);
+    series(t0, function (p) { return p.s[1]; }, AMBER, false);
+    series(t0, function (p) { return p.s[2]; }, CYAN, false);
+    series(t0, function (p) { return p.e[0]; }, "whitesmoke", true);
+    series(t0, function (p) { return p.e[1]; }, "whitesmoke", true);
+    ctx.restore();
+    ctx.textAlign = "left"; ctx.font = "12px monospace";
+    ctx.fillStyle = GREEN; ctx.fillText("b₁", PL + 6, H - 6);
+    ctx.fillStyle = AMBER; ctx.fillText("b₂", PL + 30, H - 6);
+    ctx.fillStyle = CYAN; ctx.fillText("a", PL + 54, H - 6);
+    ctx.fillStyle = "whitesmoke"; ctx.fillText("- - λ±", PL + 72, H - 6);
+  }
+  function readout() {
+    var e = eig(st);
+    document.getElementById("lx-m00").textContent = sg(st[0], 3);
+    document.getElementById("lx-m01").textContent = sg(st[2], 3);
+    document.getElementById("lx-m10").textContent = sg(st[2], 3);
+    document.getElementById("lx-m11").textContent = sg(st[1], 3);
+    document.getElementById("lx-eig").textContent =
+      "λ₊ = " + sg(e[0], 4) + "\nλ₋ = " + sg(e[1], 4) + "\nd²+a² = " + e[2].toFixed(4);
+  }
+  function snap() { hist.push({ t: t, s: st.slice(), e: eig(st) }); }
+  function reset() {
+    var b1 = parseFloat(document.getElementById("lx-b1").value);
+    var b2 = parseFloat(document.getElementById("lx-b2").value);
+    var a = parseFloat(document.getElementById("lx-a").value);
+    document.getElementById("lx-b1-v").textContent = "= " + b1.toFixed(2);
+    document.getElementById("lx-b2-v").textContent = "= " + b2.toFixed(2);
+    document.getElementById("lx-a-v").textContent = "= " + a.toFixed(2);
+    st = [b1, b2, a]; t = 0; hist = []; snap(); readout(); draw();
+  }
+  function tick() {
+    if (playing) {
+      for (var i = 0; i < STEPS; i++) { st = rk4(st); t += DT; }
+      snap();
+      while (hist.length > 1 && hist[0].t < t - TWIN - 0.5) hist.shift();
+      readout(); draw();
+    }
+    requestAnimationFrame(tick);
+  }
+  ["lx-b1", "lx-b2", "lx-a"].forEach(function (id) {
+    document.getElementById(id).addEventListener("input", reset);
+  });
+  document.getElementById("lx-reset").addEventListener("click", reset);
+  document.getElementById("lx-play").addEventListener("click", function () {
+    playing = !playing; this.textContent = playing ? "Pause" : "Play";
+  });
+  reset();
+  tick();
+})();
+</script>

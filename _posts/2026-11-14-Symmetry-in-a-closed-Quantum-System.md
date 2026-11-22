@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Draft: Symmetry in a Quantum System"
+title: "Dynamics in a Quantum System"
 date: 2026-11-14
 ---
 
@@ -19,7 +19,7 @@ So how does this theory handle the most important aspect of our world, **dynamic
 
 **Given a quantum system undergoing unitary evolution, which properties of its state are invariant under the dynamics?**
 
-To answer it, we first reformulate quantum mechanics using density operators (§ 2). Then we study the structure of the evolution itself (§ 3).
+To answer it, we first reformulate quantum mechanics using density operators (§ 2). Then we study the structure of the evolution itself (§ 3) and generalise it.
 
 ## § 2. From Schrödinger to Von Neumann
 
@@ -73,7 +73,7 @@ $$
 
 We simply weight each possible expectation value $\langle\psi_i\rvert A\lvert\psi_i\rangle$ by the probability $p_i$ that it occurs.
 
-It is important to realize that this type of average cannot, in general, be written as $\langle\varphi\rvert A\lvert\varphi\rangle$ for some single ket $\lvert\varphi\rangle$ (as can be seen above). If we want to attribute a "state" to our system, we must therefore generalize the idea of a ket. To do so, we write
+Now, we can see that in general this kind of average cannot, be written as $\langle\varphi\rvert A\lvert\varphi\rangle$ for some single ket $\lvert\varphi\rangle$ (as can be seen above). If we want to attribute a "state" to our system, we must therefore generalize the idea of a ket. To do so, we write
 
 $$
 \langle\psi_i\rvert A\lvert\psi_i\rangle = \operatorname{tr}\!\big(A\,\lvert\psi_i\rangle\langle\psi_i\rvert\big).
@@ -191,9 +191,9 @@ That's a lot of properties, but we still need one more thing to describe the rea
 
 <p class="aside">cue the Star Wars music…<br>a long time ago, in a Hilbert space far, far away…</p>
 
-### § 2.4 The Evolution Operator
+### § 2.4 Introducing the Evolution Operator !
 
-The systems we observe are seldom independent of time (that would be an interesting world!). To capture the effect of time, we define an evolution operator.
+The systems we observe are seldom independent of time (that would be an interesting world). To capture the effect of time, we define an evolution operator.
 
 For a time-independent Hamiltonian $H$, the Schrödinger equation (2.1) is solved by
 
@@ -217,6 +217,8 @@ which is the solution of the Von Neumann equation (2.9) for a time-independent $
 ### § 2.5 The Bloch Sphere
 
 Since the evolution operator preserves the norm of a state, the evolution of a single qubit can be seen as a rotation of a point on a sphere. This sphere is called the **Bloch sphere**, and it lets us see the conjugation in Eq. (2.14) as an arrow turning in 3D space.
+<!-- make this foot note -->
+(I haven't told you why this is true, but you'll have to trust me for now)
 
 Every qubit state corresponds to a point in the unit ball. Pure states sit on the surface, and mixed states sit inside it.
 (Don't worry about the formulas, just look at the visualization.)
@@ -263,9 +265,11 @@ Drag the arrow below, or use the sliders.
 
 {% include bloch.html %}
 
+Every time you click and drag your arrow around thats a unitary operation on the qubit
+
 The components $$n_x, n_y, n_z$$ shown above are exactly the measurable spin expectations $$\langle\sigma_x\rangle, \langle\sigma_y\rangle, \langle\sigma_z\rangle$$.
 
-Now let us see what the Von Neumann equation does to this arrow. For a Hamiltonian $H=\tfrac{\hbar\omega}{2}\,\hat m\cdot\vec\sigma$, where $\hat m$ is a unit vector, Eq. (2.9) becomes a rotation:
+Now let's see what the Von Neumann equation does to this arrow. For a Hamiltonian $H=\tfrac{\hbar\omega}{2}\,\hat m\cdot\vec\sigma$, where $\hat m$ is a unit vector, Eq. (2.9) becomes a rotation:
 
 $$
 \dot{\vec n}=\omega\,\hat m\times\vec n .
@@ -383,6 +387,8 @@ $$
 $$
 
 </details>
+<br>
+<br>
 
 ### § 3.3 What path can the evolution follow?
 
@@ -415,7 +421,8 @@ where we used $U^\dagger U=I$ to collapse the product, and then the cyclicity of
 Two consequences stand out:
 
 - The purity $\operatorname{tr}\rho^2$ is conserved, so a pure state stays pure.
-- The von Neumann entropy $S(\rho)=-\operatorname{tr}(\rho\ln\rho)$ is conserved, so a mixed state stays exactly as mixed as it started.
+- The von Neumann entropy $S(\rho)=-\operatorname{tr}(\rho\ln\rho)$ is conserved, so a mixed state stays exactly as mixed as it started.(Now this is huge)
+<!-- Footnote: meaning any evolution operator cant even change the entropy or a state and whatever else this implies -->
 
 Unitary evolution can never turn our ignorance about the state into knowledge, or the other way around. The spectrum is the part of $\rho$ that the dynamics cannot touch.
 
@@ -535,8 +542,43 @@ $$
 $$
 
 </details>
+<br>
+The conservation law of § 3.3 is therefore not special to quantum mechanics! It is a feature of the commutator form itself. Equations of this type are central in the study of integrable systems.
+<!-- maybe a wiki link to integrable systems -->
 
-The conservation law of § 3.3 is therefore not special to quantum mechanics. It is a feature of the commutator form itself. Equations of this type are central in the study of integrable systems, a subject we only point to here.
+To see this in action, take a $2\times 2$ example where $M$ is built out of $L$ itself:
+
+$$
+L=\begin{pmatrix}b_1&a\\a&b_2\end{pmatrix},\qquad
+M=\begin{pmatrix}0&a\\-a&0\end{pmatrix}.
+$$
+
+The entry $a$ of $M$ is an entry of $L$, so this equation is **nonlinear**. The commutator $[M,L]$ gives
+
+$$
+\dot b_1=2a^2,\qquad \dot b_2=-2a^2,\qquad \dot a=a\,(b_2-b_1),
+$$
+
+so the entries of $L$ clearly change in time. Yet the eigenvalues, $\lambda_\pm=s\pm\sqrt{d^2+a^2}$ with $s=\tfrac{b_1+b_2}{2}$ and $d=\tfrac{b_1-b_2}{2}$, do not. Pick a starting matrix below and watch.
+
+{% include lax.html %}
+
+The coloured curves are the entries of $L$, the dashed lines are $\lambda_\pm$ recomputed from the current matrix at every instant. The entries move, the dashed lines do not.
+
+<details class="derivation" markdown="1">
+<summary>Show why</summary>
+
+Adding the first two equations gives $\dot s=0$. For $d$ we get $\dot d=2a^2$, so
+
+$$
+\frac{d}{dt}\big(d^2+a^2\big)=2d\cdot 2a^2+2a\cdot a(b_2-b_1)=4a^2d-4a^2d=0 .
+$$
+
+Both $s$ and $d^2+a^2$ are constant, and so are $\lambda_\pm$.
+
+</details>
+
+In this example the flow also does something extra: unless $a=0$, the off-diagonal entry decays to zero and $L$ settles into a diagonal matrix with the eigenvalues on the diagonal, $b_1\to\lambda_+$ and $b_2\to\lambda_-$. The spectrum never changed, it just became visible.
 
 ### § 3.6 Symmetries of the Hamiltonian
 
