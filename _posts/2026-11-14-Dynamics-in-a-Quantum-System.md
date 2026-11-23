@@ -60,7 +60,7 @@ Why would we ever need to describe a system like this?
 Imagine a machine that prepares quantum systems in certain states. <br>
 It could be an oven shooting out spin-1/2 particles, or a quantum-optics setup producing photons. <br>
 
-Now suppose the apparatus is imperfect (perhaps a toaster that always burns your bread), so it does not always produce the same state. That is, it produces the state $\lvert\psi_1\rangle$ with probability $p_1$, the state $\lvert\psi_2\rangle$ with probability $p_2$, and so on. Here we are introducing a *classical* uncertainty: each $\lvert\psi_i\rangle$ is a quantum state, but we simply do not know which one comes out of the machine! We may have as many $p_i$ as we like, provided they satisfy the usual properties of a probability distribution.
+Now suppose the apparatus is imperfect (perhaps a toaster that always burns your bread), so it does not always produce the same state. That is, it produces the state $\lvert\psi_1\rangle$ with probability $p_1$, the state $\lvert\psi_2\rangle$ with probability $p_2$, and so on. Here we are introducing a *classical* uncertainty: each $\lvert\psi_i\rangle$ is a quantum state, but we simply do not know which one comes out of the machine! We may have as many $p_i$ as we like, provided that ...(you know), they satisfy the usual properties of a probability distribution.
 
 Now let $A$ be an observable. If the state is $\lvert\psi_1\rangle$, the expectation value of $A$ is $\langle\psi_1\rvert A\lvert\psi_1\rangle$. If it is $\lvert\psi_2\rangle$, it is $\langle\psi_2\rvert A\lvert\psi_2\rangle$ (I sure hope you paid attention in Linear Algebra![^linear]).
 <br>
@@ -337,7 +337,7 @@ $$
 
 This is the first of a family of conserved quantities $\operatorname{tr}(\rho^n)$, which we return to below.
 
-**3. Positivity is preserved.** For a time-independent $H$, the solution of Eq. (2.9) is $\rho(t)=U\rho(0)U^\dagger$ with $U=e^{-iHt/\hbar}$. For any $\lvert\phi\rangle$,
+**3. Positivity is preserved.** For a time-independent $H$, the solution of Eq. (2.8) is $\rho(t)=U\rho(0)U^\dagger$ with $U=e^{-iHt/\hbar}$. For any $\lvert\phi\rangle$,
 
 $$
 \langle\phi\rvert U\rho U^\dagger\lvert\phi\rangle=\langle\phi'\rvert\rho\lvert\phi'\rangle\ \ge\ 0 ,
@@ -392,7 +392,7 @@ So $\{U_t\}$ is a group, and since it is labelled by the single number $t$, it i
 <details class="derivation" markdown="1">
 <summary>Show derivation</summary>
 
-To check that $\rho(t)=U_t\rho(0)U_t^\dagger$ solves Eq. (2.9), differentiate. Since $H$ commutes with $U_t$,
+To check that $\rho(t)=U_t\rho(0)U_t^\dagger$ solves Eq. (2.8), differentiate. Since $H$ commutes with $U_t$,
 
 $$
 \frac{d\rho}{dt}
@@ -423,9 +423,7 @@ Two consequences stand out:
 - The purity $\operatorname{tr}\rho^2$ is conserved, so a pure state stays pure.
 - The von Neumann entropy $S(\rho)=-\operatorname{tr}(\rho\ln\rho)$ is conserved, so a mixed state stays exactly as mixed as it started. (Now this is huge.)[^entropy]
 
-[^entropy]: The entropy depends only on the eigenvalues of $\rho$, $S(\rho)=-\sum_k\lambda_k\ln\lambda_k$, and unitary evolution cannot change the spectrum. So no evolution operator, however cleverly chosen, can turn a mixed state into a pure one, or the other way around. Lowering the entropy of a system (cooling it, resetting a qubit) needs something that is not unitary, such as a measurement or a coupling to a larger system that carries the entropy away. It also means that when the entropy of a subsystem does change, the subsystem is not isolated: it is entangled with something else.
-
-Unitary evolution can never turn our ignorance about the state into knowledge, or the other way around. The spectrum is the part of $\rho$ that the dynamics cannot touch.
+[^entropy]: The entropy depends only on the eigenvalues of $\rho$, $S(\rho)=-\sum_k\lambda_k\ln\lambda_k$, and unitary evolution cannot change the spectrum. So no evolution operator, however cleverly chosen (¬‿¬), can turn a mixed state into a pure one, or the other way around. Lowering the entropy of a system (cooling it, resetting a qubit) needs something that is not unitary, such as a measurement or a coupling to a larger system that carries the entropy away. It also means that when the entropy of a subsystem does change, the subsystem is not isolated: it is entangled with something else.
 
 That means the classical uncertainty we introduced at the start always remains there throughout the evolution.
 
@@ -496,7 +494,7 @@ One caveat though. A *single* Hamiltonian only traces out a curve inside an orbi
 
 ### § 3.5 The Lax Form
 
-Eq. (2.9) can be written in a way that hides the quantum mechanics. Define the matrix $M=-\tfrac{i}{\hbar}H$, so that
+Eq. (2.8) can be written in a way that hides the quantum mechanics. Define the matrix $M=-\tfrac{i}{\hbar}H$, so that
 
 $$
 \dot\rho=[M,\rho] .
@@ -544,7 +542,7 @@ $$
 
 </details>
 <br>
-The conservation law of § 3.3 is therefore not special to quantum mechanics! It is a feature of the commutator form itself. Equations of this type are central in the study of [integrable systems](https://en.wikipedia.org/wiki/Integrable_system).
+The conservation law of § 3.3 is therefore not special to quantum mechanics! It is a feature of the commutator form itself. Equations of this type are central in the study of [integrable systems(wiki)](https://en.wikipedia.org/wiki/Integrable_system).
 
 To see this in action, take a $2\times 2$ example where $M$ is built out of $L$ itself:
 
@@ -584,17 +582,17 @@ This is the isospectrality of the Lax equation!
 
 ### § 3.6 Why Care About the Lax Equation?
 
-Now, you would be thinking "Why should I care ?" about this example, or even about the Lax equation hold that thought.
+Now, you would be thinking "Why should I care?" about this example, or even about the Lax equation, hold that thought.
 
-Writing a nonlinear equation as $\dot L=[M,L]$ handed us conserved quantities for free, namely every $\operatorname{tr}L^n$, with no need to look for symmetries. Lax introduced it for the Korteweg-de Vries equation, where $L$ is a Schrödinger operator and its conserved eigenvalues are the speeds of the solitons.
+Writing a nonlinear equation as $\dot L=[M,L]$ gave us conserved quantities, namely every $\operatorname{tr}L^n$, with no need to look for symmetries. Lax introduced it for the Korteweg-de Vries equation, where $L$ is a Schrödinger operator and its conserved eigenvalues are the speeds of the solitons.
 
-The example above is the two-particle Toda lattice, and its flow towards a diagonal matrix is a continuous cousin of the QR algorithm used to compute eigenvalues. Having a Lax pair does not by itself guarantee that a system is solvable, but it is the standard first sign that one is dealing with an integrable system.
+The example above is the two-particle Toda lattice, and its flow towards a diagonal matrix is a continuous cousin of the QR algorithm used to compute eigenvalues. Having a Lax pair does not by itself mean that the system is solvable, but it is the standard first sign that one is dealing with an integrable system.
 
 ## § 4. Conclusion
 
 We started by asking which properties of a quantum state are invariant under unitary evolution. We got an interesting answer: **the spectrum of $\rho$ never changes**.
 <br>
-Every $\operatorname{tr}(\rho^n)$ is conserved, and with them the purity and the entropy: a pure state stays pure, and a mixed state stays exactly as mixed as it began. Unitary evolution can never turn our ignorance about the state into knowledge, or the other way around. On top of this, the expectation value of every observable that commutes with $H$ is conserved too.
+Every $\operatorname{tr}(\rho^n)$ is conserved, and with them the purity and the entropy: a pure state stays pure, and a mixed state stays exactly as mixed as it began. Unitary evolution can never chance the entropy of our system so we can't extract more information from the system using an evolution operator, or the other way around. On top of this, the expectation value of every observable that commutes with $H$ is conserved too.
 
 The reason was group structure. The evolution operators form a group, and acting on states by conjugation, $\rho\mapsto U\rho U^\dagger$, this group moves a state only within its own orbit.
 
